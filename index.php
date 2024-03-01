@@ -1,4 +1,4 @@
 <?php
 
-    header("Location:pages/Admin/Home/HomeMain");
+    header("Location:pages/Users/Home/HomeMain");
 ?>

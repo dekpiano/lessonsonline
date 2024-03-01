@@ -1,6 +1,6 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
-include_once '../../../php/Course/Course.php'; 
+include_once '../../../pages/Admin/Course/Php/CourseClass.php'; 
 $database = new Database();
 $db = $database->getConnection();
 
@@ -33,7 +33,7 @@ $num = $stmt->rowCount();
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item active">
-                                    <a href="http://" class="btn btn-block btn-primary">เพิ่มคอร์สเรียน</a>
+                                    <a href="../../../pages/Admin/Course/CourseInsert" class="btn btn-block btn-primary">เพิ่มคอร์สเรียน</a>
 
                                 </li>
                             </ol>
@@ -55,22 +55,28 @@ $num = $stmt->rowCount();
                         <!-- /.card-header -->
                         <div class="card-body">
                             <?php if ($num > 0) : ?>
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="Tb_Couesr" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>รหัสคอร์สเรียน</th>
                                         <th>ชื่อคอร์สเรียน</th>
                                         <th>ครูผู้สอน</th>
                                         <th>วันที่สร้าง</th>
+                                        <th>บทเรียน</th>
+                                        <th>คำสั่ง</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :?>
                                     <tr>
-                                        <td><?=$row->CourseID;?></td>
-                                        <td><?=$row->CourseName;?></td>
-                                        <td><?=$row->TeacherID;?></td>
-                                        <td><?=$row->CourseDateCreated;?></td>
+                                        <td><?=$row['CourseCode'];?></td>
+                                        <td><?=$row['CourseName'];?></td>
+                                        <td><?=$row['TeacherID'];?></td>
+                                        <td><?=$row['CourseDateCreated'];?></td>
+                                        <td><a href="http://" class="btn btn-primary btn-sm">สร้างบทเรียน</a></td>
+                                        <td>
+                                            <a href="http://" class="btn btn-warning btn-sm">แก้ไข</a> <a href="http://" class="btn btn-danger btn-sm">ลบ</a>
+                                        </td>
                                     </tr>
                                     <?php endwhile; ?>
                                 <tbody>
