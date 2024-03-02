@@ -1,4 +1,6 @@
 <?php 
+session_start(); // เริ่ม session
+
 class Database {
     private $host = "localhost";
     private $db_name = "skjacth_lessonsonline";

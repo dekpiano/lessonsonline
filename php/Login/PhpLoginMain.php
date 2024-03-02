@@ -14,7 +14,7 @@ $Login->password = $_POST['password'];
 $response = array();
 
 if($Login->LoginAdmin()) {
-    echo 1;
+    echo $Login->LoginAdmin();
 } else {
     echo 0;
 }

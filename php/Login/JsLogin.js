@@ -3,12 +3,12 @@ $(document).on("submit","#loginForm", function(e) {
     
     $.ajax({
         type: "POST",
-        url: "../../../php/Login/MainLogin.php",
+        url: "../../../php/Login/PhpLoginMain.php",
         data: $(this).serialize(),
         success: function(response) {
             console.log(response);
-            if(response == 1){
-               
+            if(response == "teacher"){
+               window.location.href = "../../../pages/Teacher/Home/HomeMain";
             }else{
                 Swal.fire({
                     title: "แจ้งเตือน!",
