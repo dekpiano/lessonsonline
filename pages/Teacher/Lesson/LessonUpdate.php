@@ -2,7 +2,7 @@
 include_once '../../../php/Database/Database.php'; 
 include_once '../../../pages/Teacher/Lesson/Php/ClassLesson.php'; 
 
-$Title = "แก้ไขข้อมูลคอร์สเรียน";
+$Title = "แก้ไขข้อมูลบทเรียน";
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -35,7 +35,7 @@ $Lesson->readLessonEdit();
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">คอร์สเรียน</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:history.go(-1)"><i class="fas fa-arrow-left"></i> กลับไปบทเรียนหลัก</a></li>
                                 <li class="breadcrumb-item active"><?=$Title?></li>
                             </ol>
                         </div><!-- /.col -->

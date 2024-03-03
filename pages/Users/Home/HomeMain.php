@@ -1,10 +1,21 @@
+<?php 
+include_once '../../../php/Database/Database.php'; 
+include_once '../../Users/Home/Php/ClassCourse.php';
+$database = new Database();
+$db = $database->getConnection();
+
+$Course = new ClassCourse($db);
+$stmt = $Course->read();
+//echo '<pre>';print_r();
+
+?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-    <?php include_once('../../../pages/Users/Layout/NavbarTopUser.php') ?>
-    <?php include_once('../../../pages/Users/Layout/NavbarLeftUser.php') ?>
+        <?php include_once('../../../pages/Users/Layout/NavbarTopUser.php') ?>
+        <?php include_once('../../../pages/Users/Layout/NavbarLeftUser.php') ?>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -13,9 +24,9 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">บทเรียน</h1>
+                            <h1 class="m-0">คอร์สเรียน</h1>
                         </div><!-- /.col -->
-                     
+
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
@@ -26,70 +37,54 @@
                 <div class="container-fluid">
                     <!-- Small boxes (Stat box) -->
                     <div class="row">
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>150</h3>
 
-                                    <p>New Orders</p>
+                        <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                       
+                        <div class="col-md-4">
+                        <a href="http://">
+                            <div class="card card-widget widget-user">
+                                <div class="widget-user-header text-white"
+                                    style="background: url('../../../dist/img/photo1.png') center center;">
+                                    <h3 class="widget-user-username text-right"><?=$row['CourseName']?></h3>
+                                    <h6 class="widget-user-desc text-right">โดย <?=$row['FullNmae']?></h6>
                                 </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
+                                <div class="widget-user-image">
+                                    <img class="img-circle" src="../../../dist/img/user3-128x128.jpg" alt="User Avatar">
                                 </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                        class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-success">
-                                <div class="inner">
-                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-sm-4 border-right">
+                                            <div class="description-block">
+                                                <h5 class="description-header">3,200</h5>
+                                                <span class="description-text">ลงทะเบียนเรียน</span>
+                                            </div>
 
-                                    <p>Bounce Rate</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                        class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-warning">
-                                <div class="inner">
-                                    <h3>44</h3>
+                                        </div>
 
-                                    <p>User Registrations</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-person-add"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                        class="fas fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-6">
-                            <!-- small box -->
-                            <div class="small-box bg-danger">
-                                <div class="inner">
-                                    <h3>65</h3>
+                                        <div class="col-sm-4 border-right">
+                                            <div class="description-block">
+                                                <h5 class="description-header">13,000</h5>
+                                                <span class="description-text">เรียนสำเร็จ</span>
+                                            </div>
 
-                                    <p>Unique Visitors</p>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="description-block">
+                                                <h5 class="description-header">35</h5>
+                                                <span class="description-text">บทเรียน</span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
                                 </div>
-                                <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i
-                                        class="fas fa-arrow-circle-right"></i></a>
                             </div>
+                            </a>
                         </div>
-                        <!-- ./col -->
+                        <?php endwhile; ?>
+
                     </div>
                     <!-- /.row -->
 

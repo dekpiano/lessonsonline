@@ -33,7 +33,7 @@ $Lesson->readCourse();
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a
-                                        href="javascript:history.go(-1)">กลับไปหน้าหลักบทเรียน</a></li>
+                                        href="javascript:history.go(-1)"><i class="fas fa-arrow-left"></i> กลับไปหน้าหลักบทเรียน</a></li>
                                 <li class="breadcrumb-item active"><?=$Title?></li>
                             </ol>
                         </div><!-- /.col -->
@@ -99,7 +99,7 @@ $Lesson->readCourse();
                                         placeholder="ใส่ลิ้งก์วีดีโอ">
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="saveButton">
-                                    บันทึก
+                                <i class="fas fa-save"></i> บันทึก
                                     <div class="spinner-border text-light spinner-border-sm" role="status" id="spinner"
                                         style="display: none;">
                                         <span class="sr-only">Loading...</span>

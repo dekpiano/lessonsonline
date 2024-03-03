@@ -32,7 +32,7 @@ $num = $stmt->rowCount();
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item active">
-                                    <a href="../../../pages/Teacher/Course/CourseInsert" class="btn btn-block btn-primary">เพิ่มคอร์สเรียน</a>
+                                    <a href="../../../pages/Teacher/Course/CourseInsert" class="btn btn-block btn-primary"><i class="far fa-plus-square"></i> เพิ่มคอร์สเรียน</a>
 
                                 </li>
                             </ol>
@@ -72,9 +72,9 @@ $num = $stmt->rowCount();
                                         <td><?=$row['CourseName'];?></td>
                                         <td><?=$row['FullNmae'];?></td>
                                         <td><?=$row['CourseDateCreated'];?></td>
-                                        <td><a href="../Lesson/LessonMain?CourseID=<?=$row['CourseID']?>" class="btn btn-primary btn-sm">สร้างบทเรียน</a></td>
+                                        <td><a href="../Lesson/LessonMain?CourseID=<?=$row['CourseID']?>" class="btn btn-primary btn-sm"><i class="far fa-plus-square"></i> สร้างบทเรียน</a></td>
                                         <td>
-                                            <a href="CourseUpdate?CourseID=<?=$row['CourseID']?>" class="btn btn-warning btn-sm">แก้ไข</a> <a href="http://" class="btn btn-danger btn-sm">ลบ</a>
+                                            <a href="CourseUpdate?CourseID=<?=$row['CourseID']?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> แก้ไข</a> <a href="http://" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> ลบ</a>
                                         </td>
                                     </tr>
                                     <?php endwhile; ?>

@@ -33,13 +33,13 @@ $Lesson->readCourse();
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-8">
-                            <h1 class="m-0"><?=$Title;?> จากคอร์สเรียน <?=$Lesson->CourseName?> <small>(รหัส
+                            <h1 class="m-0"><?=$Title;?> จากคอร์สเรียนเรื่อง <?=$Lesson->CourseName?> <small>(รหัส
                                     <?=$Lesson->CourseCode?>)</small></h1>
                         </div><!-- /.col -->
                         <div class="col-sm-4">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a
-                                        href="javascript:history.go(-1)">กลับไปหน้าคอร์สเรียน</a></li>
+                                        href="javascript:history.go(-1)"><i class="fas fa-arrow-left"></i> กลับไปหน้าคอร์สเรียน</a></li>
                                 <li class="breadcrumb-item active"><?=$Title?></li>
                             </ol>
                         </div><!-- /.col -->
@@ -58,7 +58,7 @@ $Lesson->readCourse();
                             <div class="d-flex justify-content-between  align-items-center">
                                 <h3 class="card-title">ตารางบทเรียน</h3>
                                 <a href="../../../pages/Teacher/Lesson/LessonInsert?CourseID=<?=$Lesson->CourseID?>"
-                                    class="btn btn-primary">เพิ่มบทเรียน</a>
+                                    class="btn btn-primary"><i class="fas fa-plus"></i> เพิ่มบทเรียน</a>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -81,12 +81,12 @@ $Lesson->readCourse();
                                         <td><?=$row['LessonTitle'];?></td>
                                         <td><?=$row['LessonDateCreated'];?></td>
                                         <td><a href="Lesson?LessonID=<?=$row['LessonID']?>"
-                                                class="btn btn-primary btn-sm">สร้างแบบทดสอบ</a></td>
+                                                class="btn btn-primary btn-sm"><i class="far fa-plus-square"></i> สร้างแบบทดสอบ</a></td>
                                         <td>
                                             <a href="LessonUpdate?LessonID=<?=$row['LessonID']?>"
-                                                class="btn btn-warning btn-sm">แก้ไข</a> 
+                                                class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> แก้ไข</a> 
                                                 <a href="http://"
-                                                class="btn btn-danger btn-sm">ลบ</a>
+                                                class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> ลบ</a>
                                         </td>
                                     </tr>
                                     <?php endwhile; ?>
