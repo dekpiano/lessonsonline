@@ -56,7 +56,7 @@ $stmt = $Course->read();
                                         <div class="col-sm-4 border-right">
                                             <div class="description-block">
                                                 <h5 class="description-header">3,200</h5>
-                                                <span class="description-text">ลงทะเบียนเรียน</span>
+                                                <span class="description-text">ลงทะเบียน</span>
                                             </div>
 
                                         </div>

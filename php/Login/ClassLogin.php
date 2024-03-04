@@ -15,7 +15,7 @@ class ClassLogin {
 
         $stmt = $this->conn->prepare($query);
 
-        $this->username=htmlspecialchars(strip_tags($this->username));
+        //$this->username=htmlspecialchars(strip_tags($this->username));
 
         $stmt->bindParam(":Username", $this->username);
 
