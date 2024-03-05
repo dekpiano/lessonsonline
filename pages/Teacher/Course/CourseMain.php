@@ -9,6 +9,7 @@ $Title = $course->TitleBar;
 // อ่านคอร์สเรียนทั้งหมด
 $stmt = $course->read();
 $num = $stmt->rowCount();
+
 ?>
 
 <?php include_once('../../../pages/Teacher/Layout/HeaderTeacher.php') ?>

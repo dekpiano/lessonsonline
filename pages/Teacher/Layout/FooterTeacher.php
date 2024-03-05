@@ -62,6 +62,18 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="../../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+<?php if(uri(3) == "Course"):?>
+<script src="../../../pages/Teacher/Course/Js/JsCourse.js?v=4"></script>
+<script>
+    $('.summernoteEdit').summernote({
+        height: 400,   
+    });
+    var contentFromDB = `<?php echo $course->CourseDescription; ?>`;
+     $('.summernoteEdit').summernote('code', contentFromDB);
+</script>
+<?php endif;?>
+<?php if(uri(3) == "Lesson"):?>
+<script src="../../../pages/Teacher/Lesson/Js/JsLesson.js?v=4.6"></script>
 <script>
     $('.summernoteEdit').summernote({
         height: 400,   
@@ -69,12 +81,6 @@ $.widget.bridge('uibutton', $.ui.button)
     var contentFromDB = `<?php echo $Lesson->LessonContent; ?>`;
      $('.summernoteEdit').summernote('code', contentFromDB);
 </script>
-
-<?php if(uri(3) == "Course"):?>
-<script src="../../../pages/Teacher/Course/Js/JsCourse.js?v=2"></script>
-<?php endif;?>
-<?php if(uri(3) == "Lesson"):?>
-<script src="../../../pages/Teacher/Lesson/Js/JsLesson.js?v=4.6"></script>
 <?php endif;?>
 
 

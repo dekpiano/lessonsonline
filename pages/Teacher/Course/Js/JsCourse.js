@@ -8,12 +8,15 @@ $('#Tb_Couesr').DataTable({
 
 $(document).on("submit","#courseForm", function(e) {
     e.preventDefault();
-    var formData = $(this).serialize();
+    var formData = new FormData($("#courseForm")[0]);
     $.ajax({
         type: "POST",
         url: "../../../pages/Teacher/Course/Php/CoursePhpInsert.php",
         data: formData,
+        contentType: false,
+        processData: false,
         success: function(response) {
+          console.log(response);
             Swal.fire({
                 title: "แจ้งเตือน!",
                 text: "บันทึกข้อมูลคอร์สเรียนเรียบร้อย!",
@@ -32,11 +35,17 @@ $(document).on("submit","#courseForm", function(e) {
 
 $(document).on("submit","#courseFormUpdate", function(e) {
   e.preventDefault();
-  var formData = $(this).serialize();
+  // แสดง spinner
+  $('#loading').show();
+  $('#btnText').text('Loading...');
+
+  var formData = new FormData($("#courseFormUpdate")[0]);
   $.ajax({
       type: "POST",
       url: "../../../pages/Teacher/Course/Php/CoursePhpUpdate.php",
       data: formData,
+      contentType: false,
+      processData: false,
       success: function(response) {
         console.log(response);
         if(response == 1){
@@ -52,6 +61,11 @@ $(document).on("submit","#courseFormUpdate", function(e) {
         }
         
       },
+          complete: function() {
+              // ซ่อน spinner และเปลี่ยนข้อความกลับเมื่อเสร็จสิ้น
+              $('#loading').hide();
+              $('#btnText').text('แก้ไขคอร์สเรียน');
+          },
       error: function() {
           $("#result").html("<div class='alert alert-danger'>There was an error processing your request</div>");
       }

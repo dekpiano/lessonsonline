@@ -44,14 +44,15 @@ $stmt = $Course->read();
                         <a href="http://">
                             <div class="card card-widget widget-user">
                                 <div class="widget-user-header text-white"
-                                    style="background: url('../../../dist/img/photo1.png') center center;">
-                                    <h3 class="widget-user-username text-right"><?=$row['CourseName']?></h3>
-                                    <h6 class="widget-user-desc text-right">โดย <?=$row['FullNmae']?></h6>
+                                    style="background: url('../../../pages/Teacher/Course/Uploads/<?=$row['CourseImage'];?>') center center;">
+                                    
                                 </div>
                                 <div class="widget-user-image">
                                     <img class="img-circle" src="../../../dist/img/user3-128x128.jpg" alt="User Avatar">
                                 </div>
                                 <div class="card-footer">
+                                    <h5 class="m-0"><?=$row['CourseName']?></h5>
+                                    <small>โดย <?=$row['FullNmae']?></small> 
                                     <div class="row">
                                         <div class="col-sm-4 border-right">
                                             <div class="description-block">

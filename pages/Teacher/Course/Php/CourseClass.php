@@ -65,30 +65,36 @@ class Course {
 
         //print_r($row);
         // กำหนดค่าให้กับ properties
-        $this->CourseCode = $row['CourseCode'];
-        $this->CourseName = $row['CourseName'];
-        $this->CourseDescription = $row['CourseDescription'];
+
+        $data = array('CourseCode','CourseName','CourseDescription','CourseStartDate','CourseEndDate','CourseDuration','CourseType','CourseStatus');
+
+        foreach ($data as $key => $value) {
+            $this->$value = $row[$value];
+        }
+
+        $this->CourseImageOld = $row['CourseImage'];
+        // $this->CourseName = $row['CourseName'];
+        // $this->CourseDescription = $row['CourseDescription'];
     }
 
     // เพิ่มคอร์สเรียนใหม่
     public function create() {
-        $query = "INSERT INTO " . $this->table_name . " SET CourseCode=:CourseCode,CourseName=:CourseName, CourseDescription=:CourseDescription, CourseDateCreated=:CourseDateCreated,TeacherID=:TeacherID";
+
+        $data = array('CourseCode','CourseName','CourseDescription','CourseStartDate','CourseEndDate','CourseDuration','CourseType','CourseImage','CourseStatus','TeacherID','CourseDateCreated');
+        $ASum = array();
+        foreach ($data as $key => $v_data) {
+            $ASum[] = $v_data."=:".$v_data;
+        }
+        $sub = implode(',',$ASum);
+        
+        $query = "INSERT INTO " . $this->table_name . " SET ". $sub;
 
         $stmt = $this->conn->prepare($query);
 
-        // sanitize
-        $this->CourseCode=htmlspecialchars(strip_tags($this->CourseCode));
-        $this->CourseName=htmlspecialchars(strip_tags($this->CourseName));
-        $this->CourseDescription=htmlspecialchars(strip_tags($this->CourseDescription));
-        $this->CourseDateCreated=htmlspecialchars(strip_tags($this->CourseDateCreated));
-        $this->TeacherID=htmlspecialchars(strip_tags($this->TeacherID));
-
-        // bind values
-        $stmt->bindParam(":CourseCode", $this->CourseCode);
-        $stmt->bindParam(":CourseName", $this->CourseName);
-        $stmt->bindParam(":CourseDescription", $this->CourseDescription);
-        $stmt->bindParam(":CourseDateCreated", $this->CourseDateCreated);
-        $stmt->bindParam(":TeacherID", $this->TeacherID);
+        foreach ($data as $key => $v_data) {      
+            // $this->$v_data=htmlspecialchars(strip_tags($this->$v_data));      
+             $stmt->bindParam(":".$v_data, $this->$v_data);
+         }  
 
         if ($stmt->execute()) {
             return true;
@@ -97,21 +103,29 @@ class Course {
         return false;
     }
 
+
     public function UpdateCourse() {
+
+        $data = array('CourseName','CourseDescription','CourseStartDate','CourseEndDate','CourseDuration','CourseType','CourseImage');
+        $ASum = array();
+        foreach ($data as $key => $v_data) {
+            $ASum[] = $v_data."=:".$v_data;
+        }
+        $sub = implode(',',$ASum);
+        
+
         $query = "UPDATE " . $this->table_name . "
-                  SET CourseName = :CourseName, CourseDescription = :CourseDescription
+                  SET ".$sub."
                   WHERE CourseCode = :CourseCode ";
 
         $stmt = $this->conn->prepare($query);
 
-                  // ทำความสะอาดข้อมูล
-        $this->CourseName=htmlspecialchars(strip_tags($this->CourseName));
-        $this->CourseDescription=htmlspecialchars(strip_tags($this->CourseDescription));
-        $this->CourseCode=htmlspecialchars(strip_tags($this->CourseCode));
-
         // ผูกค่า
-        $stmt->bindParam(':CourseName', $this->CourseName);
-        $stmt->bindParam(':CourseDescription', $this->CourseDescription);
+        foreach ($data as $key => $v_data) {      
+            // $this->$v_data=htmlspecialchars(strip_tags($this->$v_data));      
+             $stmt->bindParam(":".$v_data, $this->$v_data);
+         }  
+         
         $stmt->bindParam(':CourseCode', $this->CourseCode);
 
         // ประมวลผลคำสั่ง

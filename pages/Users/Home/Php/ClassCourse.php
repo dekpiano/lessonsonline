@@ -45,6 +45,7 @@ class ClassCourse {
         $this->CourseCode = $row['CourseCode'];
         $this->CourseName = $row['CourseName'];
         $this->CourseDescription = $row['CourseDescription'];
+        $this->CourseImage = $row['CourseImage'];
     }
 
     
