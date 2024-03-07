@@ -1,10 +1,4 @@
-<footer class="main-footer">
-    <strong>Copyright &copy; 2024 <a href="https://facebook.com/dekpiano">Dekpiano</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 1.0.0
-    </div>
-</footer>
+
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
@@ -76,4 +70,8 @@ $.widget.bridge('uibutton', $.ui.button)
 
 <?php if(uri(3) == "Register"):?>
 <script src="../../Users/Register/Js/JsRegisterUser.js?v=1"></script>
+<?php endif; ?>
+
+<?php if(uri(3) == "learn"):?>
+<script src="../../Users/learn/Js/JsCountdownTimer.js?v=1"></script>
 <?php endif; ?>

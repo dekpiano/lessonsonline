@@ -20,10 +20,10 @@
         </div>
 
         <!-- Sidebar Menu -->
-        <nav class="mt-2">
+        <nav class="mt-2 user-panel">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="pages/kanban.html" class="nav-link">
+                    <a href="../../../pages/Admin/Home/HomeMain" class="nav-link">
                         <i class="nav-icon fas fa-columns"></i>
                         <p>
                             หน้าแรก
@@ -42,7 +42,7 @@
                 </li> -->
                 <li class="nav-item">
                     <a href="../../../pages/Admin/Teacher"
-                        class="nav-link <?=uri(3) == "Course"?"active":""?> ">
+                        class="nav-link <?=uri(3) == "Teacher"?"active":""?> ">
                         <i class="nav-icon fas fa-columns"></i>
                         <p>
                             จัดการครูผู้สอน
@@ -52,6 +52,20 @@
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
+        <nav class="mt-2 user-panel">
+                <ul class="nav nav-pills nav-sidebar" data-widget="treeview" role="menu"
+                    data-accordion="false">
+
+                    <li class="nav-item">
+                        <a href="../../../php/Login/PhpLogoutMain" class="nav-link">
+                            <i class="nav-icon fas fa-sign-out-alt"></i>
+                            <p>
+                                ออกจากระบบ
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
     </div>
     <!-- /.sidebar -->
 </aside>
