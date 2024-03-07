@@ -3,9 +3,10 @@ include_once '../../../../php/Database/Database.php';
 include_once '../../../../Pages/Users/Register/Php/ClassRegisterUser.php';
 $database = new Database();
 $db = $database->getConnection();
-$Title = "";
-
 $User = new ClassRegisterUser($db);
+$Title = $User->TitleBar;
+
+
 
 $User->UserCode = $User->getNewUserCode();
 $User->UserFirstName = $_POST['UserFirstName'];

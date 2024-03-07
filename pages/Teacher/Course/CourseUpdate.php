@@ -107,7 +107,7 @@ $course->readSingle();
                                         onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
                                     <input id="CourseImageOld" name="CourseImageOld" type="hidden"
                                         value="<?=$course->CourseImageOld;?>">
-                                    <img id="preview" src="uploads/<?=$course->CourseImageOld;?>" class="img-fluid"
+                                    <img id="preview" src="../../../uploads/Course/<?=$course->CourseImageOld;?>" class="img-fluid"
                                         alt="" srcset="">
                                 </div>
                                 <hr>

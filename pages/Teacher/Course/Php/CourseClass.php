@@ -73,8 +73,6 @@ class Course {
         }
 
         $this->CourseImageOld = $row['CourseImage'];
-        // $this->CourseName = $row['CourseName'];
-        // $this->CourseDescription = $row['CourseDescription'];
     }
 
     // เพิ่มคอร์สเรียนใหม่

@@ -63,7 +63,7 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="../../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <?php if(uri(3) == "Course"):?>
-<script src="../../../pages/Teacher/Course/Js/JsCourse.js?v=4"></script>
+<script src="../../../pages/Teacher/Course/Js/JsCourse.js?v=6"></script>
 <script>
     $('.summernoteEdit').summernote({
         height: 400,   

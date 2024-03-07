@@ -2,7 +2,7 @@
 // include database and object files
 include_once '../../../../php/Database/Database.php'; 
 include_once '../../../../pages/Teacher/Course/Php/CourseClass.php'; 
-include_once '../../../../pages/Teacher/Course/Php/ClassUploader.php'; 
+include_once '../../../../php/Uploadfile/ClassUploader.php'; 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -22,16 +22,18 @@ $course->CourseStatus = "Active";
 $course->CourseDateCreated = date("Y-m-d H:i:s");
 $course->TeacherID = $_SESSION['UserID'];
 
-if($_FILES["CourseImage"]["error"] == 0){
+
+if($_FILES["CourseImage"]["error"] == 0){ 
     $imageUploader = new ClassUploader($_FILES["CourseImage"], 2048); // Resize to 500x500
-    $course->CourseImage = $imageUploader->upload();
+    $array = json_decode($imageUploader->upload());
+    $course->CourseImage =  $array->Text;
 }else{
     $course->CourseImage = "";
 }
 
 if($course->create()) {
-    echo "<div class='alert alert-success'>Course was created.</div>";
+    echo 1;
 } else {
-    echo "<div class='alert alert-danger'>Unable to create course.</div>";
+    echo 0;
 }
 ?>

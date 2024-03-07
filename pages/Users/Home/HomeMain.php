@@ -1,10 +1,10 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
-include_once '../../Users/Home/Php/ClassCourse.php';
+include_once '../../Users/PhpClass/ClassCourse.php';
 $database = new Database();
 $db = $database->getConnection();
-
 $Course = new ClassCourse($db);
+$Title = $Course->TitleBar;
 $stmt = $Course->read();
 //echo '<pre>';print_r();
 
@@ -41,10 +41,10 @@ $stmt = $Course->read();
                         <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                        
                         <div class="col-md-4">
-                        <a href="http://">
+                        <a href="../Course/CourseView?CourseID=<?=$row['CourseCode']?>">
                             <div class="card card-widget widget-user">
                                 <div class="widget-user-header text-white"
-                                    style="background: url('../../../pages/Teacher/Course/Uploads/<?=$row['CourseImage'];?>') center center;">
+                                    style="background: url('../../../Uploads/Course/<?=$row['CourseImage'];?>') center center;">
                                     
                                 </div>
                                 <div class="widget-user-image">

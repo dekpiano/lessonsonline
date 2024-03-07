@@ -29,12 +29,12 @@ class ClassCourse {
     }
 
     public function readSingle() {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE CourseID = ? LIMIT 0,1";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE CourseCode = ? LIMIT 0,1";
 
         $stmt = $this->conn->prepare($query);
 
         // ผูกค่าพารามิเตอร์
-        $stmt->bindParam(1, $this->CourseID);
+        $stmt->bindParam(1, $this->CourseCode);
 
         $stmt->execute();
 
@@ -46,6 +46,8 @@ class ClassCourse {
         $this->CourseName = $row['CourseName'];
         $this->CourseDescription = $row['CourseDescription'];
         $this->CourseImage = $row['CourseImage'];
+        $this->CourseStartDate = $row['CourseStartDate'];
+        $this->CourseEndDate = $row['CourseEndDate'];
     }
 
     

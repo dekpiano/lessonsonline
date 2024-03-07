@@ -1,7 +1,7 @@
 <?php
 
 class ClassUploader {
-    private $targetDirectory = "../../../../pages/Teacher/Course/uploads/";
+    private $targetDirectory = "../../../../uploads/Course/";
     private $maxFileSize = 5000000; // 5MB
     private $allowedTypes = ['jpg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif'];
     private $fileName;
@@ -13,39 +13,39 @@ class ClassUploader {
     public function __construct($file, $newWidth) {
         $this->fileName = basename($file["name"]);
         $this->imageFileType = strtolower(pathinfo($this->fileName, PATHINFO_EXTENSION));
-        $this->fileTempName = $file["tmp_name"];
+        $this->fileTempName = $_FILES['CourseImage']['tmp_name'];
         $this->newWidth = $newWidth;
         //$this->newHeight = $newHeight;
     }
 
     public function upload() {
         // Check if image file is a actual image or fake image
-        $check = getimagesize($this->fileTempName);
-        if($check === false) {
-            return "File is not an image.";
-        }
+        // $check = getimagesize($this->fileTempName);
+        // if($check === false) {
+        //     return json_encode(['Msg'=>0,'Text'=> "File is not an image."]);
+        // }
 
         // Check file size
-        if ($_FILES["CourseImage"]["size"] > $this->maxFileSize) {
-            return "Sorry, your file is too large.";
-        }
+        // if ($_FILES["CourseImage"]["size"] > $this->maxFileSize) {
+        //     return json_encode(['Msg'=>0,'Text'=> "Sorry, your file is too large"]);
+        // }
 
         // Allow certain file formats
         if(!array_key_exists($this->imageFileType, $this->allowedTypes)) {
-            return "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            return json_encode(['Msg'=>0,'Text'=> "Sorry, only JPG, JPEG, PNG & GIF files are allowed."]);
         }
 
         // Check if file already exists
         if (file_exists($this->targetDirectory . $this->fileName)) {
-            return "Sorry, file already exists.";
+            return json_encode(['Msg'=>0,'Text'=> "Sorry, file already exists."]);
         }
 
         $newFilePath = $this->generateNewFileName();
         if (move_uploaded_file($this->fileTempName, $newFilePath)) {
             $this->resizeImage($newFilePath);
-            return basename($newFilePath);
+            return json_encode(['Msg'=>1,'Text'=>basename($newFilePath)]);
         } else {
-            return "Sorry, there was an error uploading your file.";
+            return json_encode(['Msg'=>1,'Text'=>basename($newFilePath)]);
         }
     }
 

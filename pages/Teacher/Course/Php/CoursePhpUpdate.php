@@ -2,7 +2,7 @@
 // include database and object files
 include_once '../../../../php/Database/Database.php'; 
 include_once '../../../../pages/Teacher/Course/Php/CourseClass.php'; 
-include_once '../../../../pages/Teacher/Course/Php/ClassUploader.php'; 
+include_once '../../../../php/Uploadfile/ClassUploader.php'; 
 
 // get database connection
 $database = new Database();
@@ -22,7 +22,7 @@ $course->CourseType = $_POST['CourseType'];
 if($_FILES["CourseImage"]["error"] == 0){    
     
     $imageUploader = new ClassUploader($_FILES["CourseImage"], 2048); // Resize to 500x500
-    $imageUploader->deleteImage('../../../../pages/Teacher/Course/uploads/'.$_POST['CourseImageOld']);
+    $imageUploader->deleteImage('../../../../uploads/Course/'.$_POST['CourseImageOld']);
     $course->CourseImage = $imageUploader->upload();
 }else{
     $course->CourseImage = $_POST['CourseImageOld'];
