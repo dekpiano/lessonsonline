@@ -20,6 +20,8 @@ $(document).on("submit","#loginForm", function(e) {
                         location.reload(); // รีโหลดหน้าปัจจุบัน
                     }
                   }); 
+            }else if(data.Type == "admin"){
+              window.location.href = "../../../pages/Admin/Home/HomeMain";
             }
             else{
                 Swal.fire({

@@ -1,11 +1,3 @@
-<footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.2.0
-    </div>
-</footer>
-
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -63,7 +55,26 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="../../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
-
-<?php if(uri(3) == "Course"):?>
-<script src="../../../pages/Admin/Course/Js/JsCourse.js"></script>
+<script>
+// Disable form submissions if there are invalid fields
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        // Get the forms we want to add validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+</script>
+<?php if(uri(3) == "Teacher"):?>
+<script src="../../../pages/Admin/Teacher/Js/JsRegisterTeacher.js?v=1"></script>
 <?php endif;?>

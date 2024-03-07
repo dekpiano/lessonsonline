@@ -6,6 +6,8 @@ $db = $database->getConnection();
 $Course = new ClassCourse($db);
 $Title = $Course->TitleBar;
 $stmt = $Course->read();
+
+$Resutl = $Course->readLessonsAll(@$_GET['Course']);
 //echo '<pre>';print_r();
 
 ?>

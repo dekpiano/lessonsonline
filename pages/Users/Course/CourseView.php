@@ -8,8 +8,8 @@ $Title = "รายละเอียดคอร์สเรียน";
 
 $Course->CourseID = $_GET['CourseID'];
 $Course->readSingle();
-
-$stmt = $Course->readLessonsAll($_GET['CourseID']);
+$stmt = $Course->readLessonsAll(@$_GET['CourseID']);
+$Resutl = $Course->readLessonsAll(@$_GET['Course']);
 
 
 ?>

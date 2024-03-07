@@ -5,8 +5,8 @@ $database = new Database();
 $db = $database->getConnection();
 $Course = new ClassLearn($db);
 $Title = $Course->TitleBar;
-$Resutl = $Course->readLessonsAll($_GET['Course']);
-$LesSing = $Course->readLessonsSingle($_GET['Course'],$_GET['Leeson']);
+$Resutl = $Course->readLessonsAll(@$_GET['Course']);
+$LesSing = $Course->readLessonsSingle(@$_GET['Course'],@$_GET['Leeson']);
 //echo '<pre>';print_r();
 // while($row = $Resutl->fetch(PDO::FETCH_ASSOC)){
 // echo $row['LessonCode'];
