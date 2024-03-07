@@ -19,7 +19,7 @@ class ClassLesson {
     public function __construct($db) {
         $this->conn = $db;
        
-        if(empty($_SESSION['UserID'])){
+        if(empty($_SESSION['UserID']) && !$_SESSION['UserType'] == "teacher"){
             header("Location: ../../../");
             exit();
         }

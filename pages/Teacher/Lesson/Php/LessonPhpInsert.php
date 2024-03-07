@@ -1,8 +1,7 @@
 <?php
 // include database and object files
 include_once '../../../../php/Database/Database.php'; 
-include_once '../../../../pages/Teacher/Lesson/Php/ClassLesson.php'; 
-
+include_once '../../../../pages/Teacher/PhpClass/ClassLesson.php';
 // get database connection
 $database = new Database();
 $db = $database->getConnection();

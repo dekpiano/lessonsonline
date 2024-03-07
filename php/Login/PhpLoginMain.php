@@ -14,7 +14,7 @@ $Login->password = $_POST['password'];
 $response = array();
 
 if($Login->LoginAdmin()) {
-    echo $Login->LoginAdmin();
+    echo json_encode(['Type'=>$Login->LoginAdmin(),'FullName'=>$_SESSION['FullName']]);
 } else {
     echo 0;
 }

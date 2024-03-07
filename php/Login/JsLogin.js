@@ -6,11 +6,20 @@ $(document).on("submit","#loginForm", function(e) {
         url: "../../../php/Login/PhpLoginMain.php",
         data: $(this).serialize(),
         success: function(response) {
-            console.log(response);
-            if(response == "teacher"){
+            var data = JSON.parse(response);
+            console.log(data.Type);
+            if(data.Type == "teacher"){
                window.location.href = "../../../pages/Teacher/Home/HomeMain";
-            }else if(response == "student"){
-                window.location.href = "../../../pages/Users/Home/HomeMain";
+            }else if(data.Type == "student"){ 
+                Swal.fire({
+                    title: "ยินดีต้อนรับ!",
+                    text: data.FullName,
+                    icon: "success"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload(); // รีโหลดหน้าปัจจุบัน
+                    }
+                  }); 
             }
             else{
                 Swal.fire({

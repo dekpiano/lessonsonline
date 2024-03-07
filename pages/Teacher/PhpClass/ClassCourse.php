@@ -1,7 +1,7 @@
 <?php
 date_default_timezone_set('Asia/Bangkok'); // ตั้งค่า Time Zone ตามที่ต้องการ
 
-class Course {
+class ClassCourse {
     private $conn;
     private $table_name = "tb_courses";
 
@@ -15,7 +15,7 @@ class Course {
     public function __construct($db) {
         $this->conn = $db;
        
-        if(empty($_SESSION['UserID'])){
+        if(empty($_SESSION['UserID']) && !$_SESSION['UserType'] == "teacher"){
             header("Location: ../../../");
             exit();
         }

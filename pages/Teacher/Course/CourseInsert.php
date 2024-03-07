@@ -1,13 +1,13 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
-include_once '../../../pages/Teacher/Course/Php/CourseClass.php'; 
+include_once '../../../pages/Teacher/PhpClass/ClassCourse.php';
 
 $Title = "เพิ่มข้อมูลคอร์สเรียน";
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 // prepare object
-$course = new Course($db);
+$course = new ClassCourse($db);
 
 
 ?>

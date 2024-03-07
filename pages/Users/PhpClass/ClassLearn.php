@@ -1,11 +1,11 @@
 <?php
 date_default_timezone_set('Asia/Bangkok'); // ตั้งค่า Time Zone ตามที่ต้องการ
 
-class ClassCourse {
+class ClassLearn {
     private $conn;
-    private $table_name = "tb_courses";
+    private $table_name = "tb_lessons";
 
-    public $TitleBar = "คอร์สเรียน";
+    public $TitleBar = "บทเรียน";
     public $CourseID;
     public $CourseName;
     public $CourseDescription;
@@ -14,7 +14,11 @@ class ClassCourse {
 
     public function __construct($db) {
         $this->conn = $db;
-      
+
+        if(empty($_SESSION['UserID']) && @!$_SESSION['UserType'] == "student"){
+            header("Location: ../../../");
+            exit();
+        }
     }
 
 
@@ -55,6 +59,15 @@ class ClassCourse {
         $query = "SELECT * FROM tb_lessons WHERE CourseID = ? ORDER BY LessonNo ASC";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $CourseID);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function readLessonsSingle($CourseID,$LessonNo) {
+        $query = "SELECT * FROM tb_lessons WHERE CourseID = ? AND LessonNo = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $CourseID);
+        $stmt->bindParam(2, $LessonNo);
         $stmt->execute();
         return $stmt;
     }

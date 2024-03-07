@@ -6,9 +6,10 @@ $db = $database->getConnection();
 $Course = new ClassCourse($db);
 $Title = "รายละเอียดคอร์สเรียน";
 
-$Course->CourseCode = $_GET['CourseID'];
+$Course->CourseID = $_GET['CourseID'];
 $Course->readSingle();
 
+$stmt = $Course->readLessonsAll($_GET['CourseID']);
 
 
 ?>
@@ -95,13 +96,11 @@ $Course->readSingle();
                                             <div class="col-12">
 
                                                 <div class="post">
-                                                    <div class="user-block">
-                                                        <img class="img-circle img-bordered-sm"
-                                                            src="<?=$Course->CourseImage?>" alt="user image">
-                                                        <span class="username">
+                                                    <div class="user-block"><!-- 
+                                                        <div class="h4">
                                                             <a href="#">คอร์สเรียน <?=$Course->CourseName?></a>
-                                                        </span>
-                                                        <span class="description">Shared publicly - 7:45 PM today</span>
+                                                        </div>
+                                                        <div class="">Shared publicly - 7:45 PM today</div> -->
                                                     </div>
                                                     <p>
                                                         <?=$Course->CourseDescription?>
@@ -109,20 +108,42 @@ $Course->readSingle();
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <hr>
+
+                                        <h4>ประมวลรายวิชา</h4>
+                                        <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
+                                        <a href="http://" rel="noopener noreferrer">
+                                            <div class="callout callout-success">
+                                                <h5>บทที่ <?=$row['LessonNo']?></h5>
+                                                <p>วีดีโอ 2 นาที</p>
+                                            </div>
+                                        </a>
+                                        <?php endwhile; ?>
+
                                     </div>
                                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                                         <h3 class="text-primary"><i class="fas fa-paint-brush"></i>
                                             <?=$Course->CourseName?></h3>
-                                        <div class="text-muted">
-                                            <p class="text-sm">เปิดให้ลงทะเบียน
-                                                <b class="d-block"><?=$Course->CourseStartDate?> ถึง <?=$Course->CourseEndDate?></b>
+                                        <img class="img-fluid" src="../../../uploads/Course/<?=$Course->CourseImage?>"
+                                            alt="รูป" srcset="">
+                                        <div class="text-muted mt-3">
+                                            <p class="text-lg">
+                                                เปิดให้ลงทะเบียน
+                                                <b class="d-block text-sm"><?=thai_date_fullmonth(strtotime($Course->CourseStartDate))?>
+                                                    ถึง <?=thai_date_fullmonth(strtotime($Course->CourseEndDate))?></b>
                                             </p>
-                                            <p class="text-sm">เข้าเรียนได้
-                                                <b class="d-block"><?=$Course->CourseStartDate?></b>
+                                            <p class="text-lg">เข้าเรียนได้
+                                                <b
+                                                    class="d-block text-sm"><?=thai_date_fullmonth(strtotime($Course->CourseStartDate))?></b>
                                             </p>
                                         </div>
                                         <div class="text-center mt-5 mb-3">
-                                            <a href="#" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
+                                            <?php if(!isset($_SESSION['FullName'])) :?>
+                                            <a href="#" data-toggle="modal" data-target="#ModalLogin" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
+                                            <?php else: ?>
+                                                <a href="../learn?Course=<?=$Course->CourseID?>" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>

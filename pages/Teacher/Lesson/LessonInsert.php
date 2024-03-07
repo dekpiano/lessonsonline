@@ -1,6 +1,6 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
-include_once '../../../pages/Teacher/Lesson/Php/ClassLesson.php'; 
+include_once '../../../pages/Teacher/PhpClass/ClassLesson.php'; 
 
 $Title = "เพิ่มข้อมูลบทเรียน";
 // get database connection

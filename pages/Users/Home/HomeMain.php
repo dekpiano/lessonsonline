@@ -41,7 +41,7 @@ $stmt = $Course->read();
                         <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
                        
                         <div class="col-md-4">
-                        <a href="../Course/CourseView?CourseID=<?=$row['CourseCode']?>">
+                        <a href="../Course/CourseView?CourseID=<?=$row['CourseID']?>">
                             <div class="card card-widget widget-user">
                                 <div class="widget-user-header text-white"
                                     style="background: url('../../../Uploads/Course/<?=$row['CourseImage'];?>') center center;">

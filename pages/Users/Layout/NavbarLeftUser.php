@@ -22,32 +22,31 @@
         </div>
         <?php else : ?>
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            
-            <div class="info">                
+
+            <div class="info">
                 <div class="">
-                ยินดีตอนรับ
+                    ยินดีตอนรับ
                 </div>
                 <div class="">
-                <?=$_SESSION['FullName'];?>
+                    <?=$_SESSION['FullName'];?>
                 </div>
                 <a href="../../../php/Login/PhpLogoutMain">[ออกจากระบบ]</a>
             </div>
         </div>
         <?php endif; ?>
 
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-
+        <?php if(!empty($_SESSION['UserID'])): ?>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <?php while($row = $Resutl->fetch(PDO::FETCH_ASSOC)) :?>
+            <li class="nav-item">
+                <a href="?Course=<?=$_GET['Course']?>&Leeson=<?=$row['LessonNo']?>" class="nav-link">
+                    <i class="fas fa-book-open"></i>
+                    <p>บทที่ <?=$row['LessonNo']?> <?=$row['LessonTitle']?></p>
+                </a>
+            </li>
+            <?php endwhile; ?>
+        </ul>
+        <?php endif; ?>
     </div>
     <!-- /.sidebar -->
 </aside>
@@ -60,7 +59,7 @@
 
             <div class="modal-body">
 
-                <h2>Login เข้าสู่ระบบ</h2>
+                <h2>Login เข้าสู่ระบบ </h2>
                 <form id="loginForm">
                     <div class="mb-3">
                         <label for="username" class="form-label">ชื่อผู้ใช้งาน:</label>

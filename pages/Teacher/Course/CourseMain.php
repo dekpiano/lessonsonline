@@ -1,10 +1,10 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
-include_once '../../../pages/Teacher/Course/Php/CourseClass.php'; 
+include_once '../../../pages/Teacher/PhpClass/ClassCourse.php'; 
 $database = new Database();
 $db = $database->getConnection();
 
-$course = new Course($db);
+$course = new ClassCourse($db);
 $Title = $course->TitleBar;
 // อ่านคอร์สเรียนทั้งหมด
 $stmt = $course->read();

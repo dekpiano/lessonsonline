@@ -7,7 +7,7 @@ class ClassLogin {
     public $password;
 
     public function __construct($db) {
-        $this->conn = $db;
+        $this->conn = $db;       
     }
 
     public function LoginAdmin() {
