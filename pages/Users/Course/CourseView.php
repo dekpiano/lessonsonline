@@ -142,7 +142,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                                             <?php if(!isset($_SESSION['FullName'])) :?>
                                             <a href="#" data-toggle="modal" data-target="#ModalLogin" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
                                             <?php else: ?>
-                                                <a href="../learn?Course=<?=$Course->CourseID?>" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
+                                                <a href="../Learn?Course=<?=$Course->CourseID?>" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -161,7 +161,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
         <!-- /.content-wrapper -->
 
 
-        <?php include_once('../../../pages/Users/layout/FooterUser.php'); ?>
+        <?php include_once('../../../pages/Users/Layout/FooterUser.php'); ?>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <?php 
 include_once '../../../../php/Database/Database.php'; 
-include_once '../../../../Pages/Users/Register/Php/ClassRegisterUser.php';
+include_once '../../../../pages/Users/Register/Php/ClassRegisterUser.php';
 $database = new Database();
 $db = $database->getConnection();
 $User = new ClassRegisterUser($db);

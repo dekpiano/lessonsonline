@@ -128,7 +128,7 @@ $User = new ClassRegisterUser($db);
         <!-- /.content-wrapper -->
 
 
-        <?php include_once('../../../pages/Users/layout/FooterUser.php'); ?>
+        <?php include_once('../../../pages/Users/Layout/FooterUser.php'); ?>
 </body>
 
 </html>

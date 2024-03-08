@@ -124,19 +124,19 @@ class ClassLesson {
 
     public function UpdateLesson() {
         $query = "UPDATE " . $this->table_name . "
-                  SET LessonCode=:LessonCode,LessonNo=:LessonNo,LessonTitle=:LessonTitle,LessonContent=:LessonContent,LessonVideoURL=:LessonVideoURL
-                  WHERE CourseID = :CourseID";
+                  SET LessonNo=:LessonNo,LessonTitle=:LessonTitle,LessonContent=:LessonContent,LessonVideoURL=:LessonVideoURL
+                  WHERE LessonCode = :LessonCode";
 
         $stmt = $this->conn->prepare($query);
 
-        $data = array('CourseID','LessonCode','LessonNo','LessonTitle','LessonContent','LessonVideoURL');
+        $data = array('LessonCode','LessonNo','LessonTitle','LessonContent','LessonVideoURL');
         // sanitize
         foreach ($data as $key => $v_data) {      
            // $this->$v_data=htmlspecialchars(strip_tags($this->$v_data));      
             $stmt->bindParam(":".$v_data, $this->$v_data);
         }   
 
-        // ประมวลผลคำสั่ง
+        // ประมวลผลคำสั่ง LessonCode=:LessonCode,
         if($stmt->execute()) {
             return true;
         }

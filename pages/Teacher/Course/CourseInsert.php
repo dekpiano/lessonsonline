@@ -120,7 +120,7 @@ $course = new ClassCourse($db);
         <!-- /.content-wrapper -->
 
 
-        <?php include_once('../../../pages/Teacher/layout/FooterTeacher.php'); ?>
+        <?php include_once('../../../pages/Teacher/Layout/FooterTeacher.php'); ?>
 </body>
 
 </html>

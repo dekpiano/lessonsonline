@@ -6,11 +6,12 @@ $db = $database->getConnection();
 $Course = new ClassLearn($db);
 $Title = $Course->TitleBar;
 $Resutl = $Course->readLessonsAll(@$_GET['Course']);
+$ResutlSing = $Course->readLessonsAll(@$_GET['Course']);
 $LesSing = $Course->readLessonsSingle(@$_GET['Course'],@$_GET['Leeson']);
-//echo '<pre>';print_r();
-// while($row = $Resutl->fetch(PDO::FETCH_ASSOC)){
-// echo $row['LessonCode'];
-// }
+
+$rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC);
+$rowLesSingTitle = $LesSing->fetch(PDO::FETCH_ASSOC);
+
 //exit();
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
@@ -59,7 +60,7 @@ iframe {
         <?php include_once('../../../pages/Users/Layout/NavbarLeftUser.php') ?>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper mb-5" style="min-height: 660.916px;">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
@@ -72,12 +73,9 @@ iframe {
                         </div>
                     </div>
                     <?php else:?>
-                    <?php  $row = $LesSing->fetch(PDO::FETCH_ASSOC);?>
-                    <h2>บทที่ <?=$row['LessonNo']?> <?=$row['LessonTitle']?></h2>
+                    <h2>บทที่ <?=$rowLesSingTitle['LessonNo']?> <?=$rowLesSingTitle['LessonTitle']?></h2>
                     <hr>
-                    <?=$row['LessonContent']?>
-
-
+                    <?=$rowLesSingTitle['LessonContent']?>
                     <?php endif; ?>
 
                 </div><!-- /.container-fluid -->
@@ -87,15 +85,13 @@ iframe {
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-
-
-
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
 
+        <?php if(!empty($_GET['Leeson'])):?>
         <footer class="main-footer fixed-bottom">
             <div class="d-flex justify-content-between align-items-center">
                 <strong>เวลาที่เรียน 5/30 นาที</strong>
@@ -112,9 +108,9 @@ iframe {
                     <b>คิดเป็น</b> 20%
                 </div>
             </div>
-
         </footer>
-        <?php include_once('../../../pages/Users/layout/FooterUser.php'); ?>
+        <?php endif; ?>
+        <?php include_once('../../../pages/Users/Layout/FooterUser.php'); ?>
 </body>
 
 </html>

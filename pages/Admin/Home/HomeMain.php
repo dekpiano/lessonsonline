@@ -65,7 +65,7 @@ $num = $result->rowCount();
         <!-- /.content-wrapper -->
 
 
-        <?php include_once('../../../pages/Admin/layout/FooterAdmin.php'); ?>
+        <?php include_once('../../../pages/Admin/Layout/FooterAdmin.php'); ?>
 </body>
 
 </html>

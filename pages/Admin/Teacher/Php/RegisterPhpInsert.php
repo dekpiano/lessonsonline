@@ -1,6 +1,6 @@
 <?php 
 include_once '../../../../php/Database/Database.php'; 
-include_once '../../../../Pages/Admin/PhpClass/ClassTeacher.php';
+include_once '../../../../pages/Admin/PhpClass/ClassTeacher.php';
 $database = new Database();
 $db = $database->getConnection();
 $Teacher = new ClassTeacher($db);

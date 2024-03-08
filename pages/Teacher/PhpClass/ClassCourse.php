@@ -43,7 +43,8 @@ class ClassCourse {
 
     // อ่านข้อมูลคอร์สเรียนทั้งหมด
     public function read() {
-        $query = "SELECT tb_courses.*,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullNmae FROM tb_courses JOIN tb_users ON tb_courses.TeacherID = tb_users.UserID";
+        $query = "SELECT tb_courses.*,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullNmae FROM tb_courses JOIN tb_users ON tb_courses.TeacherID = tb_users.UserID
+        WHERE TeacherID=".$_SESSION['UserID'];
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

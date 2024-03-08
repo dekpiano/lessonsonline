@@ -21,25 +21,34 @@
             </div>
         </div>
         <?php else : ?>
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-
-            <div class="info">
-                <div class="">
-                    ยินดีตอนรับ
+        <div class="user-panel mt-3 pb-3 mb-3">
+            <div class="d-flex align-items-center">
+                <div class="image">
+                    <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" class="img-circle elevation-2"
+                        alt="User Image">
                 </div>
-                <div class="">
-                    <?=$_SESSION['FullName'];?>
+                <div class="info">
+                    <div class="">
+                        ยินดีตอนรับ
+                    </div>
+                    <div class="">
+                        <?=$_SESSION['FullName'];?>
+                    </div>
                 </div>
-                <a href="../../../php/Login/PhpLogoutMain">[ออกจากระบบ]</a>
             </div>
+            <div class="text-center">
+            <a href="../../../php/Login/PhpLogoutMain">[ออกจากระบบ]</a>
+            </div>
+            
         </div>
         <?php endif; ?>
 
         <?php if(!empty($_SESSION['UserID'])): ?>
+            <h5><?=@$rowLesMain['CourseName']?></h5>
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <?php while($row = $Resutl->fetch(PDO::FETCH_ASSOC)) :?>
+            <?php while($row = $Resutl->fetch(PDO::FETCH_ASSOC)) :?>               
             <li class="nav-item">
-                <a href="?Course=<?=$_GET['Course']?>&Leeson=<?=$row['LessonNo']?>" class="nav-link">
+                <a href="?Course=<?=@$_GET['Course']?>&Leeson=<?=$row['LessonNo']?>" class="nav-link <?= @$_GET['Course'] == $row['CourseID'] && @$_GET['Leeson'] == $row['LessonNo'] ? "active":""?> ">
                     <i class="fas fa-book-open"></i>
                     <p>บทที่ <?=$row['LessonNo']?> <?=$row['LessonTitle']?></p>
                 </a>

@@ -7,7 +7,7 @@ $Title = "จัดการครูผู้สอน";
 
 $Teacher = new ClassTeacher($db);
 $result = $Teacher->read();
-//echo "<pre>";print_r();
+//echo "<pre>";print_r($result->fetch(PDO::FETCH_ASSOC)); exit();
 ?>
 
 <?php include_once('../../../pages/Admin/Layout/HeaderAdmin.php') ?>
@@ -200,7 +200,7 @@ $result = $Teacher->read();
         <!-- /.content-wrapper -->
 
 
-        <?php include_once('../../../pages/Admin/layout/FooterAdmin.php'); ?>
+        <?php include_once('../../../pages/Admin/Layout/FooterAdmin.php'); ?>
 </body>
 
 </html>

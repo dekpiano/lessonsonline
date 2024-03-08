@@ -56,7 +56,10 @@ class ClassLearn {
     }
 
     public function readLessonsAll($CourseID) {
-        $query = "SELECT * FROM tb_lessons WHERE CourseID = ? ORDER BY LessonNo ASC";
+        $query = "SELECT tb_lessons.*,tb_courses.CourseName 
+        FROM tb_lessons 
+        JOIN tb_courses ON tb_courses.CourseID = tb_lessons.CourseID
+        WHERE tb_lessons.CourseID = ? ORDER BY tb_lessons.LessonNo ASC";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $CourseID);
         $stmt->execute();
@@ -64,7 +67,9 @@ class ClassLearn {
     }
 
     public function readLessonsSingle($CourseID,$LessonNo) {
-        $query = "SELECT * FROM tb_lessons WHERE CourseID = ? AND LessonNo = ?";
+        $query = "SELECT tb_lessons.*,tb_courses.CourseName FROM tb_lessons 
+        JOIN tb_courses ON tb_courses.CourseID = tb_lessons.CourseID
+        WHERE tb_lessons.CourseID = ? AND tb_lessons.LessonNo = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $CourseID);
         $stmt->bindParam(2, $LessonNo);

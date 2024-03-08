@@ -4,7 +4,7 @@ include_once '../../Users/PhpClass/ClassCourse.php';
 $database = new Database();
 $db = $database->getConnection();
 $Course = new ClassCourse($db);
-$Title = $Course->TitleBar;
+$Title = "บทเรียนออนไลน์";
 $stmt = $Course->read();
 
 $Resutl = $Course->readLessonsAll(@$_GET['Course']);
@@ -46,13 +46,10 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                         <a href="../Course/CourseView?CourseID=<?=$row['CourseID']?>">
                             <div class="card card-widget widget-user">
                                 <div class="widget-user-header text-white"
-                                    style="background: url('../../../Uploads/Course/<?=$row['CourseImage'];?>') center center;">
+                                    style="background: url('../../../uploads/Course/<?=$row['CourseImage'];?>') center center;background-size: cover;">
                                     
                                 </div>
-                                <div class="widget-user-image">
-                                    <img class="img-circle" src="../../../dist/img/user3-128x128.jpg" alt="User Avatar">
-                                </div>
-                                <div class="card-footer">
+                                <div class="p-2">
                                     <h5 class="m-0"><?=$row['CourseName']?></h5>
                                     <small>โดย <?=$row['FullNmae']?></small> 
                                     <div class="row">
@@ -98,7 +95,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
         <!-- /.content-wrapper -->
 
 
-        <?php include_once('../../../pages/Users/layout/FooterUser.php'); ?>
+        <?php include_once('../../../pages/Users/Layout/FooterUser.php'); ?>
 </body>
 
 </html>
