@@ -51,3 +51,29 @@ function validatePassword() {
   validationMessage.style.color = "green";
   return true;
 }
+
+function CheckEmailRegister() {
+
+  var email = $('#Email').val();
+  if(email.length === 0) {
+    $('#emailStatus').text('');
+    return;
+}
+
+  $.ajax({
+    type: "POST",
+    url: "../../../pages/Users/Register/Php/RegisterPhpCheckEmail.php",
+    data: {Email: email},
+    success: function(response) {
+      console.log(response);
+        if(response == 1) {
+            $('#emailStatus').text('อีเมลนี้มีผู้ใช้งานแล้ว!');
+            $('#BtnSubmitRegister').prop('disabled', true);
+        } else {
+            $('#emailStatus').text('');
+            $('#BtnSubmitRegister').prop('disabled', false);
+        }
+    }
+});
+  
+}

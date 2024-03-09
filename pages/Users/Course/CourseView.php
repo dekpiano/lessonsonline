@@ -60,8 +60,10 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-4">
+                                    <img class="img-fluid" src="../../../uploads/Course/<?=$Course->CourseImage?>"
+                                            alt="รูป" srcset="">
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-sm-4">                                            
                                                 <div class="info-box bg-light">
                                                     <div class="info-box-content">
                                                         <span
@@ -108,25 +110,12 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <hr>
-
-                                        <h4>ประมวลรายวิชา</h4>
-                                        <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
-                                        <a href="http://" rel="noopener noreferrer">
-                                            <div class="callout callout-success">
-                                                <h5>บทที่ <?=$row['LessonNo']?></h5>
-                                                <p>วีดีโอ 2 นาที</p>
-                                            </div>
-                                        </a>
-                                        <?php endwhile; ?>
-
                                     </div>
+
                                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                                         <h3 class="text-primary"><i class="fas fa-paint-brush"></i>
                                             <?=$Course->CourseName?></h3>
-                                        <img class="img-fluid" src="../../../uploads/Course/<?=$Course->CourseImage?>"
-                                            alt="รูป" srcset="">
+                                        
                                         <div class="text-muted mt-3">
                                             <p class="text-lg">
                                                 เปิดให้ลงทะเบียน
@@ -145,6 +134,17 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                                                 <a href="../Learn?Course=<?=$Course->CourseID?>" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
                                             <?php endif; ?>
                                         </div>
+
+                                        <h4>ประมวลรายวิชา</h4>
+                                        <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
+                                        <a href="http://" rel="noopener noreferrer">
+                                            <div class="callout callout-success">
+                                                <h5>บทที่ <?=$row['LessonNo']?></h5>
+                                                <p>วีดีโอ 2 นาที</p>
+                                            </div>
+                                        </a>
+                                        <?php endwhile; ?>
+                                        
                                     </div>
                                 </div>
                             </div>

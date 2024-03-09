@@ -69,5 +69,20 @@ class ClassRegisterUser {
 
         return false;
     }
+
+    public function CheckEmail($email) {
+        $query = "SELECT COUNT(*) FROM ".$this->table_name." WHERE Email = :Email";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":Email", $email);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+    
+        return $count > 0 ? true : false;
+    }
+
+
+    
 }
+
+
 ?>

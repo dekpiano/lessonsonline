@@ -33,14 +33,17 @@ $User = new ClassRegisterUser($db);
                                 <form method="post" id="FormRegisterUser" class="needs-validation" novalidate>
                                     <div class="input-group mb-3">
                                         <input type="email" class="form-control" placeholder="อีเมล" id="Email"
-                                            name="Email" required>
+                                            name="Email" required onkeyup="CheckEmailRegister()" autocomplete="off">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-envelope"></span>
                                             </div>
-                                        </div>
-                                        <div class="invalid-feedback">กรุณากรอกอีเมล</div>
+                                        </div>                                        
+                                        <div class="invalid-feedback">กรุณากรอกอีเมล</div> 
+                                        <div class="w-100 text-danger" id="emailStatus"></div>                                       
                                     </div>
+                                    
+
                                     <div class="input-group mb-3">
                                         <input type="password" class="form-control" placeholder="รหัสผ่าน" id="Password"
                                             name="Password" required onkeyup="validatePassword()">
@@ -59,9 +62,10 @@ $User = new ClassRegisterUser($db);
                                                 <span class="fas fa-lock"></span>
                                             </div>
                                         </div>
-                                        <div class="invalid-feedback">กรุณากรอกยืนยันรหัสผ่าน</div>                                       
+                                        <div class="invalid-feedback">กรุณากรอกยืนยันรหัสผ่าน</div>   
+                                        <div class="w-100" id="validationMessage"></div>                                    
                                     </div>
-                                    <p id="validationMessage"></p>
+                                    
                                     <hr>
                                     <div class="form-group form-check-inline">
                                         <div class="custom-control custom-radio mr-5">
@@ -144,7 +148,7 @@ $User = new ClassRegisterUser($db);
                                     </div>
 
 
-                                    <button type="submit" class="btn btn-primary btn-block">สมัครเรียน</button>
+                                    <button type="submit" id="BtnSubmitRegister" class="btn btn-primary btn-block">สมัครเรียน</button>
 
                                 </form>
 
