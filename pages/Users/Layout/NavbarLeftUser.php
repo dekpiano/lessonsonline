@@ -13,11 +13,18 @@
         <?php if(!@$_SESSION['UserType']) :?>
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" class="img-circle elevation-2"
-                    alt="User Image">
+            <i class="fas fa-sign-in-alt fa-2x"></i>
             </div>
             <div class="info">
                 <a href="#" class="d-block" data-toggle="modal" data-target="#ModalLogin">เข้าสู่ระบบ</a>
+            </div>
+        </div>
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+            <i class="fas fa-user-plus fa-2x"></i>
+            </div>
+            <div class="info">
+                <a href="../Register" class="d-block">สมัครเรียน</a>
             </div>
         </div>
         <?php else : ?>
@@ -79,9 +86,9 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block">เข้าสู่ระบบ</button>
+                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt fa-1x"></i> เข้าสู่ระบบ</button>
                     <br>
-                    <a href="../../Users/Register" class="btn btn-secondary btn-block">สมัครเรียน</a>
+                    <a href="../../Users/Register" class="btn btn-secondary btn-block"><i class="fas fa-user-plus fa-1x"></i> สมัครเรียน</a>
 
 
 

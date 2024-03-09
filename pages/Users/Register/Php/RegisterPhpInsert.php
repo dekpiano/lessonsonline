@@ -1,6 +1,6 @@
 <?php 
 include_once '../../../../php/Database/Database.php'; 
-include_once '../../../../pages/Users/Register/Php/ClassRegisterUser.php';
+include_once '../../../../pages/Users/PhpClass/ClassRegisterUser.php';
 $database = new Database();
 $db = $database->getConnection();
 $User = new ClassRegisterUser($db);
@@ -14,6 +14,8 @@ $User->UserPrefix = $_POST['UserPrefix'];
 $User->UserLastName = $_POST['UserLastName'];
 $User->UserBirthday = $_POST['UserBirthday'];
 $User->UserPhone = $_POST['UserPhone'];
+$User->UserGender = $_POST['UserGender'];
+$User->UserIdCard = $_POST['UserIdCard'];
 $User->Username = $_POST['Email'];
 $User->Password = password_hash($_POST['Password'], PASSWORD_DEFAULT);
 $User->Email = $_POST['Email'];

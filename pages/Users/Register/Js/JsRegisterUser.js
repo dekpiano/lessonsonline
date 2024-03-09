@@ -24,3 +24,30 @@ $(document).on("submit","#FormRegisterUser", function(e) {
         }
     });
 });
+
+
+function validatePassword() {
+  var password = document.getElementById("Password").value;
+  var confirmPassword = document.getElementById("ConfirmPassword").value;
+  var validationMessage = document.getElementById("validationMessage");
+
+  // Password matching check
+  if (password !== confirmPassword) {
+      validationMessage.textContent = "รหัสผ่านไม่ตรงกัน";
+      validationMessage.style.color = "red";
+      return false;
+  }
+
+  // Password strength check: at least one lowercase, one uppercase letter, and one number
+  var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+  if (!regex.test(password)) {
+      validationMessage.textContent = "รหัสผ่านจะต้องมีอักษรตัวพิมพ์เล็กอย่างน้อยหนึ่งตัว ตัวพิมพ์ใหญ่หนึ่งตัว และตัวเลขหนึ่งตัว ความยาวขั้นต่ำคือ 8 ตัวอักษร";
+      validationMessage.style.color = "red";
+      return false;
+  }
+
+ validationMessage.textContent = "รหัสผ่านตรงกัน";
+  validationMessage.style.color = "green";
+  return true;
+}

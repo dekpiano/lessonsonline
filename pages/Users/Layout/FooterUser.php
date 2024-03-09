@@ -38,6 +38,8 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="../../../plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="../../../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="../../../plugins/moment/moment.min.js"></script>
+<script src="../../../plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../../dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -47,6 +49,7 @@ $.widget.bridge('uibutton', $.ui.button)
 
 <script src="../../../php/Login/JsLogin.js?v=3.3"></script>
 <script>
+    $(":input").inputmask();
 // Disable form submissions if there are invalid fields
 (function() {
     'use strict';
@@ -69,7 +72,7 @@ $.widget.bridge('uibutton', $.ui.button)
 
 
 <?php if(uri(3) == "Register"):?>
-<script src="../../Users/Register/Js/JsRegisterUser.js?v=1"></script>
+<script src="../../Users/Register/Js/JsRegisterUser.js?v=2"></script>
 <?php endif; ?>
 
 <?php if(uri(3) == "Learn"):?>

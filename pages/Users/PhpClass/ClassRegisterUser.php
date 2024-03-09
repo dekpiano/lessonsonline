@@ -47,7 +47,7 @@ class ClassRegisterUser {
     // เพิ่มสมัครเรียนใหม่
     public function create() {
 
-        $data = array('UserCode','UserPrefix','UserFirstName','UserLastName','UserBirthday','UserPhone','Username','Password','Email','UserType','DateCreated');
+        $data = array('UserCode','UserPrefix','UserFirstName','UserLastName','UserBirthday','UserPhone','Username','Password','Email','UserType','DateCreated','UserGender','UserIdCard');
         $ASum = array();
         foreach ($data as $key => $v_data) {
             $ASum[] = $v_data."=:".$v_data;
