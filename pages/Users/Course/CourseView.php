@@ -1,10 +1,16 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
 include_once '../../Users/PhpClass/ClassCourse.php';
+include_once '../../Users/PhpClass/ClassEnrollmentUser.php';
 $database = new Database();
 $db = $database->getConnection();
 $Course = new ClassCourse($db);
+$Enroll = new ClassEnrollmentUser($db);
 $Title = "รายละเอียดคอร์สเรียน";
+
+$Enroll->CourseID = $_GET['CourseID'];
+$Enroll->UserID = @$_SESSION['UserID'];
+$CheckEnroll = $Enroll->CheckEnrollmentUser();
 
 $Course->CourseID = $_GET['CourseID'];
 $Course->readSingle();
@@ -60,10 +66,10 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-                                    <img class="img-fluid" src="../../../uploads/Course/<?=$Course->CourseImage?>"
+                                        <img class="img-fluid" src="../../../uploads/Course/<?=$Course->CourseImage?>"
                                             alt="รูป" srcset="">
                                         <div class="row mt-3">
-                                            <div class="col-12 col-sm-4">                                            
+                                            <div class="col-12 col-sm-4">
                                                 <div class="info-box bg-light">
                                                     <div class="info-box-content">
                                                         <span
@@ -98,7 +104,8 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                                             <div class="col-12">
 
                                                 <div class="post">
-                                                    <div class="user-block"><!-- 
+                                                    <div class="user-block">
+                                                        <!-- 
                                                         <div class="h4">
                                                             <a href="#">คอร์สเรียน <?=$Course->CourseName?></a>
                                                         </div>
@@ -115,7 +122,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                                         <h3 class="text-primary"><i class="fas fa-paint-brush"></i>
                                             <?=$Course->CourseName?></h3>
-                                        
+
                                         <div class="text-muted mt-3">
                                             <p class="text-lg">
                                                 เปิดให้ลงทะเบียน
@@ -129,9 +136,17 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                                         </div>
                                         <div class="text-center mt-5 mb-3">
                                             <?php if(!isset($_SESSION['FullName'])) :?>
-                                            <a href="#" data-toggle="modal" data-target="#ModalLogin" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
+                                            <a href="#" data-toggle="modal" data-target="#ModalLogin"
+                                                class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
                                             <?php else: ?>
-                                                <a href="../Learn?Course=<?=$Course->CourseID?>" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
+                                            <?php if($CheckEnroll == 0) :?>
+                                            <a href="../Learn/Php/EnrollmentInsert?Course=<?=$Course->CourseID?>"
+                                                class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
+                                            <?php else: ?>
+                                            <a href="../Learn/?Course=<?=$Course->CourseID?>"
+                                                class="btn btn-primary btn-block">เริ่มเรียน</a>
+                                            <?php endif; ?>
+
                                             <?php endif; ?>
                                         </div>
 
@@ -144,7 +159,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                                             </div>
                                         </a>
                                         <?php endwhile; ?>
-                                        
+
                                     </div>
                                 </div>
                             </div>
