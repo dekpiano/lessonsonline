@@ -73,7 +73,7 @@ $Lesson->readLessonEdit();
                                 </div>
                                 <div class="mb-3">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 mt-2">
                                             <label for="LessonTitle" class="form-label">บทเรียนที่:</label>
                                             <select name="LessonNo" id="LessonNo" class="form-control">
                                                 <option value="">เลือกลำดับบทเรียน</option>
@@ -82,10 +82,15 @@ $Lesson->readLessonEdit();
                                                 <?php endfor; ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 mt-2">
                                             <label for="LessonTitle" class="form-label">ชื่อบทเรียน:</label>
                                             <input type="text" class="form-control" id="LessonTitle" name="LessonTitle"
                                                 placeholder="Enter Lesson title" value="<?=$Lesson->LessonTitle?>">
+                                        </div>
+                                        <div class="col-md-6 mt-2">
+                                            <label for="LessonStudyTime" class="form-label">เวลาที่ใช้เรียน:</label>
+                                            <input type="number" class="form-control" id="LessonStudyTime" name="LessonStudyTime"
+                                                placeholder="กรุณาเวลาที่ใช้เรียน เป็น นาที">
                                         </div>
                                     </div>
 

@@ -71,8 +71,8 @@ $Lesson->readCourse();
                                 </div>
                                 <div class="mb-3">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="LessonTitle" class="form-label">บทเรียนที่:</label>
+                                        <div class="col-md-6 mt-2">
+                                            <label for="LessonNo" class="form-label">บทเรียนที่:</label>
                                             <select name="LessonNo" id="LessonNo" class="form-control">
                                                 <option value="">เลือกลำดับบทเรียน</option>
                                                 <?php for ($i=1; $i <=30 ; $i++) :?>
@@ -80,10 +80,15 @@ $Lesson->readCourse();
                                                 <?php endfor; ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 mt-2">
                                             <label for="LessonTitle" class="form-label">ชื่อบทเรียน:</label>
                                             <input type="text" class="form-control" id="LessonTitle" name="LessonTitle"
-                                                placeholder="Enter Lesson title">
+                                                placeholder="ใส่ชื่อบทเรียน">
+                                        </div>
+                                        <div class="col-md-6 mt-2">
+                                            <label for="LessonStudyTime" class="form-label">เวลาที่ใช้เรียน:</label>
+                                            <input type="text" class="form-control" id="LessonStudyTime" name="LessonStudyTime"
+                                                placeholder="กรุณาเวลาที่ใช้เรียน เป็น นาที">
                                         </div>
                                     </div>
 

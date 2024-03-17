@@ -94,7 +94,7 @@ iframe {
         <?php if(!empty($_GET['Leeson'])):?>
         <footer class="main-footer fixed-bottom">
             <div class="d-flex justify-content-between align-items-center">
-                <strong>เวลาที่เรียน 5/30 นาที</strong>
+                <strong>เวลาที่เรียน <span id="RoundTime"></span>/<?=$rowLesSingTitle['LessonStudyTime']?> นาที</strong>
                 <strong>
 
                     <div id="countdown">

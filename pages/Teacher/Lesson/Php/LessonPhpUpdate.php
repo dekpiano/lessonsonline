@@ -17,6 +17,7 @@ $Lesson->LessonNo = $_POST['LessonNo'];
 $Lesson->LessonTitle = $_POST['LessonTitle'];
 $Lesson->LessonContent = $_POST['LessonContent'];
 $Lesson->LessonVideoURL = $_POST['LessonVideoURL'];
+$Lesson->LessonStudyTime = $_POST['LessonStudyTime'];
 
 // create the Lesson
 if($Lesson->UpdateLesson()) {

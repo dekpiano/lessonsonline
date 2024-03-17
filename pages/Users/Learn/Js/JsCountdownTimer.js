@@ -2,6 +2,7 @@ let end = new Date().getTime() + (60 * 1000); // 10 seconds from now
 const circle = document.querySelector('circle');
 const number = document.getElementById('number');
 const circumference = 2 * Math.PI * circle.getAttribute('r');
+let RoundTime = 0;
 
 circle.style.strokeDasharray = `${circumference} ${circumference}`;
 circle.style.strokeDashoffset = `${circumference}`;
@@ -20,7 +21,7 @@ function updateCountdown() {
 
   // Automatically restart the countdown when it reaches 0
   if (distance < 0) {
-    resetCountdown();
+    resetCountdown();    
   }
 }
 
@@ -28,7 +29,12 @@ function resetCountdown() {
   end = new Date().getTime() + (60 * 1000); // Reset end time to 10 seconds from now
   circle.style.strokeDashoffset = `${circumference}`; // Reset the circle's stroke dashoffset
   updateCountdown(); // Update the countdown immediately to avoid delay
+  RoundTime += 1;
+  document.getElementById('RoundTime').innerHTML = RoundTime+0;
+console.log(RoundTime);
 }
 
 updateCountdown(); // Initialize the countdown
+document.getElementById('RoundTime').innerHTML = 0;
 const interval = setInterval(updateCountdown, 1000);
+

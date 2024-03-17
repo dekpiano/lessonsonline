@@ -16,6 +16,7 @@ $Lesson->LessonNo = $_POST['LessonNo'];
 $Lesson->LessonTitle = $_POST['LessonTitle'];
 $Lesson->LessonContent = $_POST['LessonContent'];
 $Lesson->LessonVideoURL = $_POST['LessonVideoURL'];
+$Lesson->LessonStudyTime = $_POST['LessonStudyTime'];
 $Lesson->LessonDateCreated = date("Y-m-d H:i:s");
 $Lesson->TeacherID = $_SESSION['UserID'];
 

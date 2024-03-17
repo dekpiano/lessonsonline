@@ -105,10 +105,10 @@ class ClassLesson {
 
     // เพิ่มบทเรียนใหม่
     public function create() {
-        $query = "INSERT INTO tb_lessons (CourseID,LessonCode,LessonNo,LessonTitle,LessonContent,LessonVideoURL,LessonDateCreated,TeacherID) VALUES (?,?,?,?,?,?,?,?)";
+        $query = "INSERT INTO tb_lessons (CourseID,LessonCode,LessonNo,LessonTitle,LessonContent,LessonVideoURL,LessonDateCreated,TeacherID,LessonStudyTime) VALUES (?,?,?,?,?,?,?,?)";
 
         $stmt = $this->conn->prepare($query);
-        $data = array('CourseID','LessonCode','LessonNo','LessonTitle','LessonContent','LessonVideoURL','LessonDateCreated','TeacherID');
+        $data = array('CourseID','LessonCode','LessonNo','LessonTitle','LessonContent','LessonVideoURL','LessonDateCreated','TeacherID','LessonStudyTime');
         // sanitize
         foreach ($data as $key => $v_data) {      
            // $this->$v_data=htmlspecialchars(strip_tags($this->$v_data));      
@@ -124,12 +124,12 @@ class ClassLesson {
 
     public function UpdateLesson() {
         $query = "UPDATE " . $this->table_name . "
-                  SET LessonNo=:LessonNo,LessonTitle=:LessonTitle,LessonContent=:LessonContent,LessonVideoURL=:LessonVideoURL
+                  SET LessonNo=:LessonNo,LessonTitle=:LessonTitle,LessonContent=:LessonContent,LessonVideoURL=:LessonVideoURL,LessonStudyTime=:LessonStudyTime
                   WHERE LessonCode = :LessonCode";
 
         $stmt = $this->conn->prepare($query);
 
-        $data = array('LessonCode','LessonNo','LessonTitle','LessonContent','LessonVideoURL');
+        $data = array('LessonCode','LessonNo','LessonTitle','LessonContent','LessonVideoURL','LessonStudyTime');
         // sanitize
         foreach ($data as $key => $v_data) {      
            // $this->$v_data=htmlspecialchars(strip_tags($this->$v_data));      
