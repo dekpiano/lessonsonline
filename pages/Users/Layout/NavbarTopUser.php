@@ -14,9 +14,9 @@
             <!-- <li class="nav-item d-none d-sm-inline-block">
                     <a href="index3.html" class="nav-link">Home</a>
                 </li> -->
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">ชื่อสถานบัน</a>
-                </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">ชื่อสถานบัน</a>
+            </li>
         </ul>
 
         <!-- Right navbar links -->
@@ -44,11 +44,39 @@
                 </div>
             </li>
 
+            <?php if(!empty($_SESSION['FullName'])):?>
             <li class="nav-item">
+                <a class="nav-link" href="../../../pages/Users/Course/CourseMy" role="button">
+                    คอร์เรียนของฉัน
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fas fa-user"></i> <?=$_SESSION['FullName'];?>
+                </a>
+                <div class="dropdown-menu  dropdown-menu-right">
+                    <a href="../../../php/Login/PhpLogoutMain" class="dropdown-item">
+                    <i class="fas fa-user-circle"></i> บัญชี
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="../../../php/Login/PhpLogoutMain" class="dropdown-item">
+                        <i class="fas fa-sign-out-alt"></i> ออกจากระบบ
+                    </a>
+                </div>
+            </li>
+            <?php else:  ?>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-toggle="modal" data-target="#ModalLogin">
+                    <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ
+                </a>
+            </li>
+            <?php endif; ?>
+            <!-- <li class="nav-item">
                 <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                     <i class="fas fa-expand-arrows-alt"></i>
                 </a>
-            </li>
+            </li> -->
+
         </ul>
     </nav>
     <!-- /.navbar -->

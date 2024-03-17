@@ -42,10 +42,7 @@
                         <?=$_SESSION['FullName'];?>
                     </div>
                 </div>
-            </div>
-            <div class="text-center">
-            <a href="../../../php/Login/PhpLogoutMain">[ออกจากระบบ]</a>
-            </div>
+            </div>           
             
         </div>
         <?php endif; ?>
