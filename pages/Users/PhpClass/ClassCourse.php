@@ -60,7 +60,7 @@ class ClassCourse {
     }
 
     public function CourseMy() {
-        $query = "SELECT tb_enrollments.*,tb_courses.CourseCode,tb_courses.CourseName,tb_courses.CourseImage,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullName 
+        $query = "SELECT tb_enrollments.*,tb_courses.CourseCode,tb_courses.CourseName,tb_courses.CourseImage,tb_courses.CourseStatus,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullName 
         FROM tb_enrollments 
         JOIN tb_courses ON tb_courses.CourseID = tb_enrollments.CourseID
         JOIN tb_users ON tb_courses.TeacherID = tb_users.UserID

@@ -37,6 +37,86 @@ $stmt = $Course->CourseMy();
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Projects</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 15%">
+                          #
+                      </th>
+                      <th style="width: 20%">
+                          ชื่อคอร์สเรียน
+                      </th>
+                      <th style="width: 15%">
+                          ผู้เรียน
+                      </th>
+                      <th>
+                          เรียนแล้ว
+                      </th>
+                      <th style="width: 8%" class="text-center">
+                          สถานะ
+                      </th>
+                      <th style="width: 15%">
+                      เรียนต่อ
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+              <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+                  <tr>
+                      <td>
+                          <img src="../../../uploads/Course/<?=$row['CourseImage'];?>" class="img-fluid" alt="คอร์สเรียน" srcset="">
+                      </td>
+                      <td>
+                          <a>
+                          <?=$row['CourseName']?>
+                          </a>
+                          <br>
+                          <small>โดย <?=$row['FullName']?></small>   
+                      </td>
+                      <td>
+                         <?php echo $_SESSION['FullName']?>
+                      </td>
+                      <td class="project_progress">
+                          <div class="progress progress-sm">
+                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                              </div>
+                          </div>
+                          <small>
+                              57% Complete
+                          </small>
+                      </td>
+                      <td class="project-state">
+                          <span class="badge badge-success"><?=$row['CourseStatus']?></span>
+                      </td>
+                      <td class="project-actions">                      
+                          <a class="btn btn-info btn-sm" href="../Learn/?Course=<?=$row['CourseID']?>">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              เข้าเรียน
+                          </a>
+                          
+                      </td>
+                  </tr>
+                  <?php endwhile; ?>
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
                     <!-- Small boxes (Stat box) -->
                     <div class="row">
 

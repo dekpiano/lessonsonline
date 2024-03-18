@@ -76,6 +76,46 @@ class ClassLearn {
         $stmt->execute();
         return $stmt;
     }
+
+    public function LessonsProgressInsert($CourseID,$LessonNo) {
+
+        $QueryErollment = "SELECT * FROM tb_enrollments WHERE CourseID = ? AND UserID = ?";
+        $stmtEroll = $this->conn->prepare($QueryErollment);
+        $stmtEroll->bindValue(1, $CourseID);
+        $stmtEroll->bindValue(2, $_SESSION['UserID']);
+        $stmtEroll->execute();
+        $rowEroll = $stmtEroll->fetch(PDO::FETCH_ASSOC);
+
+        $QueryLessonPro = "SELECT * FROM  tb_lesson_progress WHERE EnrollmentID = ? AND LessonID = ?";
+        $stmtLessonPro = $this->conn->prepare($QueryLessonPro);
+        $stmtLessonPro->bindValue(1, $rowEroll['EnrollmentID']);
+        $stmtLessonPro->bindValue(2, $LessonNo);
+        $stmtLessonPro->execute();
+        $rowELessonPro = $stmtLessonPro->fetch(PDO::FETCH_ASSOC);
+
+        $rowCount = $stmtLessonPro->rowCount();
+        if($rowCount == 0){       
+            $query = "INSERT INTO tb_lesson_progress SET EnrollmentID=:EnrollmentID,LessonID=:LessonID,LessProLastAccessed=:LessProLastAccessed";
+            $stmt = $this->conn->prepare($query);       
+            $stmt->bindValue(":EnrollmentID", $rowEroll['EnrollmentID']);
+            $stmt->bindValue(":LessonID", $LessonNo);
+            $stmt->bindValue(":LessProLastAccessed", date('Y-m-d H:i:s'));       
+            $stmt->execute();
+            //return "บันทึกล่ะ";
+        }else{
+            $sql = "UPDATE tb_lesson_progress SET LessProLastAccessed = :LessProLastAccessed WHERE EnrollmentID = :EnrollmentID AND LessonID=:LessonID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue(":EnrollmentID", $rowEroll['EnrollmentID']);
+            $stmt->bindValue(":LessonID", $LessonNo);
+            $stmt->bindValue(":LessProLastAccessed", date('Y-m-d H:i:s'));       
+
+            // ทำการ execute คำสั่ง SQL UPDATE
+            $stmt->execute();
+            //return "รอ Update";
+        }
+
+        return $rowELessonPro['LessProID'];
+    }
     
 }
 ?>

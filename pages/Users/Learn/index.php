@@ -12,8 +12,16 @@ $LesSing = $Course->readLessonsSingle(@$_GET['Course'],@$_GET['Leeson']);
 $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC);
 $rowLesSingTitle = $LesSing->fetch(PDO::FETCH_ASSOC);
 
-//exit();
+if(!empty($_GET['Leeson'])){   
+     $CheckEnroll = $Course->LessonsProgressInsert(@$_GET['Course'],@$_GET['Leeson']);
+}
 ?>
+
+<!-- ค่ารหัสตารางเรียน -->
+<input type="hidden" id="LessProID" name="LessProID" value="<?=$CheckEnroll?>">
+<input type="hidden" id="CourseID" name="CourseID" value="<?=@$_GET['Course']?>">
+<input type="hidden" id="LeesonID" name="LeesonID" value="<?=@$_GET['Leeson']?>">
+<input type="hidden" id="LessonStudyTime" name="LessonStudyTime" value="<?=$rowLesSingTitle['LessonStudyTime']?>">
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
 <style>
 iframe {
@@ -105,7 +113,7 @@ iframe {
                     </div>
                 </strong>
                 <div class="float-right">
-                    <b>คิดเป็น</b> 20%
+                    <a href="http://" class="btn btn-primary btn-sm" id="btnQuiz"><b>ทำแบบทดสอบ</b></a> 
                 </div>
             </div>
         </footer>

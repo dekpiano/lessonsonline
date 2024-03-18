@@ -83,11 +83,40 @@ class ClassEnrollmentUser {
         JOIN tb_courses ON tb_courses.CourseID = tb_lessons.CourseID
         WHERE tb_lessons.CourseID = ? ORDER BY tb_lessons.LessonNo ASC";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $CourseID);
+        $stmt->bindValue(1, $CourseID);
         $stmt->execute();
         return $stmt;
     }
 
+    
+    public function EnrollmentProgressUpdateTimeSpent($LessProID,$CountTime,$CourseID) {
+
+        $CheckTime = "SELECT LessProTimeSpent,LessonID FROM tb_lesson_progress WHERE LessProID = ?";
+        $stmt = $this->conn->prepare($CheckTime);
+        $stmt->bindValue(1, $LessProID);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $CheckTimeLesson = "SELECT LessonStudyTime FROM tb_lessons WHERE CourseID = ? AND LessonNo = ?";
+        $stmtTimeLesson = $this->conn->prepare($CheckTimeLesson);
+        $stmtTimeLesson->bindValue(1, $CourseID);
+        $stmtTimeLesson->bindValue(2, $row['LessonID']);
+        $stmtTimeLesson->execute();
+        $rowTimeLesson = $stmtTimeLesson->fetch(PDO::FETCH_ASSOC);
+
+        $UpdateTime = "UPDATE tb_lesson_progress SET LessProTimeSpent = ? WHERE LessProID = ?";
+        $stmtUpTime = $this->conn->prepare($UpdateTime);
+        $stmtUpTime->bindValue(1, $CountTime + $row['LessProTimeSpent']);
+        $stmtUpTime->bindValue(2, $LessProID);
+        $stmtUpTime->execute();
+        
+        if($row['LessProTimeSpent'] < $rowTimeLesson['LessonStudyTime']){
+            echo $row['LessProTimeSpent']+1;
+        }else{
+            echo($row['LessProTimeSpent']+0);
+        }
+       
+    }
     
 }
 ?>

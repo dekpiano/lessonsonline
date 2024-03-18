@@ -53,8 +53,12 @@
             <?php while($row = $Resutl->fetch(PDO::FETCH_ASSOC)) :?>               
             <li class="nav-item">
                 <a href="?Course=<?=@$_GET['Course']?>&Leeson=<?=$row['LessonNo']?>" class="nav-link <?= @$_GET['Course'] == $row['CourseID'] && @$_GET['Leeson'] == $row['LessonNo'] ? "active":""?> ">
-                    <i class="fas fa-book-open"></i>
-                    <p>บทที่ <?=$row['LessonNo']?> <?=$row['LessonTitle']?></p>
+                    <i class="nav-icon fas fa-book-open"></i>
+                    <p>
+                        บทที่ <?=$row['LessonNo']?> <?=$row['LessonTitle']?>
+                        <?=@$rowLesSingTitle['LessonStudyTime']?>
+                        <span id="LessonNo<?=$row['LessonNo']?>" class="badge badge-success right"> <i class="fas fa-check" style="margin-left: 0rem"></i> </span>
+                    </p>
                 </a>
             </li>
             <?php endwhile; ?>
