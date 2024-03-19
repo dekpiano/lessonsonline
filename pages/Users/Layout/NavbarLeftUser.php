@@ -52,7 +52,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <?php while($row = $Resutl->fetch(PDO::FETCH_ASSOC)) :?>               
             <li class="nav-item">
-                <a href="?Course=<?=@$_GET['Course']?>&Leeson=<?=$row['LessonNo']?>" class="nav-link <?= @$_GET['Course'] == $row['CourseID'] && @$_GET['Leeson'] == $row['LessonNo'] ? "active":""?> ">
+                <a href="../Learn/?Course=<?=@$_GET['Course']?>&Leeson=<?=$row['LessonNo']?>" class="nav-link <?= @$_GET['Course'] == $row['CourseID'] && @$_GET['Leeson'] == $row['LessonNo'] ? "active":""?> ">
                     <i class="nav-icon fas fa-book-open"></i>
                     <p>
                         บทที่ <?=$row['LessonNo']?> <?=$row['LessonTitle']?>

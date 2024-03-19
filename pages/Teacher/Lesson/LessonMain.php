@@ -80,7 +80,7 @@ $Lesson->readCourse();
                                         <td><?=$row['LessonNo'];?></td>
                                         <td><?=$row['LessonTitle'];?></td>
                                         <td><?=$row['LessonDateCreated'];?></td>
-                                        <td><a href="Lesson?LessonID=<?=$row['LessonID']?>"
+                                        <td><a href="../Quizzes/QuizMain?LessonID=<?=$row['LessonID']?>"
                                                 class="btn btn-primary btn-sm"><i class="far fa-plus-square"></i> สร้างแบบทดสอบ</a></td>
                                         <td>
                                             <a href="LessonUpdate?LessonID=<?=$row['LessonID']?>"

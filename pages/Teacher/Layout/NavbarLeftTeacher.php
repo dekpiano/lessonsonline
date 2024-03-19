@@ -35,7 +35,7 @@
 
                     <li class="nav-item">
                         <a href="../../../pages/Teacher/Course/CourseMain"
-                            class="nav-link <?=uri(3) == "Course" || uri(3) == "Lesson"?"active":""?> ">
+                            class="nav-link <?=uri(3) == "Course" || uri(3) == "Lesson" || uri(3) == "Quizzes" ?"active":""?> ">
                             <i class="nav-icon fas fa-columns"></i>
                             <p>
                                 สร้างคอร์สเรียน

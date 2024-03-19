@@ -1,5 +1,3 @@
-
-
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -59,22 +57,23 @@ $.widget.bridge('uibutton', $.ui.button)
 <?php if(uri(3) == "Course"):?>
 <script src="../../../pages/Teacher/Course/Js/JsCourse.js?v=6"></script>
 <script>
-    $('.summernoteEdit').summernote({
-        height: 400,   
-    });
-    var contentFromDB = `<?php echo $course->CourseDescription; ?>`;
-     $('.summernoteEdit').summernote('code', contentFromDB);
+$('.summernoteEdit').summernote({
+    height: 400,
+});
+var contentFromDB = `<?php echo $course->CourseDescription; ?>`;
+$('.summernoteEdit').summernote('code', contentFromDB);
 </script>
 <?php endif;?>
 <?php if(uri(3) == "Lesson"):?>
 <script src="../../../pages/Teacher/Lesson/Js/JsLesson.js?v=4.6"></script>
 <script>
-    $('.summernoteEdit').summernote({
-        height: 400,   
-    });
-    var contentFromDB = `<?php echo $Lesson->LessonContent; ?>`;
-     $('.summernoteEdit').summernote('code', contentFromDB);
+$('.summernoteEdit').summernote({
+    height: 400,
+});
+var contentFromDB = `<?php echo $Lesson->LessonContent; ?>`;
+$('.summernoteEdit').summernote('code', contentFromDB);
 </script>
 <?php endif;?>
-
-
+<?php if(uri(3) == "Quizzes"):?>
+<script src="../../../pages/Teacher/Quizzes/Js/JsQuizzes.js?v=3"></script>
+<?php endif;?>
