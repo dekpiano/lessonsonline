@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2024 at 11:33 AM
+-- Generation Time: Mar 19, 2024 at 11:35 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -128,8 +128,45 @@ CREATE TABLE `tb_lesson_progress` (
 --
 
 INSERT INTO `tb_lesson_progress` (`LessProID`, `EnrollmentID`, `LessonID`, `LessProStatus`, `LessProProgress`, `LessProLastAccessed`, `LessProTimeSpent`) VALUES
-(1, 5, 2, 'ยังไม่เริ่ม', '0.00', '2024-03-18 17:03:42', 4),
-(2, 5, 3, 'ยังไม่เริ่ม', '0.00', '2024-03-18 16:20:53', 3);
+(1, 5, 2, 'ยังไม่เริ่ม', '0.00', '2024-03-19 17:08:06', 4),
+(2, 5, 3, 'ยังไม่เริ่ม', '0.00', '2024-03-19 17:08:05', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_options`
+--
+
+CREATE TABLE `tb_options` (
+  `OptID` int(3) NOT NULL COMMENT 'รหัสตัวเลือก',
+  `OptQuestionID` int(3) NOT NULL COMMENT 'รหัสคำถาม',
+  `OptChoice` varchar(150) COLLATE utf8_unicode_ci NOT NULL COMMENT 'ตัวเลือก',
+  `OptAnswer` int(1) NOT NULL COMMENT 'เฉลย'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_options`
+--
+
+INSERT INTO `tb_options` (`OptID`, `OptQuestionID`, `OptChoice`, `OptAnswer`) VALUES
+(1, 1, '2', 0),
+(2, 1, '4', 1),
+(3, 1, '6', 0),
+(4, 1, '8', 0),
+(5, 2, '2', 0),
+(6, 2, '5', 0),
+(7, 2, '15', 1),
+(8, 2, '20', 0),
+(9, 3, 'ตอ-อา-ตา', 1),
+(10, 3, 'ตา-อา-ตอ', 0),
+(11, 3, 'อา-ตอ-ตา', 0),
+(12, 3, 'ถูกทุกข้อ', 0),
+(13, 4, '2', 1),
+(14, 4, '3', 0),
+(15, 5, '45', 0),
+(16, 5, '41', 0),
+(17, 5, '17', 1),
+(18, 5, '18', 0);
 
 -- --------------------------------------------------------
 
@@ -139,23 +176,21 @@ INSERT INTO `tb_lesson_progress` (`LessProID`, `EnrollmentID`, `LessonID`, `Less
 
 CREATE TABLE `tb_questions` (
   `QuestionID` int(11) NOT NULL,
-  `QuizID` int(11) DEFAULT NULL,
+  `QuestionLessonID` int(11) NOT NULL,
   `QuestionText` text COLLATE utf8_unicode_ci NOT NULL,
-  `CorrectAnswer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+  `CorrectAnswer` varchar(10) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `tb_quizzes`
+-- Dumping data for table `tb_questions`
 --
 
-CREATE TABLE `tb_quizzes` (
-  `QuizID` int(11) NOT NULL,
-  `CourseID` int(11) DEFAULT NULL,
-  `Title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Description` text COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `tb_questions` (`QuestionID`, `QuestionLessonID`, `QuestionText`, `CorrectAnswer`) VALUES
+(1, 5, '2+2=', ''),
+(2, 5, '5+10', ''),
+(3, 5, 'คำว่า \"ตา\" อ่านแบบแจกลูกได้อย่างไร', ''),
+(4, 5, '1+1', ''),
+(5, 5, '8+9=', '');
 
 -- --------------------------------------------------------
 
@@ -164,12 +199,12 @@ CREATE TABLE `tb_quizzes` (
 --
 
 CREATE TABLE `tb_useranswers` (
-  `UserAnswerID` int(11) NOT NULL,
-  `QuestionID` int(11) DEFAULT NULL,
-  `UserID` int(11) DEFAULT NULL,
-  `AnswerGiven` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `IsCorrect` tinyint(1) DEFAULT NULL,
-  `DateAnswered` datetime DEFAULT current_timestamp()
+  `UserAnswerID` int(11) NOT NULL COMMENT 'รหัสคำตอบ',
+  `QuestionID` int(11) DEFAULT NULL COMMENT 'รหัสคำถาม',
+  `UserID` int(11) DEFAULT NULL COMMENT 'รหัสผู้ใช้',
+  `AnswerGiven` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'คำตอบที่ให้ไว้',
+  `IsCorrect` tinyint(1) DEFAULT NULL COMMENT 'คำตอบนี้ถูกต้องหรือไม่',
+  `DateAnswered` datetime DEFAULT current_timestamp() COMMENT 'วันที่ตอบ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -240,22 +275,19 @@ ALTER TABLE `tb_lessons`
 --
 ALTER TABLE `tb_lesson_progress`
   ADD PRIMARY KEY (`LessProID`),
-  ADD KEY `EnrollmentID` (`EnrollmentID`),
-  ADD KEY `LessonID` (`LessonID`);
+  ADD KEY `EnrollmentID` (`EnrollmentID`);
+
+--
+-- Indexes for table `tb_options`
+--
+ALTER TABLE `tb_options`
+  ADD PRIMARY KEY (`OptID`);
 
 --
 -- Indexes for table `tb_questions`
 --
 ALTER TABLE `tb_questions`
-  ADD PRIMARY KEY (`QuestionID`),
-  ADD KEY `QuizID` (`QuizID`);
-
---
--- Indexes for table `tb_quizzes`
---
-ALTER TABLE `tb_quizzes`
-  ADD PRIMARY KEY (`QuizID`),
-  ADD KEY `CourseID` (`CourseID`);
+  ADD PRIMARY KEY (`QuestionID`);
 
 --
 -- Indexes for table `tb_useranswers`
@@ -300,22 +332,22 @@ ALTER TABLE `tb_lesson_progress`
   MODIFY `LessProID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสตาราง', AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `tb_options`
+--
+ALTER TABLE `tb_options`
+  MODIFY `OptID` int(3) NOT NULL AUTO_INCREMENT COMMENT 'รหัสตัวเลือก', AUTO_INCREMENT=19;
+
+--
 -- AUTO_INCREMENT for table `tb_questions`
 --
 ALTER TABLE `tb_questions`
-  MODIFY `QuestionID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tb_quizzes`
---
-ALTER TABLE `tb_quizzes`
-  MODIFY `QuizID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `QuestionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_useranswers`
 --
 ALTER TABLE `tb_useranswers`
-  MODIFY `UserAnswerID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `UserAnswerID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสคำตอบ';
 
 --
 -- AUTO_INCREMENT for table `tb_users`
@@ -352,18 +384,6 @@ ALTER TABLE `tb_lessons`
 ALTER TABLE `tb_lesson_progress`
   ADD CONSTRAINT `tb_lesson_progress_ibfk_1` FOREIGN KEY (`EnrollmentID`) REFERENCES `tb_enrollments` (`EnrollmentID`),
   ADD CONSTRAINT `tb_lesson_progress_ibfk_2` FOREIGN KEY (`LessonID`) REFERENCES `tb_lessons` (`LessonID`);
-
---
--- Constraints for table `tb_questions`
---
-ALTER TABLE `tb_questions`
-  ADD CONSTRAINT `tb_questions_ibfk_1` FOREIGN KEY (`QuizID`) REFERENCES `tb_quizzes` (`QuizID`);
-
---
--- Constraints for table `tb_quizzes`
---
-ALTER TABLE `tb_quizzes`
-  ADD CONSTRAINT `tb_quizzes_ibfk_1` FOREIGN KEY (`CourseID`) REFERENCES `tb_courses` (`CourseID`);
 
 --
 -- Constraints for table `tb_useranswers`
