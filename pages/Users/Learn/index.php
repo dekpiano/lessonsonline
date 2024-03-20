@@ -113,7 +113,7 @@ iframe {
                     </div>
                 </strong>
                 <div class="float-right">
-                    <a href="../Quizzes/?Course=<?=@$_GET['Course']?>&Leeson=<?=@$_GET['Leeson']?>" class="btn btn-primary btn-sm" id="btnQuiz"><b>ทำแบบทดสอบ</b></a> 
+                    <a href="../Quizzes/?Course=<?=@$_GET['Course']?>&Leeson=<?=@$_GET['Leeson']?>&AnswerCategory=หลังเรียน" class="btn btn-primary btn-sm" id="btnQuiz"><b>ทำแบบทดสอบ</b></a> 
                 </div>
             </div>
         </footer>

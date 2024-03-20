@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2024 at 11:35 AM
+-- Generation Time: Mar 20, 2024 at 11:46 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -128,8 +128,8 @@ CREATE TABLE `tb_lesson_progress` (
 --
 
 INSERT INTO `tb_lesson_progress` (`LessProID`, `EnrollmentID`, `LessonID`, `LessProStatus`, `LessProProgress`, `LessProLastAccessed`, `LessProTimeSpent`) VALUES
-(1, 5, 2, 'ยังไม่เริ่ม', '0.00', '2024-03-19 17:08:06', 4),
-(2, 5, 3, 'ยังไม่เริ่ม', '0.00', '2024-03-19 17:08:05', 3);
+(1, 5, 2, 'ยังไม่เริ่ม', '0.00', '2024-03-20 15:55:24', 4),
+(2, 5, 3, 'ยังไม่เริ่ม', '0.00', '2024-03-20 15:18:58', 3);
 
 -- --------------------------------------------------------
 
@@ -161,8 +161,6 @@ INSERT INTO `tb_options` (`OptID`, `OptQuestionID`, `OptChoice`, `OptAnswer`) VA
 (10, 3, 'ตา-อา-ตอ', 0),
 (11, 3, 'อา-ตอ-ตา', 0),
 (12, 3, 'ถูกทุกข้อ', 0),
-(13, 4, '2', 1),
-(14, 4, '3', 0),
 (15, 5, '45', 0),
 (16, 5, '41', 0),
 (17, 5, '17', 1),
@@ -189,7 +187,6 @@ INSERT INTO `tb_questions` (`QuestionID`, `QuestionLessonID`, `QuestionText`, `C
 (1, 5, '2+2=', ''),
 (2, 5, '5+10', ''),
 (3, 5, 'คำว่า \"ตา\" อ่านแบบแจกลูกได้อย่างไร', ''),
-(4, 5, '1+1', ''),
 (5, 5, '8+9=', '');
 
 -- --------------------------------------------------------
@@ -202,10 +199,21 @@ CREATE TABLE `tb_useranswers` (
   `UserAnswerID` int(11) NOT NULL COMMENT 'รหัสคำตอบ',
   `QuestionID` int(11) DEFAULT NULL COMMENT 'รหัสคำถาม',
   `UserID` int(11) DEFAULT NULL COMMENT 'รหัสผู้ใช้',
-  `AnswerGiven` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'คำตอบที่ให้ไว้',
-  `IsCorrect` tinyint(1) DEFAULT NULL COMMENT 'คำตอบนี้ถูกต้องหรือไม่',
-  `DateAnswered` datetime DEFAULT current_timestamp() COMMENT 'วันที่ตอบ'
+  `UserAnswerCategory` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ประเภทการสอบ',
+  `UserAnswerGiven` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ข้อที่ตอบ',
+  `UserAnswerIsCorrect` int(1) NOT NULL COMMENT 'ตอบถูกหรือไม่',
+  `UserAnswerDate` datetime DEFAULT current_timestamp() COMMENT 'วันที่ตอบ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_useranswers`
+--
+
+INSERT INTO `tb_useranswers` (`UserAnswerID`, `QuestionID`, `UserID`, `UserAnswerCategory`, `UserAnswerGiven`, `UserAnswerIsCorrect`, `UserAnswerDate`) VALUES
+(1, 1, 3, 'หลังเรียน', '2', 0, '2024-03-20 15:39:51'),
+(2, 2, 3, 'หลังเรียน', '2', 0, '2024-03-20 15:39:51'),
+(3, 3, 3, 'หลังเรียน', 'ตอ-อา-ตา', 1, '2024-03-20 15:39:51'),
+(4, 5, 3, 'หลังเรียน', '45', 0, '2024-03-20 15:39:51');
 
 -- --------------------------------------------------------
 
@@ -347,7 +355,7 @@ ALTER TABLE `tb_questions`
 -- AUTO_INCREMENT for table `tb_useranswers`
 --
 ALTER TABLE `tb_useranswers`
-  MODIFY `UserAnswerID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสคำตอบ';
+  MODIFY `UserAnswerID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสคำตอบ', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
