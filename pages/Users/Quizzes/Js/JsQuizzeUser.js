@@ -11,27 +11,39 @@ $(document).on("submit","#FormCheckAnswers", function(e) {
         dateType:"json",
         success: function(response) {          
           console.log(response);
-        //   if(response == 1){
-        //     Swal.fire({
-        //       title: "แจ้งเตือน!",
-        //       text: "บันทึกข้อมูลคอร์สเรียนเรียบร้อย!",
-        //       icon: "success"
-        //     }).then((result) => {
-        //       if (result.isConfirmed) {
-        //         window.location.href = '../../../pages/Teacher/Course/CourseMain';
-        //       }
-        //     });           
-        //   }else{
-        //     Swal.fire({
-        //       title: "แจ้งเตือน!",
-        //       text: response.Text,
-        //       icon: "error"
-        //     });
-        //   }
+          if(response == 1){
+            Swal.fire({
+              title: "แจ้งเตือน!",
+              text: "ส่งแบบทดสอบเรียบร้อย!",
+              icon: "success"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.reload();
+              }
+            });           
+          }else{
+            Swal.fire({
+              title: "แจ้งเตือน!",
+              text: response.Text,
+              icon: "error"
+            });
+          }
          
         },
         error: function() {
             $("#result").html("<div class='alert alert-danger'>There was an error processing your request</div>");
         }
     });
+});
+
+let round = $(".QuestionText").length
+$(document).on("click",".radio-button", function() {
+    for (let index = 1; index <= round; index++) {
+        if($(this).attr('key_main') == index){
+            $(".R"+index).attr('style',"");
+            $(".mark"+index).remove();
+        }
+    }
+    
+   
 });

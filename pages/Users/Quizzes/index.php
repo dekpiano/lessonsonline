@@ -7,16 +7,24 @@ $db = $database->getConnection();
 $Course = new ClassLearn($db);
 $Quiz = new ClassQuizzesUser($db);
 $Title = $Course->TitleBar;
-$Resutl = $Course->readLessonsAll(@$_GET['Course']);
-$ResutlSing = $Course->readLessonsAll(@$_GET['Course']);
-$LesSing = $Course->readLessonsSingle(@$_GET['Course'],@$_GET['Leeson']);
-$rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC);
-//$rowLesSingTitle = $LesSing->fetch(PDO::FETCH_ASSOC);
+$Resutl = $Course->readLessonsAll(@$_GET['Course']); //เมนูซ้าย
+$ResutlSing = $Course->readLessonsSingle(@$_GET['Course'],@$_GET['Leeson']);
+$rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแต่ละบท
+// $LesSing = $Course->readLessonsAll(@$_GET['Course']);
+// $rowLesSing = $LesSing->fetch(PDO::FETCH_ASSOC);
 
-$ShowQuiz = $Quiz->readQuiz(@$_GET['Course'],@$_GET['Leeson']);
-$Viewscore = $Quiz->Viewscore($rowLesMain['LessonID']);
-$ViewAnswerIsCorrect = $Quiz->ViewAnswerIsCorrect($rowLesMain['LessonID']);
-// print_r($ShowQuiz->fetch(PDO::FETCH_ASSOC));
+//$rowLesSingTitle = $LesSing->fetch(PDO::FETCH_ASSOC);
+//  echo '<pre>';print_r($rowLesSing);
+// exit();
+$ShowQuiz = $Quiz->readQuiz(@$_GET['Course'],@$_GET['Leeson']); // คำตอบ
+$ViewLatestExamRound = $Quiz->ViewLatestExamRound($rowLesMain['LessonID']);
+$Viewscore = $Quiz->Viewscore($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound']);
+$ViewAnswerIsCorrect = $Quiz->ViewAnswerIsCorrect($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound']);
+
+// while ($row = $ShowQuiz->fetch(PDO::FETCH_ASSOC)) {
+//     echo '<pre>'; print_r($row);
+// }
+// echo '<pre>';print_r($ShowQuiz->fetch(PDO::FETCH_ASSOC));
 // exit();
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
@@ -33,7 +41,7 @@ input[type="radio"] {
     background-color: #ffffff;
     color: black;
     padding: 17px 25px;
-    border: 2px solid #007bff;
+    border: 2px solid #000;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -87,31 +95,41 @@ input[type="radio"]:hover+label {
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                
                     <form id="FormCheckAnswers" class="needs-validation" novalidate>
 
                         <?php $i = 1; while ($row = $ShowQuiz->fetch(PDO::FETCH_ASSOC)) : ?>
                         <input type="hidden" id="QuestionID" name="QuestionID[]" value="<?=$row['QuestionID']?>">
-                        <input type="hidden" id="QuestionID" name="UserAnswerCategory"
+                        <input type="hidden" id="UserAnswerCategory" name="UserAnswerCategory"
                             value="<?=$_GET['AnswerCategory']?>">
-                        <?php $CheckAnsFull =  explode(',',$row['OptAnswerArray'])?>
+
+                        <?php $CheckAnsFull =  explode('|',$row['OptAnswerArray'])?>
                         <div class="card">
-                            <div class="card-header bg-gradient-secondary h4 p-5">
+                            <div class="QuestionText card-header bg-gradient-secondary h4 p-5">
                                 <?=$i?>. <?= $row['QuestionText'];?>
                             </div>
                             <div class="card-body">
+
                                 <div class="row">
-                                    <?php foreach (explode(',',$row['OptChoiceArray']) as $key => $value): ?>
-                                    <?php if($value == $ViewAnswerIsCorrect[$row['QuestionID']][0] && ($ViewAnswerIsCorrect[$row['QuestionID']][1] == 1 && $CheckAnsFull[$key] == 1)){
+                                    <?php foreach (explode('|',$row['OptChoiceArray']) as $key => $value): ?>
+                                    <?php if($key == 0):?>
+                                    <input type="hidden" id="UserAnswerExamRound" name="UserAnswerExamRound"
+                                        value="<?=@$ViewAnswerIsCorrect[$row['QuestionID']][2]+1?>">
+                                    <?php endif; ?>
+                                    <?php if($value == @$ViewAnswerIsCorrect[$row['QuestionID']][0] && (@$ViewAnswerIsCorrect[$row['QuestionID']][1] == 1 && $CheckAnsFull[$key] == 1)){
                                             $Checked = "checked";
                                             $style = "style='background-color: #28a745;'";
+                                            $Is = "&#10004";
                                         }else {
                                             $Checked = "";
                                             $style = "";
+                                            $Is = "";
                                         }
 
-                                        if($value == $ViewAnswerIsCorrect[$row['QuestionID']][0] && ($ViewAnswerIsCorrect[$row['QuestionID']][1] == 0 && $CheckAnsFull[$key] == 0)){
+                                        if($value == @$ViewAnswerIsCorrect[$row['QuestionID']][0] && (@$ViewAnswerIsCorrect[$row['QuestionID']][1] == 0 && $CheckAnsFull[$key] == 0)){
                                             $Checked = "checked";
                                             $style = "style='background-color: #dc3545;'";
+                                            $Is ="&#10007";
                                         }
                                         
                                         ?>
@@ -119,9 +137,12 @@ input[type="radio"]:hover+label {
                                         <input type="radio" id="<?=$row['QuestionID'].$key;?>"
                                             name="OptChoice<?=$row['QuestionID']?>" value="<?=$value;?>" required
                                             <?=$Checked?>>
-                                        <label for="<?=$row['QuestionID'].$key;?>"
-                                            class="radio-button-label radio-button w-100" <?=$style?>>
-                                            <?=$value?> 
+                                        <label for="<?=$row['QuestionID'].$key;?>" key_main="<?=$i?>"
+                                            class="R<?=$i?> radio-button-label radio-button w-100" <?=$style?>>
+                                            <div class="d-flex justify-content-between">
+                                                <?=$value?> <div class="mark<?=$i?>"><?=$Is;?></div>
+                                            </div>
+
                                         </label>
                                         <div class="invalid-feedback">กรุณาเลือกคำตอบ!</div>
                                     </div>
@@ -133,9 +154,13 @@ input[type="radio"]:hover+label {
                         </div>
                         <?php $i++; endwhile; ?>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success mb-5">ส่งคำตอบ</button>
+                            <div>
+                                ส่งคำตอบแล้ว <?=$ViewLatestExamRound['UserAnswerExamRound'] ?? 0?>/3 ครั้ง
+                            </div>
+                            <button type="submit" class="btn btn-success mb-5" <?= ($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) >= 3 ?"disabled":""?>>ส่งคำตอบ</button>
                         </div>
                     </form>
+                 
                 </div><!-- /.container-fluid -->
             </section>
             <!-- /.content -->

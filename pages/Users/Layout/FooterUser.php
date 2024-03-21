@@ -80,5 +80,5 @@ $.widget.bridge('uibutton', $.ui.button)
 <?php endif; ?>
 
 <?php if(uri(3) == "Quizzes"):?>
-<script src="../../Users/Quizzes/Js/JsQuizzeUser.js?v=1"></script>
+<script src="../../Users/Quizzes/Js/JsQuizzeUser.js?v=3"></script>
 <?php endif; ?>

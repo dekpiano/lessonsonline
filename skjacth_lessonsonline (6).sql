@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2024 at 11:46 AM
+-- Generation Time: Mar 21, 2024 at 11:56 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -128,8 +128,8 @@ CREATE TABLE `tb_lesson_progress` (
 --
 
 INSERT INTO `tb_lesson_progress` (`LessProID`, `EnrollmentID`, `LessonID`, `LessProStatus`, `LessProProgress`, `LessProLastAccessed`, `LessProTimeSpent`) VALUES
-(1, 5, 2, 'ยังไม่เริ่ม', '0.00', '2024-03-20 15:55:24', 4),
-(2, 5, 3, 'ยังไม่เริ่ม', '0.00', '2024-03-20 15:18:58', 3);
+(1, 5, 2, 'ยังไม่เริ่ม', '0.00', '2024-03-21 17:20:53', 4),
+(2, 5, 3, 'ยังไม่เริ่ม', '0.00', '2024-03-21 17:07:13', 0);
 
 -- --------------------------------------------------------
 
@@ -164,7 +164,15 @@ INSERT INTO `tb_options` (`OptID`, `OptQuestionID`, `OptChoice`, `OptAnswer`) VA
 (15, 5, '45', 0),
 (16, 5, '41', 0),
 (17, 5, '17', 1),
-(18, 5, '18', 0);
+(18, 5, '18', 0),
+(19, 6, ' Input, Process, Output', 1),
+(20, 6, 'OS, CPM, DOS', 0),
+(21, 6, 'Hardware, Software, Peopleware, Data', 0),
+(22, 6, ' Transistor, IC, VLSI', 0),
+(23, 7, ' Digital', 1),
+(24, 7, ' Laser', 0),
+(25, 7, 'Analog', 0),
+(26, 7, ' Modem', 0);
 
 -- --------------------------------------------------------
 
@@ -187,7 +195,9 @@ INSERT INTO `tb_questions` (`QuestionID`, `QuestionLessonID`, `QuestionText`, `C
 (1, 5, '2+2=', ''),
 (2, 5, '5+10', ''),
 (3, 5, 'คำว่า \"ตา\" อ่านแบบแจกลูกได้อย่างไร', ''),
-(5, 5, '8+9=', '');
+(5, 5, '8+9=', ''),
+(6, 4, 'ส่วนประกอบที่สำคัญของระบบคอมพิวเตอร์ คือ', ''),
+(7, 4, 'การส่งผ่านข้อมูลในเครื่องคอมพิวเตอร์ปัจจุบันเป็นแบบใด', '');
 
 -- --------------------------------------------------------
 
@@ -200,6 +210,7 @@ CREATE TABLE `tb_useranswers` (
   `QuestionID` int(11) DEFAULT NULL COMMENT 'รหัสคำถาม',
   `UserID` int(11) DEFAULT NULL COMMENT 'รหัสผู้ใช้',
   `UserAnswerCategory` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ประเภทการสอบ',
+  `UserAnswerExamRound` int(1) NOT NULL COMMENT 'รอบที่่สอบ',
   `UserAnswerGiven` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ข้อที่ตอบ',
   `UserAnswerIsCorrect` int(1) NOT NULL COMMENT 'ตอบถูกหรือไม่',
   `UserAnswerDate` datetime DEFAULT current_timestamp() COMMENT 'วันที่ตอบ'
@@ -209,11 +220,13 @@ CREATE TABLE `tb_useranswers` (
 -- Dumping data for table `tb_useranswers`
 --
 
-INSERT INTO `tb_useranswers` (`UserAnswerID`, `QuestionID`, `UserID`, `UserAnswerCategory`, `UserAnswerGiven`, `UserAnswerIsCorrect`, `UserAnswerDate`) VALUES
-(1, 1, 3, 'หลังเรียน', '2', 0, '2024-03-20 15:39:51'),
-(2, 2, 3, 'หลังเรียน', '2', 0, '2024-03-20 15:39:51'),
-(3, 3, 3, 'หลังเรียน', 'ตอ-อา-ตา', 1, '2024-03-20 15:39:51'),
-(4, 5, 3, 'หลังเรียน', '45', 0, '2024-03-20 15:39:51');
+INSERT INTO `tb_useranswers` (`UserAnswerID`, `QuestionID`, `UserID`, `UserAnswerCategory`, `UserAnswerExamRound`, `UserAnswerGiven`, `UserAnswerIsCorrect`, `UserAnswerDate`) VALUES
+(1, 6, 3, 'หลังเรียน', 1, 'OS, CPM, DOS', 0, '2024-03-21 17:07:43'),
+(2, 7, 3, 'หลังเรียน', 1, ' Laser', 0, '2024-03-21 17:07:43'),
+(3, 6, 3, 'หลังเรียน', 2, ' Input, Process, Output', 1, '2024-03-21 17:07:49'),
+(4, 7, 3, 'หลังเรียน', 2, ' Digital', 1, '2024-03-21 17:07:49'),
+(5, 6, 3, 'หลังเรียน', 3, 'OS, CPM, DOS', 0, '2024-03-21 17:07:57'),
+(6, 7, 3, 'หลังเรียน', 3, ' Digital', 1, '2024-03-21 17:07:57');
 
 -- --------------------------------------------------------
 
@@ -343,19 +356,19 @@ ALTER TABLE `tb_lesson_progress`
 -- AUTO_INCREMENT for table `tb_options`
 --
 ALTER TABLE `tb_options`
-  MODIFY `OptID` int(3) NOT NULL AUTO_INCREMENT COMMENT 'รหัสตัวเลือก', AUTO_INCREMENT=19;
+  MODIFY `OptID` int(3) NOT NULL AUTO_INCREMENT COMMENT 'รหัสตัวเลือก', AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tb_questions`
 --
 ALTER TABLE `tb_questions`
-  MODIFY `QuestionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `QuestionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_useranswers`
 --
 ALTER TABLE `tb_useranswers`
-  MODIFY `UserAnswerID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสคำตอบ', AUTO_INCREMENT=5;
+  MODIFY `UserAnswerID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสคำตอบ', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
@@ -385,13 +398,6 @@ ALTER TABLE `tb_enrollments`
 --
 ALTER TABLE `tb_lessons`
   ADD CONSTRAINT `tb_lessons_ibfk_1` FOREIGN KEY (`CourseID`) REFERENCES `tb_courses` (`CourseID`);
-
---
--- Constraints for table `tb_lesson_progress`
---
-ALTER TABLE `tb_lesson_progress`
-  ADD CONSTRAINT `tb_lesson_progress_ibfk_1` FOREIGN KEY (`EnrollmentID`) REFERENCES `tb_enrollments` (`EnrollmentID`),
-  ADD CONSTRAINT `tb_lesson_progress_ibfk_2` FOREIGN KEY (`LessonID`) REFERENCES `tb_lessons` (`LessonID`);
 
 --
 -- Constraints for table `tb_useranswers`

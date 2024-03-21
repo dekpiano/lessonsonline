@@ -24,8 +24,8 @@ class ClassQuizzesUser {
             tb_questions.QuestionLessonID,
             tb_questions.QuestionText,
             tb_questions.QuestionID,
-            GROUP_CONCAT(OptChoice) AS OptChoiceArray,
-            GROUP_CONCAT(OptAnswer) AS OptAnswerArray
+            GROUP_CONCAT(OptChoice SEPARATOR '|') AS OptChoiceArray,
+            GROUP_CONCAT(OptAnswer SEPARATOR '|') AS OptAnswerArray
             FROM
             tb_questions
             INNER JOIN tb_options ON tb_questions.QuestionID = tb_options.OptQuestionID
@@ -43,7 +43,7 @@ class ClassQuizzesUser {
 
     public function CheckAnswersUser($Answers) {
        
-        $Sum = 0;
+        $Sum = 0;    
         foreach ($Answers['QuestionID'] as $key => $value) {            
             $query = "SELECT OptAnswer FROM tb_options WHERE OptQuestionID = ? AND OptChoice = ?";
             $stmt = $this->conn->prepare($query);
@@ -52,32 +52,38 @@ class ClassQuizzesUser {
             $stmt->execute();
             while ($re = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $Sum += $re['OptAnswer'];
-                $queryInsert = "INSERT INTO tb_useranswers (QuestionID,UserID,UserAnswerGiven,UserAnswerIsCorrect,UserAnswerCategory) VALUE (?,?,?,?,?)";
+                $queryInsert = "INSERT INTO tb_useranswers (QuestionID,UserID,UserAnswerGiven,UserAnswerIsCorrect,UserAnswerCategory,UserAnswerExamRound) VALUE (?,?,?,?,?,?)";
                 $stmtInsert = $this->conn->prepare($queryInsert);
                 $stmtInsert->bindValue(1, $value);
                 $stmtInsert->bindValue(2, $_SESSION['UserID']); 
                 $stmtInsert->bindValue(3, $Answers['OptChoice'.$value]);
                 $stmtInsert->bindValue(4, $re['OptAnswer']);
                 $stmtInsert->bindValue(5, $_POST['UserAnswerCategory']);
+                $stmtInsert->bindValue(6, $_POST['UserAnswerExamRound']);
                 $stmtInsert->execute(); 
+
             }
             
         }
-        return $Sum;
+        return 1;
         //print_r($Answers['OptChoice1']);
       
-        exit();
-        
+        exit();        
     }
 
-    public function Viewscore($LessonID){
+    public function ViewLatestExamRound($LessonID){
         $query = "SELECT
-                    COUNT(tb_questions.QuestionLessonID) AS CountAll,
-                    COUNT(CASE WHEN UserAnswerIsCorrect = 1 THEN 1 END) AS SumScore
-                    FROM tb_useranswers
-                    INNER JOIN tb_questions ON tb_useranswers.QuestionID = tb_questions.QuestionID
+                    tb_useranswers.UserAnswerExamRound
+                    FROM
+                    tb_questions
+                    INNER JOIN tb_options ON tb_questions.QuestionID = tb_options.OptQuestionID
+                    INNER JOIN tb_useranswers ON tb_useranswers.QuestionID = tb_questions.QuestionID
                     WHERE
                     tb_questions.QuestionLessonID = ? AND tb_useranswers.UserID = ?
+                    GROUP BY
+                    tb_useranswers.UserAnswerExamRound
+                    ORDER BY UserAnswerExamRound DESC
+                    LIMIT 1
                     ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(1, $LessonID);
@@ -86,23 +92,42 @@ class ClassQuizzesUser {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function ViewAnswerIsCorrect($LessonID){
+    public function Viewscore($LessonID,$UserAnswerExamRound){
+        $query = "SELECT
+                    COUNT(tb_questions.QuestionLessonID) AS CountAll,
+                    COUNT(CASE WHEN UserAnswerIsCorrect = 1 THEN 1 END) AS SumScore
+                    FROM tb_useranswers
+                    INNER JOIN tb_questions ON tb_useranswers.QuestionID = tb_questions.QuestionID
+                    WHERE
+                    tb_questions.QuestionLessonID = ? AND tb_useranswers.UserID = ? AND UserAnswerExamRound = ?
+                    ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(1, $LessonID);
+        $stmt->bindValue(2, $_SESSION['UserID']);
+        $stmt->bindValue(3, $UserAnswerExamRound);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function ViewAnswerIsCorrect($LessonID,$UserAnswerExamRound){
         $query = "SELECT
         tb_useranswers.UserAnswerIsCorrect,
         tb_useranswers.QuestionID,        
-        tb_useranswers.UserAnswerGiven
+        tb_useranswers.UserAnswerGiven,
+        tb_useranswers.UserAnswerExamRound
         FROM
         tb_useranswers
         INNER JOIN tb_questions ON tb_useranswers.QuestionID = tb_questions.QuestionID
         INNER JOIN tb_options ON tb_useranswers.QuestionID = tb_options.OptQuestionID
         WHERE
-        tb_questions.QuestionLessonID = ? AND tb_useranswers.UserID = ?
+        tb_questions.QuestionLessonID = ? AND tb_useranswers.UserID = ? AND UserAnswerExamRound = ?
         GROUP BY
         tb_questions.QuestionID
         ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(1, $LessonID);
-        $stmt->bindValue(2, $_SESSION['UserID']);
+        $stmt->bindValue(2, $_SESSION['UserID']);        
+        $stmt->bindValue(3, $UserAnswerExamRound);
         $stmt->execute();
         $AnswerIsCorrect = [];
         $AnswerGiven = [];
@@ -110,7 +135,8 @@ class ClassQuizzesUser {
         $i=0;
          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $data[$row['QuestionID']][] = $row['UserAnswerGiven'];
-            $data[$row['QuestionID']][] = $row['UserAnswerIsCorrect'];           
+            $data[$row['QuestionID']][] = $row['UserAnswerIsCorrect'];  
+            $data[$row['QuestionID']][] = $row['UserAnswerExamRound'];         
             $i++;
          }
         return $data;
