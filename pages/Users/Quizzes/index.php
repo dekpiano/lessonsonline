@@ -95,7 +95,7 @@ input[type="radio"]:hover+label {
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                
+
                     <form id="FormCheckAnswers" class="needs-validation" novalidate>
 
                         <?php $i = 1; while ($row = $ShowQuiz->fetch(PDO::FETCH_ASSOC)) : ?>
@@ -153,22 +153,31 @@ input[type="radio"]:hover+label {
                             </div>
                         </div>
                         <?php $i++; endwhile; ?>
-                        <div class="text-center">
-                            <div>
-                                ส่งคำตอบแล้ว <?=$ViewLatestExamRound['UserAnswerExamRound'] ?? 0?>/3 ครั้ง
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div id="SendAnswer">
+                                <div>
+                                    ส่งคำตอบแล้ว <?=$ViewLatestExamRound['UserAnswerExamRound'] ?? 0?>/3 ครั้ง
+                                </div>
+                                <button type="submit" class="btn btn-success mb-5"
+                                    <?= ($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) >= 3 ?"disabled":""?>>ส่งคำตอบ</button>
                             </div>
-                            <button type="submit" class="btn btn-success mb-5" <?= ($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) >= 3 ?"disabled":""?>>ส่งคำตอบ</button>
+                            <div id="Next">
+                                <?php if(($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) > 0):?>
+                                <a href="" class="btn btn-primary mb-5">ไปบทถัดไป &#10230;</a>
+                                <?php endif;?>
+                            </div>
                         </div>
-                    </form>
-                 
-                </div><!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
+                </div>
+                </form>
+
+        </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
 
 
-        <?php include_once('../../../pages/Users/Layout/FooterUser.php'); ?>
+    <?php include_once('../../../pages/Users/Layout/FooterUser.php'); ?>
 </body>
 
 </html>

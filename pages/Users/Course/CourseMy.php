@@ -8,7 +8,8 @@ $Title = "บทเรียนออนไลน์";
 $Resutl = $Course->readLessonsAll(@$_GET['Course']);
 
 $stmt = $Course->CourseMy();
-//echo '<pre>';print_r($row); exit();
+
+//echo '<pre>';print_r($CourseProgress->fetch(PDO::FETCH_ASSOC)); exit();
 
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
@@ -65,17 +66,23 @@ $stmt = $Course->CourseMy();
                       </th>
                       <th>
                           เรียนแล้ว
-                      </th>
+                      </th>                     
                       <th style="width: 8%" class="text-center">
                           สถานะ
                       </th>
+                      <th>
+                        
+                        </th>
                       <th style="width: 15%">
                       เรียนต่อ
                       </th>
                   </tr>
               </thead>
               <tbody>
-              <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+              <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)):
+              $CourseProgress = $Course->CourseProgress($row['CourseID']);
+              $ValCourseProgress = $CourseProgress->fetch(PDO::FETCH_ASSOC);
+                ?>
                   <tr>
                       <td>
                           <img src="../../../uploads/Course/<?=$row['CourseImage'];?>" class="img-fluid" alt="คอร์สเรียน" srcset="">
@@ -92,15 +99,22 @@ $stmt = $Course->CourseMy();
                       </td>
                       <td class="project_progress">
                           <div class="progress progress-sm">
-                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                              <div class="progress-bar bg-green" role="progressbar" aria-valuenow="<?=$ValCourseProgress['progress_percentage']?>" aria-valuemin="0" aria-valuemax="100" style="width: <?=$ValCourseProgress['progress_percentage']?>%">
                               </div>
                           </div>
                           <small>
-                              57% Complete
+                          <?=$ValCourseProgress['progress_percentage']?>% จาก (<?=$ValCourseProgress['completed_lessons'].'/'.$ValCourseProgress['total_lessons']?> บทเรียน)
                           </small>
                       </td>
                       <td class="project-state">
                           <span class="badge badge-success"><?=$row['CourseStatus']?></span>
+                      </td>                      
+                      <td>
+                      <a class="btn btn-primary btn-sm" href="#">
+                              <i class="fas fa-eye">
+                              </i>
+                             ดูทั้งหมด
+                          </a>
                       </td>
                       <td class="project-actions">                      
                           <a class="btn btn-info btn-sm" href="../Learn/?Course=<?=$row['CourseID']?>">

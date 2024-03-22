@@ -1,14 +1,23 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
 include_once '../../Users/PhpClass/ClassCourse.php';
+include_once '../../Users/PhpClass/ClassEnrollmentUser.php';
+include_once '../../Users/PhpClass/ClassLearn.php';
+
 $database = new Database();
 $db = $database->getConnection();
 $Course = new ClassCourse($db);
+$Enroll = new ClassEnrollmentUser($db);
+$Learn = new ClassLearn($db);
 $Title = "บทเรียนออนไลน์";
 $stmt = $Course->read();
 
-$Resutl = $Course->readLessonsAll(@$_GET['Course']);
-//echo '<pre>';print_r();
+$Resutl = $Course->readLessonsAll(@$_GET['Course']); //เมนูซ้าย
+//echo '<pre>';print_r($Enroll->CheckEnrollmentAll()); 
+// print_r(1);
+// exit();
+
+
 
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
@@ -55,7 +64,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                                     <div class="row">
                                         <div class="col-sm-4 border-right">
                                             <div class="description-block">
-                                                <h5 class="description-header">3,200</h5>
+                                                <h5 class="description-header"><?php print_r($Enroll->CheckEnrollmentAll($row['CourseID'])['SumAll']); ?></h5>
                                                 <span class="description-text">ลงทะเบียน</span>
                                             </div>
 
@@ -63,7 +72,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
 
                                         <div class="col-sm-4 border-right">
                                             <div class="description-block">
-                                                <h5 class="description-header">13,000</h5>
+                                                <h5 class="description-header">0</h5>
                                                 <span class="description-text">เรียนสำเร็จ</span>
                                             </div>
 
@@ -71,7 +80,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
 
                                         <div class="col-sm-4">
                                             <div class="description-block">
-                                                <h5 class="description-header">35</h5>
+                                                <h5 class="description-header"><?php print_r($Learn->LessonsAllWhereCourse($row['CourseID'])['LessonsAll'])?></h5>
                                                 <span class="description-text">บทเรียน</span>
                                             </div>
 

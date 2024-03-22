@@ -105,14 +105,14 @@ class ClassLesson {
 
     // เพิ่มบทเรียนใหม่
     public function create() {
-        $query = "INSERT INTO tb_lessons (CourseID,LessonCode,LessonNo,LessonTitle,LessonContent,LessonVideoURL,LessonDateCreated,TeacherID,LessonStudyTime) VALUES (?,?,?,?,?,?,?,?)";
+        $query = "INSERT INTO tb_lessons (CourseID,LessonCode,LessonNo,LessonTitle,LessonContent,LessonVideoURL,LessonDateCreated,TeacherID,LessonStudyTime) VALUES (?,?,?,?,?,?,?,?,?)";
 
         $stmt = $this->conn->prepare($query);
         $data = array('CourseID','LessonCode','LessonNo','LessonTitle','LessonContent','LessonVideoURL','LessonDateCreated','TeacherID','LessonStudyTime');
         // sanitize
         foreach ($data as $key => $v_data) {      
            // $this->$v_data=htmlspecialchars(strip_tags($this->$v_data));      
-            $stmt->bindParam(($key+1), $this->$v_data);
+            $stmt->bindValue(($key+1), $this->$v_data);
         }       
 
         if ($stmt->execute()) {

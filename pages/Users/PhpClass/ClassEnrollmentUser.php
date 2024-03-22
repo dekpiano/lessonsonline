@@ -36,8 +36,25 @@ class ClassEnrollmentUser {
              }  
     
             if ($stmt->execute()) {
+
+                $EnrollmentID = $this->conn->lastInsertId();
+
+                $SelLesson = "SELECT LessonID FROM tb_lessons WHERE CourseID = ?";
+                $Q_SelLesson = $this->conn->prepare($SelLesson);
+                $Q_SelLesson->bindValue(1, $this->CourseID);
+                $Q_SelLesson->execute();
+                while ($RowSelLesson = $Q_SelLesson->fetch(PDO::FETCH_ASSOC)) {
+                    $InsertLesson = "INSERT INTO tb_lesson_progress (EnrollmentID,LessonID) VALUE (?,?)";
+                    $Q_InsertLesson = $this->conn->prepare($InsertLesson);
+                    $Q_InsertLesson->bindValue(1, $EnrollmentID);
+                    $Q_InsertLesson->bindValue(2, $RowSelLesson['LessonID']);
+                    $Q_InsertLesson->execute();
+                }
+                
                 return true;
             }
+
+
     
             return false;
         }
@@ -100,22 +117,32 @@ class ClassEnrollmentUser {
         $CheckTimeLesson = "SELECT LessonStudyTime FROM tb_lessons WHERE CourseID = ? AND LessonNo = ?";
         $stmtTimeLesson = $this->conn->prepare($CheckTimeLesson);
         $stmtTimeLesson->bindValue(1, $CourseID);
-        $stmtTimeLesson->bindValue(2, $row['LessonID']);
+        $stmtTimeLesson->bindValue(2, @$row['LessonID']);
         $stmtTimeLesson->execute();
         $rowTimeLesson = $stmtTimeLesson->fetch(PDO::FETCH_ASSOC);
 
         $UpdateTime = "UPDATE tb_lesson_progress SET LessProTimeSpent = ? WHERE LessProID = ?";
         $stmtUpTime = $this->conn->prepare($UpdateTime);
-        $stmtUpTime->bindValue(1, $CountTime + $row['LessProTimeSpent']);
+        $stmtUpTime->bindValue(1, $CountTime + @$row['LessProTimeSpent']);
         $stmtUpTime->bindValue(2, $LessProID);
         $stmtUpTime->execute();
         
-        if($row['LessProTimeSpent'] < $rowTimeLesson['LessonStudyTime']){
-            echo $row['LessProTimeSpent']+1;
+        if(@$row['LessProTimeSpent'] < @$rowTimeLesson['LessonStudyTime']){
+            echo @$row['LessProTimeSpent']+1;
         }else{
-            echo($row['LessProTimeSpent']+0);
+            echo(@$row['LessProTimeSpent']+0);
         }
        
+    }
+
+    public function CheckEnrollmentAll($CourseID){
+
+        $CheckTime = "SELECT COUNT(*) AS SumAll FROM tb_enrollments WHERE CourseID = ?";
+        $stmt = $this->conn->prepare($CheckTime);
+        $stmt->bindValue(1, $CourseID);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
     }
     
 }

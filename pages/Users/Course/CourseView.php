@@ -17,7 +17,8 @@ $Course->readSingle();
 $stmt = $Course->readLessonsAll(@$_GET['CourseID']);
 $Resutl = $Course->readLessonsAll(@$_GET['Course']);
 
-
+// print_r($CheckEnroll);
+// exit();
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
 
@@ -68,38 +69,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
                                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                                         <img class="img-fluid" src="../../../uploads/Course/<?=$Course->CourseImage?>"
                                             alt="รูป" srcset="">
-                                        <div class="row mt-3">
-                                            <div class="col-12 col-sm-4">
-                                                <div class="info-box bg-light">
-                                                    <div class="info-box-content">
-                                                        <span
-                                                            class="info-box-text text-center text-muted">ลงทะเบียนเรียน</span>
-                                                        <span
-                                                            class="info-box-number text-center text-muted mb-0">2300</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="info-box bg-light">
-                                                    <div class="info-box-content">
-                                                        <span
-                                                            class="info-box-text text-center text-muted">เรียนสำเร็จ</span>
-                                                        <span
-                                                            class="info-box-number text-center text-muted mb-0">2000</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-4">
-                                                <div class="info-box bg-light">
-                                                    <div class="info-box-content">
-                                                        <span
-                                                            class="info-box-text text-center text-muted">บทเรียนทั้งหมด</span>
-                                                        <span
-                                                            class="info-box-number text-center text-muted mb-0">20</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                     
                                         <div class="row">
                                             <div class="col-12">
 

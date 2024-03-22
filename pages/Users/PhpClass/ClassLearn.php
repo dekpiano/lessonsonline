@@ -1,24 +1,18 @@
 <?php
-date_default_timezone_set('Asia/Bangkok'); // ตั้งค่า Time Zone ตามที่ต้องการ
 
 class ClassLearn {
     private $conn;
     private $table_name = "tb_lessons";
 
     public $TitleBar = "บทเรียน";
-    public $CourseID;
-    public $CourseName;
-    public $CourseDescription;
-    public $TeacherID;
-    public $CourseDateCreated;
 
     public function __construct($db) {
         $this->conn = $db;
 
-        if(empty($_SESSION['UserID']) && @!$_SESSION['UserType'] == "student"){
-            header("Location: ../../../");
-            exit();
-        }
+        // if(empty($_SESSION['UserID']) && @!$_SESSION['UserType'] == "student"){
+        //     header("Location: ../../../");
+        //     exit();
+        // }
     }
 
 
@@ -56,14 +50,47 @@ class ClassLearn {
     }
 
     public function readLessonsAll($CourseID) {
-        $query = "SELECT tb_lessons.*,tb_courses.CourseName 
-        FROM tb_lessons 
-        JOIN tb_courses ON tb_courses.CourseID = tb_lessons.CourseID
-        WHERE tb_lessons.CourseID = ? ORDER BY tb_lessons.LessonNo ASC";
+        $query = "SELECT
+        tb_enrollments.EnrollmentID,
+        tb_lessons.CourseID,
+        tb_lessons.LessonTitle,
+        tb_lessons.LessonNo,
+        tb_enrollments.UserID,
+        tb_courses.CourseName
+        FROM
+        tb_lessons
+        INNER JOIN tb_enrollments ON tb_enrollments.CourseID = tb_lessons.CourseID
+        INNER JOIN tb_courses ON tb_lessons.CourseID = tb_courses.CourseID AND tb_enrollments.CourseID = tb_courses.CourseID
+        WHERE
+                tb_lessons.CourseID = ? AND tb_enrollments.UserID = ?
+        ORDER BY tb_lessons.LessonNo ASC";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $CourseID);
+        $stmt->bindParam(2, $_SESSION['UserID']);
         $stmt->execute();
-        return $stmt;
+        return $stmt; 
+    }
+
+    public function CheckStatusLesson($CourseID,$EnrollmentID,$LessonNo){
+
+        $sql = "SELECT
+        tb_lesson_progress.LessProStatus,
+        tb_lesson_progress.EnrollmentID,
+        tb_enrollments.UserID,
+        tb_lessons.LessonNo
+        FROM
+        tb_lesson_progress
+        INNER JOIN tb_enrollments ON tb_enrollments.EnrollmentID = tb_lesson_progress.EnrollmentID
+        INNER JOIN tb_lessons ON tb_lessons.LessonID = tb_lesson_progress.LessonID
+        WHERE tb_enrollments.UserID = ? AND tb_lesson_progress.EnrollmentID = ? AND tb_enrollments.CourseID = ? AND tb_lessons.LessonNo= ?";
+        $stmt = $this->conn->prepare($sql);      
+        $stmt->bindParam(1, $_SESSION['UserID']);
+        $stmt->bindParam(2, $EnrollmentID);
+        $stmt->bindParam(3, $CourseID);
+        $stmt->bindParam(4, $LessonNo);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
     }
 
     public function readLessonsSingle($CourseID,$LessonNo) {
@@ -78,7 +105,10 @@ class ClassLearn {
     }
 
     public function LessonsProgressInsert($CourseID,$LessonNo) {
-
+        if(empty($_SESSION['UserID']) && @!$_SESSION['UserType'] == "student"){
+            header("Location: ../../../");
+            exit();
+        }
         $QueryErollment = "SELECT * FROM tb_enrollments WHERE CourseID = ? AND UserID = ?";
         $stmtEroll = $this->conn->prepare($QueryErollment);
         $stmtEroll->bindValue(1, $CourseID);
@@ -103,18 +133,27 @@ class ClassLearn {
             $stmt->execute();
             //return "บันทึกล่ะ";
         }else{
-            $sql = "UPDATE tb_lesson_progress SET LessProLastAccessed = :LessProLastAccessed WHERE EnrollmentID = :EnrollmentID AND LessonID=:LessonID";
+            $sql = "UPDATE tb_lesson_progress SET LessProLastAccessed = :LessProLastAccessed,LessProStatus = :LessProStatus WHERE EnrollmentID = :EnrollmentID AND LessonID=:LessonID";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindValue(":EnrollmentID", $rowEroll['EnrollmentID']);
             $stmt->bindValue(":LessonID", $LessonNo);
-            $stmt->bindValue(":LessProLastAccessed", date('Y-m-d H:i:s'));       
+            $stmt->bindValue(":LessProLastAccessed", date('Y-m-d H:i:s')); 
+            $stmt->bindValue(":LessProStatus","กำลังเรียน");      
 
             // ทำการ execute คำสั่ง SQL UPDATE
             $stmt->execute();
             //return "รอ Update";
         }
 
-        return $rowELessonPro['LessProID'];
+        return @$rowELessonPro['LessProID'];
+    }
+
+    public function LessonsAllWhereCourse($CourseID) {
+        $QueryLessonsAll = "SELECT COUNT(*) AS LessonsAll FROM tb_lessons WHERE CourseID = ?";
+        $stmtLessonsAll = $this->conn->prepare($QueryLessonsAll);
+        $stmtLessonsAll->bindValue(1, $CourseID);
+        $stmtLessonsAll->execute();
+       return $stmtLessonsAll->fetch(PDO::FETCH_ASSOC);
     }
     
 }

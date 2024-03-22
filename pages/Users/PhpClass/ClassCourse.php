@@ -70,6 +70,23 @@ class ClassCourse {
         $stmt->execute();
         return $stmt;
     }
+
+    public function CourseProgress($CourseID) {
+        $sql = "SELECT
+        COUNT(*) AS total_lessons,
+       SUM(CASE WHEN tb_lesson_progress.LessProStatus = 'เรียนสำเร็จ'  THEN 1 ELSE 0 END) AS completed_lessons,
+       ROUND((SUM(CASE WHEN tb_lesson_progress.LessProStatus = 'เรียนสำเร็จ'  THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS progress_percentage
+       FROM
+       tb_lesson_progress
+       INNER JOIN tb_enrollments ON tb_enrollments.EnrollmentID = tb_lesson_progress.EnrollmentID
+       WHERE
+       tb_enrollments.UserID = ? AND tb_enrollments.CourseID = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(1, $_SESSION['UserID']);
+        $stmt->bindParam(2, $CourseID);
+        $stmt->execute();
+        return $stmt;
+    }
     
 }
 ?>

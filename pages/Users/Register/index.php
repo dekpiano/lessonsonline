@@ -1,11 +1,15 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
+include_once '../../Users/PhpClass/ClassLearn.php';
 include_once '../../../pages/Users/PhpClass/ClassRegisterUser.php';
 $database = new Database();
 $db = $database->getConnection();
 $Title = "สมัครเรียน | บทเรียนออนไลน์";
 $User = new ClassRegisterUser($db);
-
+$Course = new ClassLearn($db);
+$Resutl = $Course->readLessonsAll(@$_GET['Course']); //เมนูซ้าย
+$ResutlSing = $Course->readLessonsSingle(@$_GET['Course'],@$_GET['Leeson']);
+$rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแต่ละบท
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
 

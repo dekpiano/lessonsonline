@@ -11,7 +11,8 @@ $LesSing = $Course->readLessonsSingle(@$_GET['Course'],@$_GET['Leeson']);
 
 $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC);
 $rowLesSingTitle = $LesSing->fetch(PDO::FETCH_ASSOC);
-
+//print_r($rowLesMain);
+//exit();
 if(!empty($_GET['Leeson'])){   
      $CheckEnroll = $Course->LessonsProgressInsert(@$_GET['Course'],@$_GET['Leeson']);
 }
@@ -102,7 +103,8 @@ iframe {
         <?php if(!empty($_GET['Leeson'])):?>
         <footer class="main-footer fixed-bottom">
             <div class="d-flex justify-content-between align-items-center">
-                <strong>เวลาที่เรียน <span id="RoundTime"></span>/<?=$rowLesSingTitle['LessonStudyTime']?> นาที</strong>
+                <strong>เวลาที่เรียน <span id="RoundTime"></span>/<?=$rowLesSingTitle['LessonStudyTime'] ?? 0?>
+                    นาที</strong>
                 <strong>
 
                     <div id="countdown">
@@ -113,7 +115,8 @@ iframe {
                     </div>
                 </strong>
                 <div class="float-right">
-                    <a href="../Quizzes/?Course=<?=@$_GET['Course']?>&Leeson=<?=@$_GET['Leeson']?>&AnswerCategory=หลังเรียน" class="btn btn-primary btn-sm" id="btnQuiz"><b>ทำแบบทดสอบ</b></a> 
+                    <a href="../Quizzes/?Course=<?=@$_GET['Course']?>&Leeson=<?=@$_GET['Leeson']?>&AnswerCategory=หลังเรียน"
+                        class="btn btn-primary btn-sm" id="btnQuiz"><b>ทำแบบทดสอบ</b></a>
                 </div>
             </div>
         </footer>
@@ -122,3 +125,20 @@ iframe {
 </body>
 
 </html>
+
+
+<script>
+// $(document).on("click", ".reloadButton", function(event) {
+//     event.preventDefault();
+//     Swal.fire({
+//         title: "ในแต่ละบทมีเวลากำหนด เมื่ออยู่ครบเวลาจะสามารถทำแบบทดสอบและไปบทถัดไปได้",
+
+//     }).then((result) => {
+//         /* Read more about isConfirmed, isDenied below */
+//         if (result.isConfirmed) {
+//             window.location.href = event.target.href;;
+//         }
+//     });
+
+// });
+</script>

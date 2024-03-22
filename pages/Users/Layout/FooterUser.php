@@ -76,7 +76,7 @@ $.widget.bridge('uibutton', $.ui.button)
 <?php endif; ?>
 
 <?php if(uri(3) == "Learn"):?>
-<script src="../../Users/Learn/Js/JsCountdownTimer.js?v=2.7"></script>
+<script src="../../Users/Learn/Js/JsCountdownTimer.js?v=3.0"></script>
 <?php endif; ?>
 
 <?php if(uri(3) == "Quizzes"):?>

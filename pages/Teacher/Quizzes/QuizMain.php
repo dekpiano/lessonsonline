@@ -66,9 +66,7 @@ $ShowQuestion = $Quiz->readAll($_GET['LessonID']);
                                 <thead>
                                     <tr>
 
-                                        <th>คำถาม</th>
-                                        <th>ตัวเลือก</th>
-                                        <th>คำตอบที่ถูก</th>
+                                        <th>คำถาม</th>                                       
                                         <th>คำสั่ง</th>
                                     </tr>
                                 </thead>
@@ -76,8 +74,6 @@ $ShowQuestion = $Quiz->readAll($_GET['LessonID']);
                                     <?php while ($row = $ShowQuestion->fetch(PDO::FETCH_ASSOC)): ?>
                                     <tr>
                                         <td><?=$row['QuestionText']?></td>
-                                        <td></td>
-                                        <td></td>
                                         <td><a href="" class="btn btn-warning btn-sm">แก้ไข</a> <a href=""
                                                 class="btn btn-danger btn-sm">ลบ</a></td>
                                     </tr>
