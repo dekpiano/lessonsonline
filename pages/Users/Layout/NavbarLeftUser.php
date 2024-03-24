@@ -28,27 +28,11 @@
             </div>
         </div>
         <?php else : ?>
-        <div class="user-panel mt-3 pb-3 mb-3">
-            <div class="d-flex align-items-center">
-                <div class="image">
-                    <img src="https://cdn-icons-png.flaticon.com/128/456/456212.png" class="img-circle elevation-2"
-                        alt="User Image">
-                </div>
-                <div class="info">
-                    <div class="">
-                        ยินดีตอนรับ
-                    </div>
-                    <div class="">
-                        <?=$_SESSION['FullName'];?>
-                    </div>
-                </div>
-            </div>           
-            
-        </div>
+        
         <?php endif; ?>
 
         <?php if(!empty($_SESSION['UserID'])): ?>
-            <h5><?=@$rowLesMain['CourseName']?></h5>
+            <h5 class="mt-3"><?=@$rowLesMain['CourseName']?></h5>
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <?php while($row = $Resutl->fetch(PDO::FETCH_ASSOC)) :?>               
             <li class="nav-item">
@@ -56,6 +40,7 @@
                     <i class="nav-icon fas fa-book-open"></i>
                     <p>
                         บทที่ <?=$row['LessonNo']?> <?=$row['LessonTitle']?>  
+                        <?=@$_GET['Course'],$row['EnrollmentID'],$row['LessonNo'];?>
                         <?php if(@$Course->CheckStatusLesson(@$_GET['Course'],$row['EnrollmentID'],$row['LessonNo'])['LessProStatus'] == "กำลังเรียน"): ?>                    
                         <span id="LessonNo<?=$row['LessonNo']?>" class="badge badge-success right"> <i class="fas fa-check" style="margin-left: 0rem"></i> </span>
                         <?php endif;?>
@@ -69,34 +54,3 @@
     <!-- /.sidebar -->
 </aside>
 
-<!-- Modal -->
-<div class="modal fade" id="ModalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-            <div class="modal-body">
-
-                <h2>Login เข้าสู่ระบบ </h2>
-                <form id="loginForm">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">ชื่อผู้ใช้งาน:</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">รหัสผ่าน:</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt fa-1x"></i> เข้าสู่ระบบ</button>
-                    <br>
-                    <a href="../../Users/Register" class="btn btn-secondary btn-block"><i class="fas fa-user-plus fa-1x"></i> สมัครเรียน</a>
-
-
-
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>

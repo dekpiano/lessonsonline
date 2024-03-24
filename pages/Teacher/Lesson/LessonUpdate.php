@@ -90,7 +90,7 @@ $Lesson->readLessonEdit();
                                         <div class="col-md-6 mt-2">
                                             <label for="LessonStudyTime" class="form-label">เวลาที่ใช้เรียน:</label>
                                             <input type="number" class="form-control" id="LessonStudyTime" name="LessonStudyTime"
-                                                placeholder="กรุณาเวลาที่ใช้เรียน เป็น นาที">
+                                                placeholder="กรุณาเวลาที่ใช้เรียน เป็น นาที" value="<?=$Lesson->LessonStudyTime?>">
                                         </div>
                                     </div>
 

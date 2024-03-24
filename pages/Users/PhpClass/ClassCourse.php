@@ -60,6 +60,10 @@ class ClassCourse {
     }
 
     public function CourseMy() {
+        if(empty($_SESSION['UserID']) && @!$_SESSION['UserType'] == "student"){
+            header("Location: ../../../");
+            exit();
+        }
         $query = "SELECT tb_enrollments.*,tb_courses.CourseCode,tb_courses.CourseName,tb_courses.CourseImage,tb_courses.CourseStatus,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullName 
         FROM tb_enrollments 
         JOIN tb_courses ON tb_courses.CourseID = tb_enrollments.CourseID
@@ -72,6 +76,11 @@ class ClassCourse {
     }
 
     public function CourseProgress($CourseID) {
+        if(empty($_SESSION['UserID']) && @!$_SESSION['UserType'] == "student"){
+            header("Location: ../../../");
+            exit();
+        }
+        
         $sql = "SELECT
         COUNT(*) AS total_lessons,
        SUM(CASE WHEN tb_lesson_progress.LessProStatus = 'เรียนสำเร็จ'  THEN 1 ELSE 0 END) AS completed_lessons,

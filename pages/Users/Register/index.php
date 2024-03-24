@@ -13,11 +13,10 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition layout-top-nav">
     <div class="wrapper">
 
-        <?php include_once('../../../pages/Users/Layout/NavbarTopUser.php') ?>
-        <?php include_once('../../../pages/Users/Layout/NavbarLeftUser.php') ?>
+    <?php include_once('../../../pages/Users/Layout/NavbarHomeUser.php') ?>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">

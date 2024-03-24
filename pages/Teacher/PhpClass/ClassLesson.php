@@ -101,6 +101,7 @@ class ClassLesson {
         $this->LessonNo = $row['LessonNo'];
         $this->LessonContent = $row['LessonContent'];
         $this->LessonVideoURL = $row['LessonVideoURL'];
+        $this->LessonStudyTime = $row['LessonStudyTime'];
     }
 
     // เพิ่มบทเรียนใหม่

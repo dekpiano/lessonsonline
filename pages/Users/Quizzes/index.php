@@ -105,7 +105,7 @@ input[type="radio"]:hover+label {
 
                         <?php $CheckAnsFull =  explode('|',$row['OptAnswerArray'])?>
                         <div class="card">
-                            <div class="QuestionText card-header bg-gradient-secondary h4 p-5">
+                            <div class="QuestionText card-header bg-gradient-secondary h4">
                                 <?=$i?>. <?= $row['QuestionText'];?>
                             </div>
                             <div class="card-body">

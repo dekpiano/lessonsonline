@@ -121,16 +121,22 @@ class ClassEnrollmentUser {
         $stmtTimeLesson->execute();
         $rowTimeLesson = $stmtTimeLesson->fetch(PDO::FETCH_ASSOC);
 
-        $UpdateTime = "UPDATE tb_lesson_progress SET LessProTimeSpent = ? WHERE LessProID = ?";
-        $stmtUpTime = $this->conn->prepare($UpdateTime);
-        $stmtUpTime->bindValue(1, $CountTime + @$row['LessProTimeSpent']);
-        $stmtUpTime->bindValue(2, $LessProID);
-        $stmtUpTime->execute();
+        
         
         if(@$row['LessProTimeSpent'] < @$rowTimeLesson['LessonStudyTime']){
-            echo @$row['LessProTimeSpent']+1;
+            echo @$row['LessProTimeSpent'];
+            $UpdateTime = "UPDATE tb_lesson_progress SET LessProTimeSpent = ? WHERE LessProID = ?";
+            $stmtUpTime = $this->conn->prepare($UpdateTime);
+            $stmtUpTime->bindValue(1, $CountTime + @$row['LessProTimeSpent']);
+            $stmtUpTime->bindValue(2, $LessProID);
+            $stmtUpTime->execute();
         }else{
             echo(@$row['LessProTimeSpent']+0);
+            $UpdateTime = "UPDATE tb_lesson_progress SET LessProStatus = ? WHERE LessProID = ?";
+            $stmtUpTime = $this->conn->prepare($UpdateTime);
+            $stmtUpTime->bindValue(1, "เรียนสำเร็จ");
+            $stmtUpTime->bindValue(2, $LessProID);
+            $stmtUpTime->execute();
         }
        
     }
