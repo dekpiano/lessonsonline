@@ -40,6 +40,20 @@ class ClassQuizzes {
         return $stmt;
     }
 
+    public function CorrectAnswer($QuestionID){
+
+        $query = "SELECT OptChoice FROM tb_options WHERE OptQuestionID = ? AND OptAnswer = 1";
+
+        $stmt = $this->conn->prepare($query);
+
+        // ผูกค่าพารามิเตอร์
+        $stmt->bindValue(1, $QuestionID);
+
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+
     
     public function readLessonEdit() {
         $query = "SELECT tb_lessons.*,tb_courses.CourseName FROM " . $this->table_name . " 
@@ -112,6 +126,44 @@ class ClassQuizzes {
         exit();
     }
 
+    public function QuizzesPhpUpdate() {
+
+        // print_r($_POST);
+        // exit();
+        $queryQuestions = "UPDATE tb_questions SET QuestionText = ? WHERE QuestionID = ?";
+        $stmtQuestions = $this->conn->prepare($queryQuestions);
+        $stmtQuestions->bindValue(1,$_POST['UpdateQuestionText']);
+        $stmtQuestions->bindValue(2,$_POST['UpdateQuestionID']);
+        $stmtQuestions->execute();
+
+        $SelIDOption = "SELECT OptID FROM tb_options WHERE OptQuestionID = ?";
+        $stmtIDOption = $this->conn->prepare($SelIDOption);
+        $stmtIDOption->bindValue(1,$_POST['UpdateQuestionID']);
+        $stmtIDOption->execute();
+        $i = 0;
+        while ($rowIDOption = $stmtIDOption->fetch(PDO::FETCH_ASSOC)) {            
+            $query = "UPDATE tb_options SET OptChoice = ?, OptAnswer = ? WHERE OptID = ?";
+            $stmtUpdateData = $this->conn->prepare($query);
+            $stmtUpdateData->bindValue(1,$_POST['UpdateOptChoice'][$i]);
+            $stmtUpdateData->bindValue(2,$_POST['UpdateOptAnswer'][$i]);
+            $stmtUpdateData->bindValue(3,$rowIDOption['OptID']);
+            $stmtUpdateData->execute();
+            $i++;
+        }
+        
+        if(!empty($_POST['OptChoice'])){
+            foreach ($_POST['OptChoice']  as $key => $v_OptChoice) {
+                $Choice = "INSERT INTO tb_options (OptQuestionID,OptChoice,OptAnswer) VALUES (?,?,?)";    
+                $stmtChoice = $this->conn->prepare($Choice);       
+                $stmtChoice->bindValue(1,$_POST['UpdateQuestionID']);
+                $stmtChoice->bindValue(2, $v_OptChoice);
+                $stmtChoice->bindValue(3, $_POST['OptAnswer'][$key]);
+                $stmtChoice->execute();
+            }
+        }
+        return 1;
+    }
+
     public function UpdateLesson() {
         $query = "UPDATE " . $this->table_name . "
                   SET LessonNo=:LessonNo,LessonTitle=:LessonTitle,LessonContent=:LessonContent,LessonVideoURL=:LessonVideoURL,LessonStudyTime=:LessonStudyTime
@@ -133,5 +185,48 @@ class ClassQuizzes {
 
         return false;
     }
+
+    public function EditQuizzes($IDQuestion){
+        $sqlquestions = "SELECT
+        tb_options.OptChoice,
+        tb_options.OptAnswer,
+        tb_questions.QuestionText,
+        tb_questions.QuestionID,
+        tb_options.OptID
+        FROM
+        tb_questions
+        INNER JOIN tb_options ON tb_questions.QuestionID = tb_options.OptQuestionID
+         WHERE QuestionID = :QuestionID";
+        $stmtquestions = $this->conn->prepare($sqlquestions);
+        $stmtquestions->bindValue(':QuestionID', $IDQuestion);
+        $stmtquestions->execute();
+        $result =array();
+        while ($row = $stmtquestions->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row;
+        }
+
+        echo json_encode($result);
+    }
+
+    public function DeleteQuizzes($delete_id){
+        $sql = "DELETE FROM tb_questions WHERE QuestionID = :QuestionID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':QuestionID', $delete_id);
+        $stmt->execute();
+
+        // ตรวจสอบว่าลบข้อมูลสำเร็จหรือไม่
+        if ($stmt->rowCount() > 0) {
+            $sqlOpt = "DELETE FROM tb_options WHERE OptQuestionID = :OptQuestionID";
+            $stmtOpt = $this->conn->prepare($sqlOpt);
+            $stmtOpt->bindValue(':OptQuestionID', $delete_id);
+            $stmtOpt->execute();
+            return $delete_id;
+        } else {
+            return 0;
+        }
+    }
+
 }
+
+
 ?>

@@ -54,6 +54,27 @@ $.widget.bridge('uibutton', $.ui.button)
 <script src="../../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+<script>
+// Disable form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Get the forms we want to add validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+
 <?php if(uri(3) == "Course"):?>
 <script src="../../../pages/Teacher/Course/Js/JsCourse.js?v=6"></script>
 <script>
@@ -75,5 +96,5 @@ $('.summernoteEdit').summernote('code', contentFromDB);
 </script>
 <?php endif;?>
 <?php if(uri(3) == "Quizzes"):?>
-<script src="../../../pages/Teacher/Quizzes/Js/JsQuizzes.js?v=3"></script>
+<script src="../../../pages/Teacher/Quizzes/Js/JsQuizzes.js?v=5.12"></script>
 <?php endif;?>
