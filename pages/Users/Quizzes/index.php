@@ -14,13 +14,13 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
 // $rowLesSing = $LesSing->fetch(PDO::FETCH_ASSOC);
 
 //$rowLesSingTitle = $LesSing->fetch(PDO::FETCH_ASSOC);
-//  echo '<pre>';print_r($rowLesSing);
-// exit();
-$ShowQuiz = $Quiz->readQuiz(@$_GET['Course'],@$_GET['Leeson']); // คำตอบ
-$ViewLatestExamRound = $Quiz->ViewLatestExamRound($rowLesMain['LessonID']);
-$Viewscore = $Quiz->Viewscore($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound']);
-$ViewAnswerIsCorrect = $Quiz->ViewAnswerIsCorrect($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound']);
 
+$ShowQuiz = $Quiz->readQuiz(@$_GET['Course'],@$_GET['Leeson']); // คำตอบ
+$ViewLatestExamRound = $Quiz->ViewLatestExamRound($rowLesMain['LessonID'],@$_GET['AnswerCategory']);
+$Viewscore = $Quiz->Viewscore($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound'],@$_GET['AnswerCategory']);
+$ViewAnswerIsCorrect = $Quiz->ViewAnswerIsCorrect($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound'],@$_GET['AnswerCategory']);
+//  echo '<pre>';print_r($Viewscore);
+// exit();
 // while ($row = $ShowQuiz->fetch(PDO::FETCH_ASSOC)) {
 //     echo '<pre>'; print_r($row);
 // }
@@ -154,6 +154,9 @@ input[type="radio"]:hover+label {
                         </div>
                         <?php $i++; endwhile; ?>
                         <div class="d-flex justify-content-between align-items-center">
+                            <?php if($_GET['AnswerCategory'] == "ก่อนเรียน") :?>
+                                <button type="submit" class="btn btn-success mb-5" <?= ($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) == 1 ?"disabled":""?>>ส่งคำตอบ</button>
+                                <?php else: ?>
                             <div id="SendAnswer">
                                 <div>
                                     ส่งคำตอบแล้ว <?=$ViewLatestExamRound['UserAnswerExamRound'] ?? 0?>/3 ครั้ง
@@ -161,9 +164,14 @@ input[type="radio"]:hover+label {
                                 <button type="submit" class="btn btn-success mb-5"
                                     <?= ($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) >= 3 ?"disabled":""?>>ส่งคำตอบ</button>
                             </div>
+                            <?php endif;?>
+
                             <div id="Next">
-                                <?php if(($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) > 0):?>
-                                <a href="" class="btn btn-primary mb-5">ไปบทถัดไป &#10230;</a>
+                                <?php if(($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) > 0 && $_GET['AnswerCategory'] == "หลังเรียน"):?>
+                                    <a href="../Learn/?Course=<?=$_GET['Course']?>" class="btn btn-primary mb-5">เลือกบทถัดไป เมนูซ้าย</a>
+                                    
+                                    <?php else : ?>
+                                <a href="../Learn/?Course=<?=$_GET['Course']?>&Leeson=<?=$_GET['Leeson']?>" class="btn btn-primary mb-5">ถัดไป &#10230;</a>
                                 <?php endif;?>
                             </div>
                         </div>

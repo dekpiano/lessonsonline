@@ -155,6 +155,30 @@ class ClassLearn {
         $stmtLessonsAll->execute();
        return $stmtLessonsAll->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function LessonsCheckExamBefore($CourseID,$LessonNo) {
+
+        $sql = "SELECT
+        tb_questions.QuestionID,
+        tb_questions.QuestionLessonID,
+        tb_useranswers.UserAnswerCategory,
+        tb_useranswers.UserID,
+        tb_lessons.CourseID,
+        tb_lessons.LessonNo
+        FROM
+        tb_questions
+        INNER JOIN tb_useranswers ON tb_useranswers.QuestionID = tb_questions.QuestionID
+        INNER JOIN tb_lessons ON tb_lessons.LessonID = tb_questions.QuestionLessonID
+        WHERE tb_useranswers.UserID = ? AND tb_lessons.CourseID = ? AND tb_lessons.LessonNo = ? AND tb_useranswers.UserAnswerCategory = 'ก่อนเรียน'";
+        $query = $this->conn->prepare($sql);
+        $query->bindValue(1, $_SESSION['UserID']);
+        $query->bindValue(2, $CourseID);
+        $query->bindValue(3, $LessonNo);
+        $query->execute();
+
+        return $query->rowCount();
+
+    }
     
 }
 ?>
