@@ -56,13 +56,17 @@ class ClassLearn {
         tb_lessons.LessonTitle,
         tb_lessons.LessonNo,
         tb_enrollments.UserID,
-        tb_courses.CourseName
+        tb_courses.CourseName,
+        tb_lesson_progress.LessProStatus
         FROM
         tb_lessons
         INNER JOIN tb_enrollments ON tb_enrollments.CourseID = tb_lessons.CourseID
         INNER JOIN tb_courses ON tb_lessons.CourseID = tb_courses.CourseID AND tb_enrollments.CourseID = tb_courses.CourseID
+        INNER JOIN tb_lesson_progress ON tb_lesson_progress.LessonID = tb_lessons.LessonID
         WHERE
-                tb_lessons.CourseID = ? AND tb_enrollments.UserID = ?
+        tb_lessons.CourseID = ? AND tb_enrollments.UserID = ?
+        GROUP BY
+        tb_lessons.LessonNo
         ORDER BY tb_lessons.LessonNo ASC";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $CourseID);
@@ -71,7 +75,7 @@ class ClassLearn {
         return $stmt; 
     }
 
-    public function CheckStatusLesson($CourseID,$EnrollmentID,$LessonNo){
+    public function CheckStatusLesson($CourseID){
 
         $sql = "SELECT
         tb_lesson_progress.LessProStatus,
@@ -82,14 +86,12 @@ class ClassLearn {
         tb_lesson_progress
         INNER JOIN tb_enrollments ON tb_enrollments.EnrollmentID = tb_lesson_progress.EnrollmentID
         INNER JOIN tb_lessons ON tb_lessons.LessonID = tb_lesson_progress.LessonID
-        WHERE tb_enrollments.UserID = ? AND tb_lesson_progress.EnrollmentID = ? AND tb_enrollments.CourseID = ? AND tb_lessons.LessonNo= ?";
+        WHERE tb_enrollments.UserID = ? AND tb_enrollments.CourseID = ?";
         $stmt = $this->conn->prepare($sql);      
         $stmt->bindParam(1, $_SESSION['UserID']);
-        $stmt->bindParam(2, $EnrollmentID);
-        $stmt->bindParam(3, $CourseID);
-        $stmt->bindParam(4, $LessonNo);
+        $stmt->bindParam(2, $CourseID);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt;
 
     }
 

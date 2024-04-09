@@ -13,8 +13,8 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC);
 $rowLesSingTitle = $LesSing->fetch(PDO::FETCH_ASSOC);
 
 $CheckExamBefore = $Course->LessonsCheckExamBefore(@$_GET['Course'],@$_GET['Leeson']);
-// print_r($CheckExamBefore);
-// exit();
+
+
 if(!empty($_GET['Leeson'])){   
      $CheckEnroll = $Course->LessonsProgressInsert(@$_GET['Course'],@$_GET['Leeson']);
 }
