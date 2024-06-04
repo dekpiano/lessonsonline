@@ -214,7 +214,7 @@ $ShowQuestion = $Quiz->readAll($_GET['LessonID']);
                                         <label for="OrtionFile1" class="file-label mb-0 mr-2"><i
                                                 class="fas fa-image upload-icon"></i></label>
                                         <input type="file" class="option-file-input" name="OptImg[]" id="OrtionFile1"
-                                            accept="image/*" style="display: none;">
+                                            accept="image/*" style="display: none; ">
                                     </div>
                                     <div>
                                         <div class="icheck-primary d-inline">
