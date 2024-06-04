@@ -21,7 +21,7 @@ $course->CourseType = $_POST['CourseType'];
 
 if($_FILES["CourseImage"]["error"] == 0){    
     
-    $imageUploader = new ClassUploader($_FILES["CourseImage"], 2048); // Resize to 500x500
+    $imageUploader = new ClassUploader($_FILES["CourseImage"]["name"],$_FILES["CourseImage"]["tmp_name"], 2048,"Course"); // Resize to 500x500
     $imageUploader->deleteImage('../../../../uploads/Course/'.$_POST['CourseImageOld']);
     $array = json_decode($imageUploader->upload());
     $course->CourseImage =  $array->Text;

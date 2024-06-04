@@ -2,6 +2,7 @@
 // include database and object files
 include_once '../../../../php/Database/Database.php'; 
 include_once '../../../../pages/Teacher/PhpClass/ClassQuizzes.php';
+include_once '../../../../php/Uploadfile/ClassUploader.php';
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -9,7 +10,16 @@ $db = $database->getConnection();
 // prepare object
 $Quiz = new ClassQuizzes($db);
 
-$QuizUpdate = $Quiz->QuizzesPhpUpdate();
+if($_FILES["UpdateQuestionImg"]["error"] == 0){ 
+    $imageUploader = new ClassUploader($_FILES["UpdateQuestionImg"]["name"],$_FILES["UpdateQuestionImg"]["tmp_name"], 500,"Question"); // Resize to 500x500
+    $array = json_decode($imageUploader->upload());
+    $UpdateQuestion_Img =  $array->Text;
+    $QuizUpdate = $Quiz->QuizzesPhpUpdate($UpdateQuestion_Img);
+}else{
+    $UpdateQuestion_Img = "";
+}
+
+
 
 echo $QuizUpdate;
 

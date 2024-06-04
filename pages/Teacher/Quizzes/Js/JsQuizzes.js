@@ -105,9 +105,11 @@ $(document).on("click",".BtnEditQuizzes", function(e) {
    $.post("../../../pages/Teacher/Quizzes/Php/QuizzesPhpEdit.php", { IDQuestion: $(this).attr('IDQuestion') })
           .done(function(response) {
 
+            console.log(response[0].QuestionImg);
             
             $('#UpdateQuestionText').val(response[0].QuestionText);
             $('#UpdateQuestionID').val(response[0].QuestionID);
+            $('#UpdateimagePreview').attr("src","../../../uploads/Question/"+response[0].QuestionImg);
             var container = $("#Update-options-container");
             container.empty();
             $.each(response, function(index, value) {

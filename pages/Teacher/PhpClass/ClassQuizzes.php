@@ -1,5 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Bangkok'); // ตั้งค่า Time Zone ตามที่ต้องการ
+// include_once '../../../php/Uploadfile/ClassUploader.php';
 
 class ClassQuizzes {
     private $conn;
@@ -81,38 +82,32 @@ class ClassQuizzes {
     }
 
     // เพิ่มบทเรียนใหม่
-    public function QuizzesPhpInsert() {
+    public function QuizzesPhpInsert($Question_Img) {
+
         try {
         $OptChoice = $_POST['OptChoice'] ?? []; // รับค่า options จากฟอร์ม
         $OptAnswer = $_POST['OptAnswer'] ?? []; // รับค่า correct_options จากฟอร์ม
-
-        // foreach ($OptChoice as $key => $OptChoice) {
-        //     // ตรวจสอบว่า correct_options ที่ส่งมามี index ตรงกับ options ที่กำลังตรวจสอบหรือไม่
-        //     // ถ้ามีให้กำหนดค่าให้กับ $correct_value ในแต่ละรอบ
-        //     $correct_value = in_array('off', $OptAnswer) ? 1 : 0;
-            
-        //     // สามารถใช้ตัวแปร $correct_value ในการทำอะไรก็ได้ต่อจากนั้น
-        //     // เช่น บันทึกลงฐานข้อมูล หรือประมวลผลต่อไป
-        //     echo "Option: $OptChoice, Correct: $correct_value <br>";
-        // }
-
    
-        $query = "INSERT INTO tb_questions (QuestionLessonID,QuestionText) VALUES (?,?)";
+        $query = "INSERT INTO tb_questions (QuestionLessonID,QuestionText,QuestionImg) VALUES (?,?,?)";
 
         $stmt = $this->conn->prepare($query);       
         $stmt->bindValue(1, $_POST['LessonID']);
         $stmt->bindValue(2, $_POST['QuestionText']);
+        $stmt->bindValue(3, $Question_Img);
         $stmt->execute();
 
         $question_id = $this->conn->lastInsertId();
        
         foreach ($OptChoice  as $key => $v_OptChoice) {
-            $Choice = "INSERT INTO tb_options (OptQuestionID,OptChoice,OptAnswer) VALUES (?,?,?)";
+            $imageUploader = new ClassUploader($_FILES["OptImg"]["name"][$key],$_FILES["OptImg"]["tmp_name"][$key], 500,"Question"); // Resize to 500x500
+            $array = json_decode($imageUploader->upload());
 
+            $Choice = "INSERT INTO tb_options (OptQuestionID,OptChoice,OptAnswer,OptImg) VALUES (?,?,?,?)";
             $stmtChoice = $this->conn->prepare($Choice);       
             $stmtChoice->bindValue(1,$question_id);
             $stmtChoice->bindValue(2, $v_OptChoice);
             $stmtChoice->bindValue(3, $OptAnswer[$key]);
+            $stmtChoice->bindValue(4, $array->Text);
             $stmtChoice->execute();
         }
         echo 1;
@@ -126,14 +121,15 @@ class ClassQuizzes {
         exit();
     }
 
-    public function QuizzesPhpUpdate() {
+    public function QuizzesPhpUpdate($UpdateQuestion_Img) {
 
         // print_r($_POST);
         // exit();
-        $queryQuestions = "UPDATE tb_questions SET QuestionText = ? WHERE QuestionID = ?";
+        $queryQuestions = "UPDATE tb_questions SET QuestionText = ?,QuestionImg = ? WHERE QuestionID = ?";
         $stmtQuestions = $this->conn->prepare($queryQuestions);
         $stmtQuestions->bindValue(1,$_POST['UpdateQuestionText']);
-        $stmtQuestions->bindValue(2,$_POST['UpdateQuestionID']);
+        $stmtQuestions->bindValue(3,$_POST['UpdateQuestionID']);
+        $stmtQuestions->bindValue(2, $UpdateQuestion_Img);
         $stmtQuestions->execute();
 
         $SelIDOption = "SELECT OptID FROM tb_options WHERE OptQuestionID = ?";
@@ -192,7 +188,8 @@ class ClassQuizzes {
         tb_options.OptAnswer,
         tb_questions.QuestionText,
         tb_questions.QuestionID,
-        tb_options.OptID
+        tb_options.OptID,
+        tb_questions.QuestionImg
         FROM
         tb_questions
         INNER JOIN tb_options ON tb_questions.QuestionID = tb_options.OptQuestionID

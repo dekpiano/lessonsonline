@@ -1,7 +1,7 @@
 <?php
 
 class ClassUploader {
-    private $targetDirectory = "../../../../uploads/Course/";
+    private $targetDirectory = "../../../../uploads/";
     private $maxFileSize = 5000000; // 5MB
     private $allowedTypes = ['jpg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif'];
     private $fileName;
@@ -9,12 +9,19 @@ class ClassUploader {
     private $fileTempName;
     private $newWidth;
     private $newHeight;
+    private $Directory;
 
-    public function __construct($file, $newWidth) {
-        $this->fileName = basename($file["name"]);
+    public function __construct($filename,$tmpname, $newWidth,$Directory) {
+        $this->fileName = basename($filename);
         $this->imageFileType = strtolower(pathinfo($this->fileName, PATHINFO_EXTENSION));
-        $this->fileTempName = $_FILES['CourseImage']['tmp_name'];
+        $this->fileTempName = $tmpname;
         $this->newWidth = $newWidth;
+        $this->Directory = $Directory;
+
+        if (!is_dir($this->targetDirectory.$Directory."/")) {
+            mkdir($this->targetDirectory.$Directory."/", 0777, true);
+        }
+
         //$this->newHeight = $newHeight;
     }
 
@@ -36,7 +43,7 @@ class ClassUploader {
         }
 
         // Check if file already exists
-        if (file_exists($this->targetDirectory . $this->fileName)) {
+        if (file_exists($this->targetDirectory.$this->Directory."/". $this->fileName)) {
             return json_encode(['Msg'=>0,'Text'=> "Sorry, file already exists."]);
         }
 
@@ -94,7 +101,7 @@ class ClassUploader {
     private function generateNewFileName() {
         // Generate a unique name for the image: use time and random number
         $newFileName = time() . '-' . rand(1000, 9999) . '.' . $this->imageFileType;
-        return $this->targetDirectory . $newFileName;
+        return $this->targetDirectory.$this->Directory."/".$newFileName;
     }
 
     public function deleteImage($filePath) {
