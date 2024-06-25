@@ -10,6 +10,10 @@ $db = $database->getConnection();
 // prepare object
 $Quiz = new ClassQuizzes($db);
 
+print_r($_POST);
+
+exit();
+
 if($_FILES["UpdateQuestionImg"]["error"] == 0){ 
     $imageUploader = new ClassUploader($_FILES["UpdateQuestionImg"]["name"],$_FILES["UpdateQuestionImg"]["tmp_name"], 500,"Question"); // Resize to 500x500
     $array = json_decode($imageUploader->upload());
@@ -17,6 +21,7 @@ if($_FILES["UpdateQuestionImg"]["error"] == 0){
     $QuizUpdate = $Quiz->QuizzesPhpUpdate($UpdateQuestion_Img);
 }else{
     $UpdateQuestion_Img = "";
+    $QuizUpdate = "";
 }
 
 

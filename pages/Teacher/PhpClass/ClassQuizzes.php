@@ -121,7 +121,7 @@ class ClassQuizzes {
         exit();
     }
 
-    public function QuizzesPhpUpdate($UpdateQuestion_Img) {
+    public function QuizzesPhpUpdate($UpdateQuestion_Img = null) {
 
         // print_r($_POST);
         // exit();
@@ -189,6 +189,7 @@ class ClassQuizzes {
         tb_questions.QuestionText,
         tb_questions.QuestionID,
         tb_options.OptID,
+        tb_options.OptImg,
         tb_questions.QuestionImg
         FROM
         tb_questions

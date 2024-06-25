@@ -205,15 +205,12 @@ $ShowQuestion = $Quiz->readAll($_GET['LessonID']);
                                 <div class="d-flex align-items-center">
                                     <div class="mr-2" style="width: -webkit-fill-available;">
                                         <input type="text" id="OptChoice" name="OptChoice[]" class="form-control"
-                                            placeholder="ใส่ตัวเลือกคำตอบ" required>
-                                        <!-- <div class="invalid-feedback">
-                                        กรุณาเพิ่มตัวเลือก
-                                    </div> -->
+                                            placeholder="ใส่ตัวเลือกคำตอบ" required>                                        
                                     </div>
                                     <div>
                                         <label for="OrtionFile1" class="file-label mb-0 mr-2"><i
                                                 class="fas fa-image upload-icon"></i></label>
-                                        <input type="file" class="option-file-input" name="OptImg[]" id="OrtionFile1"
+                                        <input type="file" class="option-file-insert" name="OptImg[]" id="OrtionFile1"
                                             accept="image/*" style="display: none; ">
                                     </div>
                                     <div>
@@ -224,11 +221,11 @@ $ShowQuestion = $Quiz->readAll($_GET['LessonID']);
                                         </div>
                                     </div>
                                 </div>
-                                <img id="preview1" class="img-fluid" style="display:none" src="#" alt="">
+                                <img id="preview1" class="img-fluid" style="display:none;width:150px;" src="#" alt="">
                                 <div id="removeButton" class="remove-button">&times;</div>
                             </div>
-
                         </div>
+
                     </div>
 
                     <button type="button" class="btn btn-secondary mt-2" onclick="addOption()">เพิ่มตัวเลือก</button>
@@ -248,12 +245,12 @@ function addOption() {
     var html =
         '<div><div class="d-flex align-items-center mt-2"><div class="mr-2" style="width: -webkit-fill-available;"><input type="text" id="OptChoice" name="OptChoice[]" class="form-control"placeholder="ใส่ตัวเลือกคำตอบ" required></div><div><label for="OrtionFile' +
         id +
-        '" class="file-label mb-0 mr-2"><i class="fas fa-image upload-icon"></i></label><input type="file" class="option-file-input" name="OptImg[]" id="OrtionFile' +
+        '" class="file-label mb-0 mr-2"><i class="fas fa-image upload-icon"></i></label><input type="file" class="option-file-insert" name="OptImg[]" id="OrtionFile' +
         id +
         '"  accept="image/*" style="display: none;"> </div><div><div class="icheck-primary d-inline"><input type="checkbox" id="OptAnswer' +
         id + '" name="OptAnswer[]" value="1"><label for="OptAnswer' + id +
         '"></label></div></div></div><img id="preview' + id +
-        '" class="img-fluid" style="display:none" src="#" alt=""><div id="removeButton" class="remove-button">&times;</div></div>';
+        '" style="display:none;width:150px;" src="#" alt=""><div id="removeButton" class="remove-button">&times;</div></div>';
     container.append(html);
 }
 
@@ -261,8 +258,13 @@ function UpdateaddOption() {
     var container = $("#Update-options-container");
     var id = container.children().length + 1;
     var html =
-        '<div class="d-flex align-items-center mt-2"><div class="mr-2" style="width: -webkit-fill-available;"><input type="text" id="UpdateOptChoice" name="OptChoice[]" class="form-control"placeholder="ใส่ตัวเลือกคำตอบ" required></div><div><div class="icheck-primary d-inline"><input type="checkbox" id="OptAnswer' +
-        id + '" name="OptAnswer[]" value="1"><label for="OptAnswer' + id + '"></label></div></div></div>';
+        '<div><div class="d-flex align-items-center mt-2"><div class="mr-2" style="width: -webkit-fill-available;"><input type="text" id="UpdateOptChoice" name="UpdateOptChoice[]" class="form-control"placeholder="ใส่ตัวเลือกคำตอบ" required></div><div><label for="OrtionFile' +
+        id +
+        '" class="file-label mb-0 mr-2"><i class="fas fa-image upload-icon"></i></label><input type="file" class="option-file-Update" name="OptImg[]" id="OrtionFile' +
+        id +
+        '"  accept="image/*" style="display: none;"> </div><div><div class="icheck-primary d-inline"><input type="checkbox" id="UpdateOptAnswer' +
+        id + '" name="UpdateOptAnswer[]" value="1"><label for="UpdateOptAnswer' + id + '"></label></div></div></div><img id="OptionPreviwe' + id +
+        '" style="display:none;width:150px;" src="#" alt=""></div>';
     container.append(html);
 }
 </script>
@@ -295,7 +297,7 @@ function UpdateaddOption() {
                             </div>
                         </div>
                         <div class="image-preview-container">
-                            <img id="UpdateimagePreview" class="img-fluid" src="#" alt="">
+                            <img id="UpdateimagePreview" class="img-fluid" src="#" alt="" style="width:200px">
                             <div id="UpdateremoveButton" class="remove-button">&times;</div>
                         </div>
                     </div>
@@ -359,19 +361,36 @@ $(document).on("click", "#UpdateremoveButton", function() {
     $('.upload-icon').show();
 });
 
-$(document).on('change', 'input[type="file"]', function() {
+// $(document).on('change', '.option-file-insert', function() {
+//     var inputId = $(this).attr('id');
+//     var previewId = 'preview' + inputId.slice(-1);
+//     //console.log(previewId);
+//     //$('#' + previewId).html("");
+//     var file = this.files[0];
+//     if (file && /(\.|\/)(gif|jpe?g|png)$/i.test(file.type)) {
+//         var reader = new FileReader();
+//         reader.onload = function(e) {
+
+//             $('#' + previewId).attr('src', e.target.result).show();
+//         }
+//         reader.readAsDataURL(file);
+//     }
+// });
+
+$(document).on('change', '.option-file-Update', function() {
     var inputId = $(this).attr('id');
-    var previewId = 'preview' + inputId.slice(-1);
-    console.log(previewId);
+    var OptionPreviwe = 'OptionPreviwe' + inputId.slice(-1);
+    console.log(OptionPreviwe);
     //$('#' + previewId).html("");
     var file = this.files[0];
     if (file && /(\.|\/)(gif|jpe?g|png)$/i.test(file.type)) {
         var reader = new FileReader();
         reader.onload = function(e) {
 
-            $('#' + previewId).attr('src', e.target.result).show();
+            $('#' + OptionPreviwe).attr('src', e.target.result).show();
         }
         reader.readAsDataURL(file);
     }
 });
+
 </script>
