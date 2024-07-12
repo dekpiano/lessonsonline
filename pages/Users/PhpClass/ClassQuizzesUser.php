@@ -24,8 +24,10 @@ class ClassQuizzesUser {
             tb_questions.QuestionLessonID,
             tb_questions.QuestionText,
             tb_questions.QuestionID,
+            tb_questions.QuestionImg,
             GROUP_CONCAT(OptChoice SEPARATOR '|') AS OptChoiceArray,
-            GROUP_CONCAT(OptAnswer SEPARATOR '|') AS OptAnswerArray
+            GROUP_CONCAT(OptAnswer SEPARATOR '|') AS OptAnswerArray,
+            GROUP_CONCAT(OptImg SEPARATOR '|') AS OptImgArray
             FROM
             tb_questions
             INNER JOIN tb_options ON tb_questions.QuestionID = tb_options.OptQuestionID

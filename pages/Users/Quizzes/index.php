@@ -108,6 +108,13 @@ input[type="radio"]:hover+label {
                             <div class="QuestionText card-header bg-gradient-secondary h4">
                                 <?=$i?>. <?= $row['QuestionText'];?>
                             </div>
+                            <?php if($row['QuestionImg'] != ''): ?>
+                            <div class="mt-2 text-center">
+                                <img src="../../../uploads/Question/<?= $row['QuestionImg'];?>" style="width:200px"
+                                    alt="">
+                            </div>
+                            <?php endif;?>
+
                             <div class="card-body">
 
                                 <div class="row">
@@ -142,8 +149,12 @@ input[type="radio"]:hover+label {
                                             <div class="d-flex justify-content-between">
                                                 <?=$value?> <div class="mark<?=$i?>"><?=$Is;?></div>
                                             </div>
-
                                         </label>
+                                        <?php $OptImg =  explode("|",$row['OptImgArray']); ?>
+                                        <div class="mt-1 mb-1 text-center">
+                                <img src="../../../uploads/Question/<?= $OptImg[$key];?>" style="width:200px"
+                                    alt="">
+                            </div>
                                         <div class="invalid-feedback">กรุณาเลือกคำตอบ!</div>
                                     </div>
 
@@ -155,8 +166,9 @@ input[type="radio"]:hover+label {
                         <?php $i++; endwhile; ?>
                         <div class="d-flex justify-content-between align-items-center">
                             <?php if($_GET['AnswerCategory'] == "ก่อนเรียน") :?>
-                                <button type="submit" class="btn btn-success mb-5" <?= ($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) == 1 ?"disabled":""?>>ส่งคำตอบ</button>
-                                <?php else: ?>
+                            <button type="submit" class="btn btn-success mb-5"
+                                <?= ($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) == 1 ?"disabled":""?>>ส่งคำตอบ</button>
+                            <?php else: ?>
                             <div id="SendAnswer">
                                 <div>
                                     ส่งคำตอบแล้ว <?=$ViewLatestExamRound['UserAnswerExamRound'] ?? 0?>/3 ครั้ง
@@ -168,10 +180,12 @@ input[type="radio"]:hover+label {
 
                             <div id="Next">
                                 <?php if(($ViewLatestExamRound['UserAnswerExamRound'] ?? 0) > 0 && $_GET['AnswerCategory'] == "หลังเรียน"):?>
-                                    <a href="../Learn/?Course=<?=$_GET['Course']?>" class="btn btn-primary mb-5">เลือกบทถัดไป เมนูซ้าย</a>
-                                    
-                                    <?php else : ?>
-                                <a href="../Learn/?Course=<?=$_GET['Course']?>&Leeson=<?=$_GET['Leeson']?>" class="btn btn-primary mb-5">ถัดไป &#10230;</a>
+                                <a href="../Learn/?Course=<?=$_GET['Course']?>"
+                                    class="btn btn-primary mb-5">เลือกบทถัดไป เมนูซ้าย</a>
+
+                                <?php else : ?>
+                                <a href="../Learn/?Course=<?=$_GET['Course']?>&Leeson=<?=$_GET['Leeson']?>"
+                                    class="btn btn-primary mb-5">ถัดไป &#10230;</a>
                                 <?php endif;?>
                             </div>
                         </div>
