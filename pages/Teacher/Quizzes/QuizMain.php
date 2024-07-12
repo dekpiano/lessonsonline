@@ -285,6 +285,7 @@ function UpdateaddOption() {
                 <input type="hidden" id="UpdateQuestionID" name="UpdateQuestionID" value="">
                 <div class="modal-body">
                     <div class="form-group">
+                     
                         <label for="inputDescription">คำถาม</label>
                         <div class="d-flex">
                             <textarea id="UpdateQuestionText" name="UpdateQuestionText" class="form-control" rows="2"
@@ -361,26 +362,28 @@ $(document).on("click", "#UpdateremoveButton", function() {
     $('.upload-icon').show();
 });
 
-// $(document).on('change', '.option-file-insert', function() {
-//     var inputId = $(this).attr('id');
-//     var previewId = 'preview' + inputId.slice(-1);
-//     //console.log(previewId);
-//     //$('#' + previewId).html("");
-//     var file = this.files[0];
-//     if (file && /(\.|\/)(gif|jpe?g|png)$/i.test(file.type)) {
-//         var reader = new FileReader();
-//         reader.onload = function(e) {
+$(document).on('change', '.option-file-insert', function(e) {
+    e.preventDefault();
+    var inputId = $(this).attr('id');
+    var previewId = 'preview' + inputId.slice(-1);
+    //console.log(previewId);
+    //$('#' + previewId).html("");
+    var file = this.files[0];
+    if (file && /(\.|\/)(gif|jpe?g|png)$/i.test(file.type)) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
 
-//             $('#' + previewId).attr('src', e.target.result).show();
-//         }
-//         reader.readAsDataURL(file);
-//     }
-// });
+            $('#' + previewId).attr('src', e.target.result).show();
+        }
+        reader.readAsDataURL(file);
+    }
+});
 
-$(document).on('change', '.option-file-Update', function() {
+$(document).on('change', '.option-file-Update', function(e) {
+    e.preventDefault();
     var inputId = $(this).attr('id');
     var OptionPreviwe = 'OptionPreviwe' + inputId.slice(-1);
-    console.log(OptionPreviwe);
+    //console.log(OptionPreviwe);
     //$('#' + previewId).html("");
     var file = this.files[0];
     if (file && /(\.|\/)(gif|jpe?g|png)$/i.test(file.type)) {

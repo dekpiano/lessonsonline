@@ -101,12 +101,12 @@ $(document).on("submit","#FormUpdateQuizzes", function(e) {
 });
 
 $(document).on("click",".BtnEditQuizzes", function(e) {
-  
+
    $.post("../../../pages/Teacher/Quizzes/Php/QuizzesPhpEdit.php", { IDQuestion: $(this).attr('IDQuestion') })
           .done(function(response) {
 
            // console.log(response[0].QuestionImg);
-            
+           
             $('#UpdateQuestionText').val(response[0].QuestionText);
             $('#UpdateQuestionID').val(response[0].QuestionID);
             $('#UpdateimagePreview').attr("src","../../../uploads/Question/"+response[0].QuestionImg);
@@ -119,12 +119,13 @@ $(document).on("click",".BtnEditQuizzes", function(e) {
               }else{
                 Check = "";
               }
-              var ImgOption = "<img id='OptionPreviwe"+(index+1)+"' class='OptionPreviwe'  src='../../../uploads/Question/"+value.OptImg+"' alt='' style='width:150px'";
+              var num = index+1;
+              var ImgOption = "<img id='OptionPreviwe"+(num)+"' class='OptionPreviwe'  src='../../../uploads/Question/"+value.OptImg+"' alt='' style='width:150px'";
               var html =
-                '<div><div class="d-flex align-items-center mt-2"><div class="mr-2" style="width: -webkit-fill-available;"><input type="text" id="UpdateOptChoice" name="UpdateOptChoice[]" class="form-control"placeholder="ใส่ตัวเลือกคำตอบ" required value="'+value.OptChoice+'"></div><div><label for="OrtionFile' +
-                (index+1) +
-        '" class="file-label mb-0 mr-2"><i class="fas fa-image upload-icon"></i></label><input type="file" class="option-file-Update" name="OptImg[]" id="OrtionFile' +
-        (index+1) +
+                '<div> <input type="hidden" id="UpdateOptID" name="OptID[]" value="'+value.OptID+'"><div class="d-flex align-items-center mt-2"><div class="mr-2" style="width: -webkit-fill-available;"><input type="text" id="UpdateOptChoice" name="UpdateOptChoice[]" class="form-control"placeholder="ใส่ตัวเลือกคำตอบ" required value="'+value.OptChoice+'"></div><div><label for="Update-OrtionFile' +
+                (num) +
+        '" class="file-label mb-0 mr-2"><i class="fas fa-image upload-icon"></i></label><input type="file" class="option-file-Update" name="OptImg[]" id="Update-OrtionFile' +
+        (num) +
         '"  accept="image/*" style="display: none;"> </div><div><div class="icheck-primary d-inline"><input type="checkbox" id="UpdateOptAnswer' +
                 index + '" name="UpdateOptAnswer[]" value="1"  '+Check+'><label for="UpdateOptAnswer' + index + '"></label></div></div></div><div>'+ImgOption+'</div></div>';
             container.append(html);

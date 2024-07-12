@@ -96,5 +96,5 @@ $('.summernoteEdit').summernote('code', contentFromDB);
 </script>
 <?php endif;?>
 <?php if(uri(3) == "Quizzes"):?>
-<script src="../../../pages/Teacher/Quizzes/Js/JsQuizzes.js?v=10.2"></script>
+<script src="../../../pages/Teacher/Quizzes/Js/JsQuizzes.js?v=11"></script>
 <?php endif;?>

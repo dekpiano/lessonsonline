@@ -123,15 +123,18 @@ class ClassQuizzes {
 
     public function QuizzesPhpUpdate($UpdateQuestion_Img = null) {
 
-        // print_r($_POST);
-        // exit();
-        $queryQuestions = "UPDATE tb_questions SET QuestionText = ?,QuestionImg = ? WHERE QuestionID = ?";
-        $stmtQuestions = $this->conn->prepare($queryQuestions);
-        $stmtQuestions->bindValue(1,$_POST['UpdateQuestionText']);
-        $stmtQuestions->bindValue(3,$_POST['UpdateQuestionID']);
-        $stmtQuestions->bindValue(2, $UpdateQuestion_Img);
-        $stmtQuestions->execute();
-
+        // print_r(666);
+        //     exit();
+        if($UpdateQuestion_Img != ""){
+           
+            $queryQuestions = "UPDATE tb_questions SET QuestionText = ?,QuestionImg = ? WHERE QuestionID = ?";
+            $stmtQuestions = $this->conn->prepare($queryQuestions);
+            $stmtQuestions->bindValue(1,$_POST['UpdateQuestionText']);
+            $stmtQuestions->bindValue(3,$_POST['UpdateQuestionID']);
+            $stmtQuestions->bindValue(2, $UpdateQuestion_Img);
+            $stmtQuestions->execute();
+        }
+    
         $SelIDOption = "SELECT OptID FROM tb_options WHERE OptQuestionID = ?";
         $stmtIDOption = $this->conn->prepare($SelIDOption);
         $stmtIDOption->bindValue(1,$_POST['UpdateQuestionID']);
