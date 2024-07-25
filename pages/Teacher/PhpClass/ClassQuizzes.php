@@ -99,7 +99,7 @@ class ClassQuizzes {
         $question_id = $this->conn->lastInsertId();
        
         foreach ($OptChoice  as $key => $v_OptChoice) {
-            $imageUploader = new ClassUploader($_FILES["OptImg"]["name"][$key],$_FILES["OptImg"]["tmp_name"][$key], 500,"Question"); // Resize to 500x500
+            $imageUploader = new ClassUploader($_FILES["OptImg"]["name"][$key],$_FILES["OptImg"]["tmp_name"][$key], 500,"Options"); // Resize to 500x500
             $array = json_decode($imageUploader->upload());
 
             $Choice = "INSERT INTO tb_options (OptQuestionID,OptChoice,OptAnswer,OptImg) VALUES (?,?,?,?)";
@@ -123,32 +123,80 @@ class ClassQuizzes {
 
     public function QuizzesPhpUpdate($UpdateQuestion_Img = null) {
 
-        // print_r(666);
-        //     exit();
-        if($UpdateQuestion_Img != ""){
-           
+        
+        if($_FILES["UpdateQuestionImg"]["error"] == 0){ 
+            // ลบรูปเก่าก่อน 
+            $delQuiz = "SELECT QuestionImg FROM tb_questions WHERE QuestionID = ?";
+            $stmtDelQuiz = $this->conn->prepare($delQuiz);
+            $stmtDelQuiz->bindValue(1, $_POST['UpdateQuestionID']);
+            $stmtDelQuiz->execute();
+            $imageUploader = new ClassUploader(0,0, 500,"Question"); // Resize to 500x500
+            $array = ($imageUploader->deleteImage("../../../../uploads/Question/".$stmtDelQuiz->fetch(PDO::FETCH_ASSOC)['QuestionImg']));
+            
+            // อัพเดตรูปใหม่
+            $imageUploader = new ClassUploader($_FILES["UpdateQuestionImg"]["name"],$_FILES["UpdateQuestionImg"]["tmp_name"], 500,"Question"); 
+            $array = json_decode($imageUploader->upload());
+            $UpdateQuestion_Img =  $array->Text;   
             $queryQuestions = "UPDATE tb_questions SET QuestionText = ?,QuestionImg = ? WHERE QuestionID = ?";
             $stmtQuestions = $this->conn->prepare($queryQuestions);
             $stmtQuestions->bindValue(1,$_POST['UpdateQuestionText']);
             $stmtQuestions->bindValue(3,$_POST['UpdateQuestionID']);
             $stmtQuestions->bindValue(2, $UpdateQuestion_Img);
             $stmtQuestions->execute();
-        }
-    
+            
+        }else{
+            $queryQuestions = "UPDATE tb_questions SET QuestionText = ? WHERE QuestionID = ?";
+            $stmtQuestions = $this->conn->prepare($queryQuestions);
+            $stmtQuestions->bindValue(1,$_POST['UpdateQuestionText']);
+            $stmtQuestions->bindValue(2,$_POST['UpdateQuestionID']);
+            $stmtQuestions->execute();
+        }           
+              
+         // อัพเดตตัวเลือก
+
+         
+        // print_r($_POST);
+        // print_r($_FILES);
+        // exit();
+
         $SelIDOption = "SELECT OptID FROM tb_options WHERE OptQuestionID = ?";
         $stmtIDOption = $this->conn->prepare($SelIDOption);
         $stmtIDOption->bindValue(1,$_POST['UpdateQuestionID']);
         $stmtIDOption->execute();
         $i = 0;
-        while ($rowIDOption = $stmtIDOption->fetch(PDO::FETCH_ASSOC)) {            
-            $query = "UPDATE tb_options SET OptChoice = ?, OptAnswer = ? WHERE OptID = ?";
-            $stmtUpdateData = $this->conn->prepare($query);
-            $stmtUpdateData->bindValue(1,$_POST['UpdateOptChoice'][$i]);
-            $stmtUpdateData->bindValue(2,$_POST['UpdateOptAnswer'][$i]);
-            $stmtUpdateData->bindValue(3,$rowIDOption['OptID']);
-            $stmtUpdateData->execute();
+        while ($rowIDOption = $stmtIDOption->fetch(PDO::FETCH_ASSOC)) { 
+            
+            if($_FILES["OptImg"]["error"][$i] == 0){
+                $delQuiz = "SELECT OptImg FROM tb_options WHERE OptID = ?";
+                $stmtDelQuiz = $this->conn->prepare($delQuiz);
+                $stmtDelQuiz->bindValue(1, $rowIDOption['OptID']);
+                $stmtDelQuiz->execute();
+                $imageUploader = new ClassUploader(0,0, 500,"Question"); // Resize to 500x500
+                $array = ($imageUploader->deleteImage("../../../../uploads/Options/".$stmtDelQuiz->fetch(PDO::FETCH_ASSOC)['OptImg']));
+
+                $imageUploader = new ClassUploader($_FILES["OptImg"]["name"][$i],$_FILES["OptImg"]["tmp_name"][$i], 500,"Options"); 
+                $array = json_decode($imageUploader->upload());
+                $UpdateOptions_Img =  $array->Text;   
+
+                $query = "UPDATE tb_options SET OptChoice = ?, OptAnswer = ?, OptImg = ? WHERE OptID = ?";
+                $stmtUpdateData = $this->conn->prepare($query);
+                $stmtUpdateData->bindValue(1,$_POST['UpdateOptChoice'][$i]);
+                $stmtUpdateData->bindValue(2,$_POST['UpdateOptAnswer'][$i]);
+                $stmtUpdateData->bindValue(3,$UpdateOptions_Img);
+                $stmtUpdateData->bindValue(4,$rowIDOption['OptID']);
+                $stmtUpdateData->execute();
+            }else{
+                $query = "UPDATE tb_options SET OptChoice = ?, OptAnswer = ? WHERE OptID = ?";
+                $stmtUpdateData = $this->conn->prepare($query);
+                $stmtUpdateData->bindValue(1,$_POST['UpdateOptChoice'][$i]);
+                $stmtUpdateData->bindValue(2,$_POST['UpdateOptAnswer'][$i]);
+                $stmtUpdateData->bindValue(3,$rowIDOption['OptID']);
+                $stmtUpdateData->execute();
+            }           
             $i++;
         }
+
+       
         
         if(!empty($_POST['OptChoice'])){
             foreach ($_POST['OptChoice']  as $key => $v_OptChoice) {
@@ -210,16 +258,40 @@ class ClassQuizzes {
     }
 
     public function DeleteQuizzes($delete_id){
-        $sql = "DELETE FROM tb_questions WHERE QuestionID = :QuestionID";
+
+        $delQuiz = "SELECT QuestionImg FROM tb_questions WHERE QuestionID = ?";
+        $stmtDelQuiz = $this->conn->prepare($delQuiz);
+        $stmtDelQuiz->bindValue(1, $delete_id);
+        $stmtDelQuiz->execute();
+        $imageUploader = new ClassUploader(0,0, 500,"Question"); // Resize to 500x500
+        $array = ($imageUploader->deleteImage("../../../../uploads/Question/".$stmtDelQuiz->fetch(PDO::FETCH_ASSOC)['QuestionImg']));
+
+        $sql = "DELETE FROM tb_useranswers WHERE QuestionID = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue(':QuestionID', $delete_id);
+        $stmt->bindValue(1, $delete_id);
         $stmt->execute();
 
+        $sql = "DELETE FROM tb_questions WHERE QuestionID = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(1, $delete_id);
+        $stmt->execute();
+        
         // ตรวจสอบว่าลบข้อมูลสำเร็จหรือไม่
         if ($stmt->rowCount() > 0) {
-            $sqlOpt = "DELETE FROM tb_options WHERE OptQuestionID = :OptQuestionID";
+
+            $delOptions = "SELECT OptImg FROM tb_options WHERE OptQuestionID = ?";
+            $stmtDelOptions = $this->conn->prepare($delOptions);
+            $stmtDelOptions->bindValue(1, $delete_id);
+            $stmtDelOptions->execute();
+            $imageUploader = new ClassUploader(0,0,0,"Options"); // Resize to 500x500
+
+            while ($row = $stmtDelOptions->fetch(PDO::FETCH_ASSOC)) {
+                $array = ($imageUploader->deleteImage("../../../../uploads/Options/".$row['OptImg']));
+            }
+
+            $sqlOpt = "DELETE FROM tb_options WHERE OptQuestionID = ?";
             $stmtOpt = $this->conn->prepare($sqlOpt);
-            $stmtOpt->bindValue(':OptQuestionID', $delete_id);
+            $stmtOpt->bindValue(1, $delete_id);
             $stmtOpt->execute();
             return $delete_id;
         } else {

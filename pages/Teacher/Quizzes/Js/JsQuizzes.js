@@ -120,7 +120,7 @@ $(document).on("click",".BtnEditQuizzes", function(e) {
                 Check = "";
               }
               var num = index+1;
-              var ImgOption = "<img id='OptionPreviwe"+(num)+"' class='OptionPreviwe'  src='../../../uploads/Question/"+value.OptImg+"' alt='' style='width:150px'";
+              var ImgOption = "<img id='OptionPreviwe"+(num)+"' class='OptionPreviwe'  src='../../../uploads/Options/"+value.OptImg+"' alt='' style='width:150px'";
               var html =
                 '<div> <input type="hidden" id="UpdateOptID" name="OptID[]" value="'+value.OptID+'"><div class="d-flex align-items-center mt-2"><div class="mr-2" style="width: -webkit-fill-available;"><input type="text" id="UpdateOptChoice" name="UpdateOptChoice[]" class="form-control"placeholder="ใส่ตัวเลือกคำตอบ" required value="'+value.OptChoice+'"></div><div><label for="Update-OrtionFile' +
                 (num) +
@@ -141,6 +141,7 @@ $(document).on("click",".BtnEditQuizzes", function(e) {
 
 
 function confirmDeleteQuiz(deleteId) {
+ 
   Swal.fire({
       title: 'คุณแน่ใจหรือไม่?',
       text: "คุณต้องการลบข้อมูลนี้?",
@@ -159,7 +160,7 @@ function confirmDeleteQuiz(deleteId) {
             if(response >= 1){
               $('#Quiz' + response).remove();
             }
-           
+           console.log(response);
           })
           .fail(function(xhr, status, error) {
               console.error("Error:", error);

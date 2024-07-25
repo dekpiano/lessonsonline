@@ -23,20 +23,9 @@ $Quiz = new ClassQuizzes($db);
 //             echo $_POST['OptID'][$i];
 //         }
 //    }
-print_r($_POST);
-exit();
 
-if($_FILES["UpdateQuestionImg"]["error"] == 0){ 
-    $imageUploader = new ClassUploader($_FILES["UpdateQuestionImg"]["name"],$_FILES["UpdateQuestionImg"]["tmp_name"], 500,"Question"); // Resize to 500x500
-    $array = json_decode($imageUploader->upload());
-    $UpdateQuestion_Img =  $array->Text;
-    
-}else{
-    $UpdateQuestion_Img = "";
-    $QuizUpdate = "";
-}
 
-$QuizUpdate = $Quiz->QuizzesPhpUpdate($UpdateQuestion_Img);
+$QuizUpdate = $Quiz->QuizzesPhpUpdate();
 
 
 

@@ -39,7 +39,7 @@ class ClassUploader {
 
         // Allow certain file formats
         if(!array_key_exists($this->imageFileType, $this->allowedTypes)) {
-            return json_encode(['Msg'=>0,'Text'=> "Sorry, only JPG, JPEG, PNG & GIF files are allowed."]);
+            return json_encode(['Msg'=>0,'Text'=> ""]);
         }
 
         // Check if file already exists
@@ -109,12 +109,12 @@ class ClassUploader {
         if (file_exists($filePath)) {
             // ลบไฟล์
             if (unlink($filePath)) {
-                return "The file has been deleted.";
+                return "ไฟล์ถูกลบแล้ว";
             } else {
-                return "There was an error deleting the file.";
+                return "เกิดข้อผิดพลาดในการลบไฟล์";
             }
         } else {
-            return "The file does not exist.";
+            return "ไม่มีไฟล์นี้อยู่";
         }
     }
     

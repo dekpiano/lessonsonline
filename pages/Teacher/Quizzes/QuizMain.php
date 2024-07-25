@@ -197,10 +197,11 @@ $ShowQuestion = $Quiz->readAll($_GET['LessonID']);
                     <hr>
                     <div class="form-group">
                         <div class="d-flex justify-content-between">
-                            <div>ตัวเลือก</div>
+                            <div>คำตอบ</div>
                             <div>เฉลย</div>
                         </div>
                         <div id="options-container">
+                            <?php for ($i=1; $i <=4 ; $i++) :?>
                             <div>
                                 <div class="d-flex align-items-center">
                                     <div class="mr-2" style="width: -webkit-fill-available;">
@@ -208,22 +209,23 @@ $ShowQuestion = $Quiz->readAll($_GET['LessonID']);
                                             placeholder="ใส่ตัวเลือกคำตอบ" required>                                        
                                     </div>
                                     <div>
-                                        <label for="OrtionFile1" class="file-label mb-0 mr-2"><i
+                                        <label for="OrtionFile<?=$i?>" class="file-label mb-0 mr-2"><i
                                                 class="fas fa-image upload-icon"></i></label>
-                                        <input type="file" class="option-file-insert" name="OptImg[]" id="OrtionFile1"
+                                        <input type="file" class="option-file-insert" name="OptImg[]" id="OrtionFile<?=$i?>"
                                             accept="image/*" style="display: none; ">
                                     </div>
                                     <div>
                                         <div class="icheck-primary d-inline">
-                                            <input type="checkbox" id="OptAnswer1" name="OptAnswer[]" value="1">
-                                            <label for="OptAnswer1">
+                                            <input type="checkbox" id="OptAnswer<?=$i?>" name="OptAnswer[]" value="1">
+                                            <label for="OptAnswer<?=$i?>">
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-                                <img id="preview1" class="img-fluid" style="display:none;width:150px;" src="#" alt="">
+                                <img id="preview<?=$i?>" class="img-fluid" style="display:none;width:150px;" src="#" alt="">
                                 <div id="removeButton" class="remove-button">&times;</div>
                             </div>
+                            <?php endfor; ?>
                         </div>
 
                     </div>
