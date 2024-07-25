@@ -85,7 +85,7 @@ $Lesson->readCourse();
                                         <td>
                                             <a href="LessonUpdate?LessonID=<?=$row['LessonID']?>"
                                                 class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> แก้ไข</a> 
-                                                <a href="http://"
+                                                <a href="http://" onclick="return confirm('ยังไม่เปิดให้ลบข้อมูล');"
                                                 class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> ลบ</a>
                                         </td>
                                     </tr>

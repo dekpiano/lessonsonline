@@ -75,7 +75,7 @@ $num = $stmt->rowCount();
                                         <td><?=$row['CourseDateCreated'];?></td>
                                         <td><a href="../Lesson/LessonMain?CourseID=<?=$row['CourseID']?>" class="btn btn-primary btn-sm"><i class="far fa-plus-square"></i> สร้างบทเรียน</a></td>
                                         <td>
-                                            <a href="CourseUpdate?CourseID=<?=$row['CourseID']?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> แก้ไข</a> <a href="http://" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> ลบ</a>
+                                            <a href="CourseUpdate?CourseID=<?=$row['CourseID']?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> แก้ไข</a> <a href="http://" onclick="return confirm('ยังไม่เปิดให้ลบข้อมูล');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> ลบ</a>
                                         </td>
                                     </tr>
                                     <?php endwhile; ?>
