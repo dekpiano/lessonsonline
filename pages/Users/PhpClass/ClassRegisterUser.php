@@ -47,7 +47,7 @@ class ClassRegisterUser {
     // เพิ่มสมัครเรียนใหม่
     public function create() {
 
-        $data = array('UserCode','UserPrefix','UserFirstName','UserLastName','UserBirthday','UserPhone','Username','Password','Email','UserType','DateCreated','UserGender','UserIdCard');
+        $data = array('UserCode','UserPrefix','UserFirstName','UserLastName','UserBirthday','UserPhone','Username','Password','Email','UserType','DateCreated','UserIdCard','UserRangeAge','UserLevelEdu','UserTypeService');
         $ASum = array();
         foreach ($data as $key => $v_data) {
             $ASum[] = $v_data."=:".$v_data;
@@ -80,6 +80,35 @@ class ClassRegisterUser {
         return $count > 0 ? true : false;
     }
 
+    public function TypeService(){
+
+        $query = "SELECT * FROM tb_type_service";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    public function RangeAge(){
+
+        $query = "SELECT * FROM tb_range_age";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    public function LevelEdu(){
+
+        $query = "SELECT * FROM tb_level_edu";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
 
     
 }

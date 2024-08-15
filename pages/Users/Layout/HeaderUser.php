@@ -28,42 +28,76 @@
     <!-- summernote -->
     <link rel="stylesheet" href="../../../plugins/summernote/summernote-bs4.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
 
 </head>
 <style>
-    *{
-        font-family:"Sarabun";
-    }
+* {
+    font-family: "Sarabun";
+}
 </style>
 
 <!-- Modal -->
 <div class="modal fade" id="ModalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
-            <div class="modal-body">
+            <div class="">
+                <div class="">
+                    <div class="card card-outline card-primary">
+                        <div class="card-header text-center">
+                            <a href="../../index2.html" class="h1"><b>เข้าสู่ระบบ</b></a>
+                        </div>
+                        <div class="card-body">
 
-                <h2>Login เข้าสู่ระบบ </h2>
-                <form id="loginForm">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">ชื่อผู้ใช้งาน:</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                            <form id="loginForm" action="#" method="post">
+                                <div class="input-group mb-3">
+                                    <input type="email" class="form-control" placeholder="Email" id="username"
+                                        name="username">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-envelope"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="password" class="form-control" placeholder="Password" id="password"
+                                        name="password">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-lock"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <a href="../../Users/ForgotPassword">ลืมรหัสผ่าน</a>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                            <hr>
+                            <div class="social-auth-links text-center mt-2 mb-3">
+                                <a href="../../Users/Register" class="btn btn-block btn-success">
+                                <i class="fas fa-user-edit"></i> สมัครเรียน
+                                </a>
+                            </div>
+
+
+                        </div>
+
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">รหัสผ่าน:</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
 
-                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt fa-1x"></i> เข้าสู่ระบบ</button>
-                    <br>
-                    <a href="../../Users/Register" class="btn btn-secondary btn-block"><i class="fas fa-user-plus fa-1x"></i> สมัครเรียน</a>
+                </div>
 
-
-
-                </form>
 
             </div>
         </div>

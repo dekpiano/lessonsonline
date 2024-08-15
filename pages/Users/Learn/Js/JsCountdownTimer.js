@@ -1,4 +1,5 @@
-let end = new Date().getTime() + (10 * 1000); // 10 seconds from now
+let timing = 60; //วินาที
+let end = new Date().getTime() + (timing * 1000); // 10 seconds from now
 const circle = document.querySelector('circle');
 const number = document.getElementById('number');
 const circumference = 2 * Math.PI * circle.getAttribute('r');
@@ -10,10 +11,10 @@ circle.style.strokeDashoffset = `${circumference}`;
 function updateCountdown() {
   const now = new Date().getTime();
   const distance = end - now;
-  const seconds = Math.floor((distance % (1000 * 10)) / 1000);
+  const seconds = Math.floor((distance % (1000 * timing)) / 1000);
 
   // Calculate the offset for the circular progress
-  const percent = (((distance / 1000)) / 10) * circumference;
+  const percent = (((distance / 1000)) / timing) * circumference;
   circle.style.strokeDashoffset = circumference - percent;
 
   // Update the timer display
@@ -26,11 +27,11 @@ function updateCountdown() {
 }
 
 function resetCountdown() {
-  end = new Date().getTime() + (10 * 1000); // Reset end time to 10 seconds from now
+  end = new Date().getTime() + (timing * 1000); // Reset end time to 10 seconds from now
   circle.style.strokeDashoffset = `${circumference}`; // Reset the circle's stroke dashoffset
   updateCountdown(); // Update the countdown immediately to avoid delay
   //RoundTime += 1;
-  document.getElementById('RoundTime').innerHTML = RoundTime+0;
+  //document.getElementById('RoundTime').innerHTML = RoundTime+0;
   UpdateTimeLesson(1);
 }
 
@@ -46,7 +47,7 @@ function UpdateTimeLesson(CountTime) {
     data: { LessProID: LessProID,CountTimeFull:CountTimeFull,CourseID:CourseID }, // ส่งข้อมูลตามที่ต้องการ
     success: function(response) {
        console.log(response); // พิมพ์การตอบกลับจากเซิร์ฟเวอร์ใน console
-        if(response < LessonStudyTime){
+        if(response != LessonStudyTime){
           document.getElementById('RoundTime').innerHTML = response;
           $('#btnQuiz').addClass('disabled');
 
@@ -63,7 +64,7 @@ function UpdateTimeLesson(CountTime) {
 }
 
 updateCountdown(); // Initialize the countdown
-document.getElementById('RoundTime').innerHTML = 0;
+//document.getElementById('RoundTime').innerHTML = 0;
 UpdateTimeLesson();
 const interval = setInterval(updateCountdown, 1000);
 

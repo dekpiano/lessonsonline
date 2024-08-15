@@ -16,7 +16,7 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
 <body class="hold-transition layout-top-nav">
     <div class="wrapper">
 
-    <?php include_once('../../../pages/Users/Layout/NavbarHomeUser.php') ?>
+        <?php include_once('../../../pages/Users/Layout/NavbarHomeUser.php') ?>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -41,11 +41,11 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                             <div class="input-group-text">
                                                 <span class="fas fa-envelope"></span>
                                             </div>
-                                        </div>                                        
-                                        <div class="invalid-feedback">กรุณากรอกอีเมล</div> 
-                                        <div class="w-100 text-danger" id="emailStatus"></div>                                       
+                                        </div>
+                                        <div class="invalid-feedback">กรุณากรอกอีเมล</div>
+                                        <div class="w-100 text-danger" id="emailStatus"></div>
                                     </div>
-                                    
+
 
                                     <div class="input-group mb-3">
                                         <input type="password" class="form-control" placeholder="รหัสผ่าน" id="Password"
@@ -59,29 +59,18 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                     </div>
                                     <div class="input-group mb-3">
                                         <input type="password" class="form-control" placeholder="ยืนยันรหัสผ่าน"
-                                            required onkeyup="validatePassword()" id="ConfirmPassword" name="ConfirmPassword">
+                                            required onkeyup="validatePassword()" id="ConfirmPassword"
+                                            name="ConfirmPassword">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-lock"></span>
                                             </div>
                                         </div>
-                                        <div class="invalid-feedback">กรุณากรอกยืนยันรหัสผ่าน</div>   
-                                        <div class="w-100" id="validationMessage"></div>                                    
+                                        <div class="invalid-feedback">กรุณากรอกยืนยันรหัสผ่าน</div>
+                                        <div class="w-100" id="validationMessage"></div>
                                     </div>
-                                    
+
                                     <hr>
-                                    <div class="form-group form-check-inline">
-                                        <div class="custom-control custom-radio mr-5">
-                                            <input class="custom-control-input" type="radio" id="customRadio1"
-                                                name="UserGender" value="ชาย"  required>
-                                            <label for="customRadio1" class="custom-control-label">ชาย</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input class="custom-control-input" type="radio" id="customRadio2"
-                                                name="UserGender" required value="หญิง">
-                                            <label for="customRadio2" class="custom-control-label">หญิง</label>
-                                        </div>
-                                    </div>
 
                                     <div class="input-group mb-3">
                                         <select name="UserPrefix" id="UserPrefix" class="form-control" required>
@@ -99,6 +88,7 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                         </div>
                                         <div class="invalid-feedback">กรุณาเลือกคำนำหน้า</div>
                                     </div>
+
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="ชื่อจริง"
                                             id="UserFirstName" name="UserFirstName" required>
@@ -121,7 +111,8 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                     </div>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="เลขบัตรประชาชน 13 หลัก"
-                                            id="UserIdCard" name="UserIdCard" required data-inputmask="'mask': '9999999999999'">
+                                            id="UserIdCard" name="UserIdCard" required
+                                            data-inputmask="'mask': '9999999999999'">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-user"></span>
@@ -140,6 +131,52 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                         <div class="invalid-feedback">กรุณาเลือกวันเกิด</div>
                                     </div>
                                     <div class="input-group mb-3">
+                                        <select name="UserRangeAge" id="UserRangeAge" class="form-control" required>
+                                            <option value="">กรุณาเลือกช่วงอายุ</option>
+                                            <?php $RangeAge = $User->RangeAge();
+                                            while($row = $RangeAge->fetch(PDO::FETCH_ASSOC)): ?>
+                                            <option value="<?=$row['rangeage_id']?>"><?=$row['rangeage_title']?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user"></span>
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback">กรุณาเลือกช่วงอายุ</div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <select name="UserLevelEdu" id="UserLevelEdu" class="form-control" required>
+                                            <option value="">กรุณาเลือกระดับการศึกษา</option>
+                                            <?php $LevelEdu = $User->LevelEdu();
+                                            while($row = $LevelEdu->fetch(PDO::FETCH_ASSOC)): ?>
+                                            <option value="<?=$row['edu_id']?>"><?=$row['edu_title']?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user"></span>
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback">กรุณาเลือกระดับการศึกษา</div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <select name="UserTypeService" id="UserTypeService" class="form-control" required>
+                                            <option value="">กรุณาเลือกประเภทผู้บริการ</option>
+                                            <?php $type = $User->TypeService();
+                                            while($row = $type->fetch(PDO::FETCH_ASSOC)): ?>
+                                            <option value="<?=$row['typeser_id']?>"><?=$row['typeser_title']?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user"></span>
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback">กรุณาเลือกประเภทผู้บริการ</div>
+                                    </div>
+                                    <div class="input-group mb-3">
                                         <input type="tel" class="form-control" placeholder="เบอร์โทร" id="UserPhone"
                                             name="UserPhone" required data-inputmask="'mask': '9999999999'">
                                         <div class="input-group-append">
@@ -151,7 +188,8 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                     </div>
 
 
-                                    <button type="submit" id="BtnSubmitRegister" class="btn btn-primary btn-block">สมัครเรียน</button>
+                                    <button type="submit" id="BtnSubmitRegister"
+                                        class="btn btn-primary btn-block">สมัครเรียน</button>
 
                                 </form>
 

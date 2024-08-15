@@ -36,7 +36,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']); //เมนูซ้าย
       <div class="container">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"> คอร์เรียน</h1>
+            <h1 class="m-0"> คอร์สเรียน</h1>
           </div><!-- /.col -->
      
         </div><!-- /.row -->
@@ -60,7 +60,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']); //เมนูซ้าย
         </div>
         <div class="p-2">
             <h5 class="m-0"><?=$row['CourseName']?></h5>
-            <small>โดย <?=$row['FullNmae']?></small> 
+            <small>โดย ศูนย์วิทยาศาสตร์เพื่อการศึกษานครสวรรค์</small> 
             <div class="row">
                 <div class="col-sm-4 col-4 border-right">
                     <div class="description-block">

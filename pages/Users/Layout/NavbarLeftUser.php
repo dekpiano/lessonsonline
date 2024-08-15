@@ -34,15 +34,20 @@
         <?php if(!empty($_SESSION['UserID'])): ?>
         <h5 class="mt-3"><?=@$rowLesMain['CourseName']?></h5>
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <?php while($row = $Resutl->fetch(PDO::FETCH_ASSOC)) :?>
+            <?php while($row = $Resutl->fetch(PDO::FETCH_ASSOC)) : 
+              ?>
             <li class="nav-item">
                 <a href="../Learn/?Course=<?=@$_GET['Course']?>&Leeson=<?=$row['LessonNo']?>"
                     class="nav-link reloadButton <?= @$_GET['Course'] == $row['CourseID'] && @$_GET['Leeson'] == $row['LessonNo'] ? "active":""?> ">
                     <i class="nav-icon fas fa-book-open"></i>
                     <p>
                         บทที่ <?=$row['LessonNo']?> <?=$row['LessonTitle']?>
-                    
-                        <?php if($row['LessProStatus'] == "เรียนสำเร็จ"): ?>
+                        
+                        <?php $CheckStatusLesson = $Course->CheckStatusLesson($row['CourseID'],$row['LessonNo'])->fetch(PDO::FETCH_ASSOC); 
+                        //print_r($CheckStatusLesson);
+                        ?>
+
+                        <?php if($CheckStatusLesson['LessProStatus'] == "เรียนสำเร็จ"): ?>
                         <span id="LessonNo<?=$row['LessonNo']?>" class="badge badge-success right"> <i
                                 class="fas fa-check" style="margin-left: 0rem"></i> </span>
                         <?php endif;?>

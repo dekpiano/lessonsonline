@@ -3,7 +3,7 @@
         <a href="../../../" class="navbar-brand">
             <img src="../../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                 style="opacity: .8">
-            <span class="brand-text font-weight-light">บทเรียนออนไลน์</span>
+            <span class="brand-text font-weight-light">บทเรียนออนไลน์ ศูนย์วิทยาศาสตร์เพื่อการศึกษานครสวรรค์</span>
         </a>
 
         <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -18,7 +18,7 @@
             <?php if(!empty($_SESSION['FullName'])):?>
             <li class="nav-item">
                 <a class="nav-link" href="../../../pages/Users/Course/CourseMy" role="button">
-                    คอร์เรียนของฉัน
+                    คอร์สเรียนของฉัน
                 </a>
             </li>
             <li class="nav-item dropdown">

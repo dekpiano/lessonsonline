@@ -110,7 +110,7 @@ input[type="radio"]:hover+label {
                             </div>
                             <?php if($row['QuestionImg'] != ''): ?>
                             <div class="mt-2 text-center">
-                                <img src="../../../uploads/Question/<?= $row['QuestionImg'];?>" style="width:200px"
+                                <img src="../../../uploads/Question/<?= $row['QuestionImg'];?>" class="img-fluid"
                                     alt="">
                             </div>
                             <?php endif;?>
@@ -152,7 +152,7 @@ input[type="radio"]:hover+label {
                                         </label>
                                         <?php $OptImg =  explode("|",$row['OptImgArray']); ?>
                                         <div class="mt-1 mb-1 text-center">
-                                <img src="../../../uploads/Question/<?= $OptImg[$key];?>" style="width:200px"
+                                <img src="../../../uploads/Options/<?= $OptImg[$key];?>" style="width:200px"
                                     alt="">
                             </div>
                                         <div class="invalid-feedback">กรุณาเลือกคำตอบ!</div>

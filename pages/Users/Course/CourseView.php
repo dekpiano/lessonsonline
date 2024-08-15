@@ -121,12 +121,12 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
 
                                         <h4>ประมวลรายวิชา</h4>
                                         <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
-                                        <a href="http://" rel="noopener noreferrer">
+                                        <!-- <a href="#" rel="noopener noreferrer"> -->
                                             <div class="callout callout-success">
-                                                <h5>บทที่ <?=$row['LessonNo']?></h5>
-                                                <p>วีดีโอ 2 นาที</p>
+                                                <h5>บทที่ <?=$row['LessonNo']?> <?=$row['LessonTitle']?></h5>
+                                                <p>เวลาที่ใช้เรียน <?=$row['LessonStudyTime']?> นาที</p>
                                             </div>
-                                        </a>
+                                        <!-- </a> -->
                                         <?php endwhile; ?>
 
                                     </div>

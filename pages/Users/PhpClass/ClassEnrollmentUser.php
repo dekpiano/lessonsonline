@@ -123,20 +123,24 @@ class ClassEnrollmentUser {
 
         
         
-        if(@$row['LessProTimeSpent'] < @$rowTimeLesson['LessonStudyTime']){
-            echo @$row['LessProTimeSpent'];
+        if(@$row['LessProTimeSpent'] != @$rowTimeLesson['LessonStudyTime']){
+           
             $UpdateTime = "UPDATE tb_lesson_progress SET LessProTimeSpent = ? WHERE LessProID = ?";
             $stmtUpTime = $this->conn->prepare($UpdateTime);
             $stmtUpTime->bindValue(1, $CountTime + @$row['LessProTimeSpent']);
             $stmtUpTime->bindValue(2, $LessProID);
             $stmtUpTime->execute();
-        }else{
-            echo(@$row['LessProTimeSpent']+0);
+            echo @$row['LessProTimeSpent'];
+        }
+        if(@$row['LessProTimeSpent'] == @$rowTimeLesson['LessonStudyTime']){
+           
             $UpdateTime = "UPDATE tb_lesson_progress SET LessProStatus = ? WHERE LessProID = ?";
             $stmtUpTime = $this->conn->prepare($UpdateTime);
             $stmtUpTime->bindValue(1, "เรียนสำเร็จ");
             $stmtUpTime->bindValue(2, $LessProID);
             $stmtUpTime->execute();
+            echo(@$row['LessProTimeSpent']);
+
         }
        
     }
