@@ -1,11 +1,19 @@
 <?php include_once '../../../php/Database/Database.php'; 
 include_once '../../../pages/Teacher/Home/Php/ClassHome.php'; 
+include_once '../../../pages/Teacher/PhpClass/ClassCourse.php'; 
 // สร้างออบเจกต์ฐานข้อมูลและคอร์สเรียน
 $database = new Database();
 $db = $database->getConnection();
+$course = new ClassCourse($db);
 
 $Home = new ClassHome($db);
 $Title = $Home->TitleBar;
+
+$CourseAll = $course->CheckPackageCourse();
+$LessonsAll = $course->CheckLessons();
+$EnrollmentsAll = $course->CheckEnrollments();
+$CheckGraduationAll = $course->CheckGraduation();
+
 ?>
 
 <?php include_once('../../../pages/Teacher/Layout/HeaderTeacher.php') ?>
@@ -46,7 +54,7 @@ $Title = $Home->TitleBar;
                             <!-- small box -->
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3>150</h3>
+                                    <h3><?=$CourseAll;?></h3>
 
                                     <p>คอร์สเรียน</p>
                                 </div>
@@ -62,7 +70,7 @@ $Title = $Home->TitleBar;
                             <!-- small box -->
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                                    <h3><?=$LessonsAll;?></h3>
 
                                     <p>บทเรียน</p>
                                 </div>
@@ -78,7 +86,7 @@ $Title = $Home->TitleBar;
                             <!-- small box -->
                             <div class="small-box bg-warning">
                                 <div class="inner">
-                                    <h3>44</h3>
+                                    <h3><?=$EnrollmentsAll;?></h3>
 
                                     <p>ลงทะเบียน</p>
                                 </div>
@@ -94,7 +102,7 @@ $Title = $Home->TitleBar;
                             <!-- small box -->
                             <div class="small-box bg-danger">
                                 <div class="inner">
-                                    <h3>65</h3>
+                                    <h3><?=$CheckGraduationAll;?></h3>
 
                                     <p>เรียนสำเร็จ</p>
                                 </div>

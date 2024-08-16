@@ -43,8 +43,7 @@ class ClassCourse {
 
     // อ่านข้อมูลคอร์สเรียนทั้งหมด
     public function read() {
-        $query = "SELECT tb_courses.*,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullNmae FROM tb_courses JOIN tb_users ON tb_courses.TeacherID = tb_users.UserID
-        WHERE TeacherID=".$_SESSION['UserID'];
+        $query = "SELECT tb_courses.*,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullNmae FROM tb_courses JOIN tb_users ON tb_courses.TeacherID = tb_users.UserID";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -133,6 +132,44 @@ class ClassCourse {
         }
 
         return false;
+    }
+
+    public function CheckPackageCourse() {
+
+        $query = "SELECT COUNT(*) FROM tb_courses";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+
+    }
+
+    public function CheckLessons() {
+
+        $query = "SELECT COUNT(*) FROM tb_lessons";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+
+    }
+
+    public function CheckEnrollments() {
+        $query = "SELECT COUNT(*) FROM tb_enrollments";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+
+    }
+
+    public function CheckGraduation() {
+        $query = "SELECT COUNT(*) FROM tb_enrollments WHERE EnrollCertificate != ''";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+
     }
 }
 ?>
