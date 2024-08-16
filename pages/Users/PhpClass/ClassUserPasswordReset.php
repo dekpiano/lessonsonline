@@ -31,7 +31,12 @@ class ClassUserPasswordReset {
             if ($isLocalhost) {
                $resetLink = 'http://'.$_SERVER['SERVER_NAME']."/lessonsonline/pages/Users/ForgotPassword/RecoverPassword.php?token=" . $token;
             }else{
-                $resetLink = $_SERVER['HTTPS'].$_SERVER['SERVER_NAME']."/pages/Users/ForgotPassword/RecoverPassword.php?token=" . $token;
+                if($_SERVER['HTTPS'] === "on"){
+                    $ht = "https://";
+                }else{
+                    $ht = "http://";
+                }
+                $resetLink = $ht.$_SERVER['SERVER_NAME']."/pages/Users/ForgotPassword/RecoverPassword.php?token=" . $token;
             }
 
             $mail = new PHPMailer(true);
@@ -40,11 +45,15 @@ class ClassUserPasswordReset {
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
                 $mail->Username   = 'dekpiano@skj.ac.th';
-                $mail->Password   = 'hgyu ohmv czha hvdy'; // รหัสผ่านสำหรับแอป
+                $mail->Password   = 'hgyu ohmv czha hvdy'; // รหัสผ่านสำหรับแอป hgyu ohmv czha hvdy
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
                 // Set charset
                 $mail->CharSet = 'UTF-8';
+
+                  // เปิดการดีบัก
+                // $mail->SMTPDebug = 2; // ตั้งค่าให้แสดงระดับดีบักที่ต้องการ
+                // $mail->Debugoutput = 'html';
                             
                 // ตั้งค่าผู้ส่งและผู้รับ
                 $mail->setFrom('dekpiano@skj.ac.th', "ผู้ดูแล");

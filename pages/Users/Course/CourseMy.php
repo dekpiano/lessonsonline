@@ -11,7 +11,7 @@ $Resutl = $Course->readLessonsAll(@$_GET['Course']);
 
 $stmt = $Course->CourseMy();
 $Check = $Course->CourseMy()->fetch(PDO::FETCH_ASSOC);
-$CheckAssessment = $Assessment->CheckAssessment($Check['CourseID']);
+$CheckAssessment = $Assessment->CheckAssessment(@$Check['CourseID']);
 
 //print_r($CheckAssessment);exit();
 
@@ -122,11 +122,11 @@ $CheckAssessment = $Assessment->CheckAssessment($Check['CourseID']);
                                                     บทเรียน)
                                                 </small>
                                                 <div>
-                                                    <a class="btn btn-primary btn-xs" href="#">
+                                                    <!-- <a class="btn btn-primary btn-xs" href="#">
                                                         <i class="fas fa-eye">
                                                         </i>
                                                         ดูทั้งหมด
-                                                    </a>
+                                                    </a> -->
                                                 </div>
 
                                             </td>

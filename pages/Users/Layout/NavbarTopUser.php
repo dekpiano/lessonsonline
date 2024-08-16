@@ -55,9 +55,9 @@
                     <i class="fas fa-user"></i> <?=$_SESSION['FullName'];?>
                 </a>
                 <div class="dropdown-menu  dropdown-menu-right">
-                    <a href="../../../Users/Profile" class="dropdown-item">
+                    <!-- <a href="../../../Users/Profile" class="dropdown-item">
                     <i class="fas fa-user-circle"></i> บัญชี
-                    </a>
+                    </a> -->
                     <div class="dropdown-divider"></div>
                     <a href="../../../php/Login/PhpLogoutMain" class="dropdown-item">
                         <i class="fas fa-sign-out-alt"></i> ออกจากระบบ

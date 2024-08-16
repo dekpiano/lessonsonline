@@ -2,10 +2,13 @@
 include_once '../../../php/Database/Database.php'; 
 include_once '../../Users/PhpClass/ClassLearn.php';
 include_once '../../Users/PhpClass/ClassQuizzesUser.php';
+include_once '../../Users/PhpClass/ClassCourse.php';
 $database = new Database();
 $db = $database->getConnection();
 $Course = new ClassLearn($db);
 $Quiz = new ClassQuizzesUser($db);
+$CourseMain = new ClassCourse($db);
+
 $Title = $Course->TitleBar;
 $Resutl = $Course->readLessonsAll(@$_GET['Course']); //เมนูซ้าย
 $ResutlSing = $Course->readLessonsSingle(@$_GET['Course'],@$_GET['Leeson']);
@@ -19,13 +22,8 @@ $ShowQuiz = $Quiz->readQuiz(@$_GET['Course'],@$_GET['Leeson']); // คำตอ�
 $ViewLatestExamRound = $Quiz->ViewLatestExamRound($rowLesMain['LessonID'],@$_GET['AnswerCategory']);
 $Viewscore = $Quiz->Viewscore($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound'],@$_GET['AnswerCategory']);
 $ViewAnswerIsCorrect = $Quiz->ViewAnswerIsCorrect($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound'],@$_GET['AnswerCategory']);
-//  echo '<pre>';print_r($Viewscore);
-// exit();
-// while ($row = $ShowQuiz->fetch(PDO::FETCH_ASSOC)) {
-//     echo '<pre>'; print_r($row);
-// }
-// echo '<pre>';print_r($ShowQuiz->fetch(PDO::FETCH_ASSOC));
-// exit();
+
+$CourseProgress = $CourseMain->CourseProgress(@$_GET['Course'])->fetch(PDO::FETCH_ASSOC);
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
 
@@ -80,7 +78,7 @@ input[type="radio"]:hover+label {
                         <div class="col-sm-6">
                             <h1 class="m-0">แบบทดสอบ บทที่ <?=$rowLesMain['LessonNo']?> <?=$rowLesMain['LessonTitle']?>
                             </h1>
-                            <h5>( <?=$Viewscore['SumScore']?>/<?=$Viewscore['CountAll']?> คะแนน )</h5>
+                            <h5>( <?=$Viewscore['SumScore']?>/<?=$Viewscore['CountAll']?> คะแนน คิดเป็น <?=number_format((($Viewscore['SumScore']/$Viewscore['CountAll'])*100),2);?>%)</h5>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
