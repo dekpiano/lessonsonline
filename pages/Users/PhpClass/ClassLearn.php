@@ -65,6 +65,24 @@ class ClassLearn {
         return $stmt; 
     }
 
+    public function readLessonsAll1($CourseID) {
+        $query = "SELECT
+                tb_courses.CourseName,
+                tb_courses.CourseID
+                FROM
+                tb_lessons
+                INNER JOIN tb_courses ON tb_lessons.CourseID = tb_courses.CourseID          
+                WHERE tb_lessons.CourseID = ?
+        ORDER BY tb_lessons.LessonNo ASC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $CourseID);
+        //$stmt->bindParam(2, $_SESSION['UserID']);
+        $stmt->execute();
+        return $stmt; 
+    }
+
+    
+
 
     public function CheckStatusLesson($CourseID,$LessonNo){
 

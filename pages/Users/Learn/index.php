@@ -6,10 +6,11 @@ $db = $database->getConnection();
 $Course = new ClassLearn($db);
 $Title = $Course->TitleBar;
 $Resutl = $Course->readLessonsAll(@$_GET['Course']);
-$ResutlSing = $Course->readLessonsAll(@$_GET['Course']);
+$ResutlSing = $Course->readLessonsAll1(@$_GET['Course']);
 $LesSing = $Course->readLessonsSingle(@$_GET['Course'],@$_GET['Leeson']);
 
 $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC);
+
 $rowLesSingTitle = $LesSing->fetch(PDO::FETCH_ASSOC);
 
 $CheckExamBefore = $Course->LessonsCheckExamBefore(@$_GET['Course'],@$_GET['Leeson']);

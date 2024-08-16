@@ -47,7 +47,7 @@
             <?php if(!empty($_SESSION['FullName'])):?>
             <li class="nav-item">
                 <a class="nav-link" href="../../../pages/Users/Course/CourseMy" role="button">
-                    คอร์เรียนของฉัน
+                    คอร์สเรียนของฉัน
                 </a>
             </li>
             <li class="nav-item dropdown">

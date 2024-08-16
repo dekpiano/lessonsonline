@@ -1,15 +1,19 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
 include_once '../../Users/PhpClass/ClassCourse.php';
+include_once '../../Users/PhpClass/ClassAssessment.php';
 $database = new Database();
 $db = $database->getConnection();
 $Course = new ClassCourse($db);
+$Assessment = new ClassAssessment($db);
 $Title = "บทเรียนออนไลน์";
 $Resutl = $Course->readLessonsAll(@$_GET['Course']);
 
 $stmt = $Course->CourseMy();
+$Check = $Course->CourseMy()->fetch(PDO::FETCH_ASSOC);
+$CheckAssessment = $Assessment->CheckAssessment($Check['CourseID']);
 
-//echo '<pre>';print_r($CourseProgress->fetch(PDO::FETCH_ASSOC)); exit();
+//print_r($CheckAssessment);exit();
 
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>
@@ -26,7 +30,7 @@ $stmt = $Course->CourseMy();
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">คอร์สเรียนของฉัน</h1>
+                            <h1 class="m-0"></h1>
                         </div><!-- /.col -->
 
                     </div><!-- /.row -->
@@ -39,7 +43,7 @@ $stmt = $Course->CourseMy();
                 <div class="container">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Projects</h3>
+                            <h3 class="card-title">คอร์สเรียนของฉัน</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -67,21 +71,28 @@ $stmt = $Course->CourseMy();
                                             <th>
                                                 เรียนแล้ว
                                             </th>
-                                            <th style="width: 8%" class="text-center">
+                                            <th style="" class="text-center">
                                                 สถานะ
                                             </th>
-                                            <th>
-
-                                            </th>
-                                            <th style="width: 15%">
+                                            <th style="">
                                                 เรียนต่อ
+                                            </th>
+                                            <th style="">
+                                                แบบประเมิน
+                                            </th>
+                                            <th>
+                                                เกียรติบัตร
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php while($row = $stmt->fetch(PDO::FETCH_ASSOC)):
               $CourseProgress = $Course->CourseProgress($row['CourseID']);
+              $LessonsTotal = $Course->LessonsTotal($row['CourseID'])->fetch(PDO::FETCH_ASSOC);
+                                          
               $ValCourseProgress = $CourseProgress->fetch(PDO::FETCH_ASSOC);
+              //สมการหา %
+              $ValProgressAll = ROUND((($ValCourseProgress['completed_lessons']/$LessonsTotal['TotalLessons'])*100),2);
                 ?>
                                         <tr>
                                             <td>
@@ -92,8 +103,8 @@ $stmt = $Course->CourseMy();
                                                 <a>
                                                     <?=$row['CourseName']?>
                                                 </a>
-                                                <br>
-                                                <small>โดย <?=$row['FullName']?></small>
+                                                <!-- <br>
+                                                <small>โดย <?=$row['FullName']?></small> -->
                                             </td>
                                             <td>
                                                 <?php echo $_SESSION['FullName']?>
@@ -101,35 +112,51 @@ $stmt = $Course->CourseMy();
                                             <td class="project_progress">
                                                 <div class="progress progress-sm">
                                                     <div class="progress-bar bg-green" role="progressbar"
-                                                        aria-valuenow="<?=$ValCourseProgress['progress_percentage']?>"
-                                                        aria-valuemin="0" aria-valuemax="100"
-                                                        style="width: <?=$ValCourseProgress['progress_percentage']?>%">
+                                                        aria-valuenow="<?=$ValProgressAll?>" aria-valuemin="0"
+                                                        aria-valuemax="100" style="width: <?=$ValProgressAll?>%">
                                                     </div>
                                                 </div>
                                                 <small>
-                                                    <?=$ValCourseProgress['progress_percentage']?>% จาก
-                                                    (<?=$ValCourseProgress['completed_lessons'].'/'.$ValCourseProgress['total_lessons']?>
+                                                    <?=$ValProgressAll?>% จาก
+                                                    (<?=$ValCourseProgress['completed_lessons'].'/'.$LessonsTotal['TotalLessons']?>
                                                     บทเรียน)
                                                 </small>
+                                                <div>
+                                                    <a class="btn btn-primary btn-xs" href="#">
+                                                        <i class="fas fa-eye">
+                                                        </i>
+                                                        ดูทั้งหมด
+                                                    </a>
+                                                </div>
+
                                             </td>
                                             <td class="project-state">
                                                 <span class="badge badge-success"><?=$row['CourseStatus']?></span>
                                             </td>
-                                            <td>
-                                                <a class="btn btn-primary btn-sm" href="#">
-                                                    <i class="fas fa-eye">
-                                                    </i>
-                                                    ดูทั้งหมด
-                                                </a>
-                                            </td>
+
                                             <td class="project-actions">
-                                                <a class="btn btn-info btn-sm"
+                                                <a class="btn btn-info btn-xs"
                                                     href="../Learn/?Course=<?=$row['CourseID']?>">
                                                     <i class="fas fa-pencil-alt">
                                                     </i>
-                                                    เข้าเรียน
+                                                    เรียน
                                                 </a>
 
+                                            </td>
+                                            <td>
+                                            <?php $disabledAssessment = ($ValCourseProgress['completed_lessons'] != $LessonsTotal['TotalLessons']) ?"disabled":""?>
+                                                <a  class="btn btn-success btn-xs <?=$disabledAssessment?>" href="../Assessment?Course=<?=$row['CourseID']?>">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                    แบบประเมิน
+                                                </a>
+                                            </td>
+                                            <td>
+                                            <?php $disabledCertificate = ($CheckAssessment == 0) ?"disabled":""?>
+                                            <a class="btn btn-warning btn-xs <?=$disabledAssessment?> <?=$disabledCertificate?>" href="Certificate/LoadCertificate.php?CourseID=<?=$row['CourseID']?>" target="_blank">
+                                            <i class="fas fa-file-export"></i>
+                                                    ดาวน์โหลด
+                                                </a>
+                                                
                                             </td>
                                         </tr>
                                         <?php endwhile; ?>

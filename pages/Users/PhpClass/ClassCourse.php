@@ -96,6 +96,14 @@ class ClassCourse {
         $stmt->execute();
         return $stmt;
     }
+
+    public function LessonsTotal($CourseID) {
+        $query = "SELECT COUNT(*) AS TotalLessons FROM tb_lessons WHERE CourseID = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $CourseID);
+        $stmt->execute();
+        return $stmt;
+    }
     
 }
 ?>

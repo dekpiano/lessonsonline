@@ -86,3 +86,13 @@ $.widget.bridge('uibutton', $.ui.button)
 <?php if(uri(3) == "Profile"):?>
 <script src="../../Users/Profile/Js/JsProfileUser.js?v=3.22"></script>
 <?php endif; ?>
+
+<?php if(uri(3) == "Assessment"):?> 
+<script src="../../Users/Assessment/Js/JsAssessment.js?v=3"></script>
+<?php endif; ?>
+
+<?php if(uri(3) == "Course"):?> 
+    <script src="../../../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../../../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../../Users/Course/Js/LoadCertificate.js?v=2.5"></script>
+<?php endif; ?>
