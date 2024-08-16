@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?=$Title?></title>
-
+    <link rel="icon" href="../../../dist/img/AdminLTELogo.png"
+        type="image/x-icon" />
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -79,7 +80,8 @@
                                     </div>
 
                                     <div class="col-4">
-                                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</button>
+                                        <button type="submit" class="btn btn-primary btn-block"><i
+                                                class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</button>
                                     </div>
 
                                 </div>
@@ -87,7 +89,7 @@
                             <hr>
                             <div class="social-auth-links text-center mt-2 mb-3">
                                 <a href="../../Users/Register" class="btn btn-block btn-success">
-                                <i class="fas fa-user-edit"></i> สมัครเรียน
+                                    <i class="fas fa-user-edit"></i> สมัครเรียน
                                 </a>
                             </div>
 

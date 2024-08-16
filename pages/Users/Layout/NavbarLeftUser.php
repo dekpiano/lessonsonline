@@ -63,7 +63,16 @@
             </ul>
             <hr>
             <ul class="nav nav-pills nav-sidebar flex-column">
-                <li class="nav-item"><a href="../Assessment?Course=<?=@$_GET['Course']?>" class="btn btn-block btn-success text-white">แบบประเมิน</a></li>
+                <?php if(@$CourseProgress['completed_lessons'] == @$CourseProgress['total_lessons']) {
+                            $disabled = "";
+                            $href = "../Assessment?Course=".@$_GET['Course'];
+                       }else{                           
+                            $disabled = 'disabled';
+                            $href = '#'; 
+                       }
+                ?>
+                <li class="nav-item"><a href="<?=$href;?>"
+                        class="btn btn-block btn-success text-white <?=$disabled;?>">แบบประเมิน</a></li>
             </ul>
         </div>
 

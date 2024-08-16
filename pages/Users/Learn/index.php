@@ -1,9 +1,12 @@
 <?php 
 include_once '../../../php/Database/Database.php'; 
 include_once '../../Users/PhpClass/ClassLearn.php';
+include_once '../../Users/PhpClass/ClassCourse.php';
 $database = new Database();
 $db = $database->getConnection();
 $Course = new ClassLearn($db);
+$CourseMain = new ClassCourse($db);
+
 $Title = $Course->TitleBar;
 $Resutl = $Course->readLessonsAll(@$_GET['Course']);
 $ResutlSing = $Course->readLessonsAll1(@$_GET['Course']);
@@ -14,6 +17,9 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC);
 $rowLesSingTitle = $LesSing->fetch(PDO::FETCH_ASSOC);
 
 $CheckExamBefore = $Course->LessonsCheckExamBefore(@$_GET['Course'],@$_GET['Leeson']);
+
+$LessonsTotal = $CourseMain->LessonsTotal(@$_GET['Course'])->fetch(PDO::FETCH_ASSOC);
+$CourseProgress = $CourseMain->CourseProgress(@$_GET['Course'])->fetch(PDO::FETCH_ASSOC);
 
 
 if(!empty($_GET['Leeson'])){   
@@ -111,6 +117,7 @@ iframe {
                                 </div>
                             </strong>
                             <div class="float-right">
+                               
                                 <a href="../Quizzes/?Course=<?=@$_GET['Course']?>&Leeson=<?=@$_GET['Leeson']?>&AnswerCategory=หลังเรียน"
                                     class="btn btn-primary btn-sm" id="btnQuiz"><b>ทำแบบทดสอบ</b></a>
                             </div>

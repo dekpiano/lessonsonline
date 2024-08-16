@@ -25,10 +25,22 @@ class ClassAssessment {
         return $stmt;
     }
 
-
+    //เอาไว้สร้าง Token
+    function generateUUID() {
+        // ใช้ฟังก์ชัน random_bytes เพื่อสร้าง UUID
+        $data = random_bytes(16);
+    
+        // ตั้งค่า variant bits
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // version 4
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // variant
+    
+        // กลับมาเป็นรูปแบบ UUID
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
 
     public function AssessmentInsert() {
-       
+     
+
         $query1 = "INSERT INTO tb_assessments_responses SET question_id=:question_id,user_id=:user_id,response_text=:response_text,response_rating=:response_rating";
         $stmt = $this->conn->prepare($query1);       
         //print_r($_POST);
@@ -50,6 +62,15 @@ class ClassAssessment {
             $stmt->bindValue(":user_id", $_SESSION['UserID']);               
             $stmt->execute();
         }
+
+        $UpdateKeyCertificate = "UPDATE tb_enrollments SET EnrollCertificate=:EnrollCertificate,EnrollCompletionDate=:EnrollCompletionDate WHERE CourseID=:CourseID AND UserID=:UserID";
+        $stmtUpdateKey = $this->conn->prepare($UpdateKeyCertificate); 
+        $stmtUpdateKey->bindValue(":EnrollCertificate", $this->generateUUID());
+        $stmtUpdateKey->bindValue(":EnrollCompletionDate", date('Y-m-d'));
+        $stmtUpdateKey->bindValue(":CourseID", 1);
+        $stmtUpdateKey->bindValue(":UserID", $_SESSION['UserID']);
+        $stmtUpdateKey->execute();
+
         // Return a JSON response
         echo json_encode(['status' => 'success', 'message' => 'Assessment submitted successfully']);
     }
