@@ -24,8 +24,9 @@ $Course = new ClassLearn($db);
                     <p class="login-box-msg">คุณเหลือรหัสผ่านใหม่เพียงขั้นตอนเดียว กู้คืนรหัสผ่านของคุณทันที</p>
                     <form action="Php/PhpUserConfrimPassword.php" method="post">
                         <div class="input-group mb-3">
-                        <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
-                            <input type="password" id="PasswordMain" name="PasswordMain" class="form-control" placeholder="Password">
+                            <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>">
+                            <input type="password" id="PasswordMain" name="PasswordMain" class="form-control"
+                                placeholder="Password">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
@@ -33,16 +34,18 @@ $Course = new ClassLearn($db);
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="password" id="ConfrimPassword" name="ConfrimPassword" class="form-control" placeholder="Confirm Password">
+                            <input type="password" id="ConfrimPassword" name="ConfrimPassword" class="form-control"
+                                placeholder="Confirm Password">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
                                 </div>
                             </div>
                         </div>
+                        <p id="message"></p>
                         <div class="row">
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary btn-block">เปลี่ยนรหัสผ่าน</button>
+                                <button type="submit" id="submitButton" class="btn btn-primary btn-block" disabled>เปลี่ยนรหัสผ่าน</button>
                             </div>
 
                         </div>
@@ -61,3 +64,4 @@ $Course = new ClassLearn($db);
 </body>
 
 </html>
+

@@ -43,7 +43,6 @@ $.widget.bridge('uibutton', $.ui.button)
 <!-- AdminLTE App -->
 <script src="../../../dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../../../dist/js/demo1.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../../dist/js/pages/dashboard.js"></script>
 
@@ -70,9 +69,12 @@ $.widget.bridge('uibutton', $.ui.button)
 })();
 </script>
 
+<?php if(uri(3) == "ForgotPassword"):?>
+<script src="../../Users/ForgotPassword/Js/RecoverPassword.js?v=3.1"></script>
+<?php endif; ?>
 
 <?php if(uri(3) == "Register"):?>
-<script src="../../Users/Register/Js/JsRegisterUser.js?v=3.1"></script>
+<script src="../../Users/Register/Js/JsRegisterUser.js?v=3.5"></script>
 <?php endif; ?>
 
 <?php if(uri(3) == "Learn"):?>

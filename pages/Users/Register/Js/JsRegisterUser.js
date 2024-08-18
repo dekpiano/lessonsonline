@@ -26,31 +26,100 @@ $(document).on("submit","#FormRegisterUser", function(e) {
 });
 
 
-function validatePassword() {
-  var password = document.getElementById("Password").value;
-  var confirmPassword = document.getElementById("ConfirmPassword").value;
-  var validationMessage = document.getElementById("validationMessage");
 
-  // Password matching check
-  if (password !== confirmPassword) {
-      validationMessage.textContent = "รหัสผ่านไม่ตรงกัน";
-      validationMessage.style.color = "red";
-      return false;
+document.addEventListener('DOMContentLoaded', () => {
+  const password1Input = document.getElementById('Password');
+  const password2Input = document.getElementById('ConfirmPassword');
+  const messageElement = document.getElementById('message');
+  const messageElement13 = document.getElementById('message13');
+  const numberInput = document.getElementById('UserIdCard');
+  const submitButton = document.getElementById('BtnSubmitRegister');
+
+  function validatePassword(password) {
+      const minLength = 8;
+      const maxLength = 20;
+      const minUpper = 1;
+      const minLower = 1;
+      const minDigit = 1;
+      const minSpecial = 1;
+
+      if (password.length < minLength || password.length > maxLength) {
+          return `รหัสผ่านต้องมีความยาวระหว่าง ${minLength} ถึง ${maxLength} ตัวอักษร`;
+      }
+      if ((password.match(/[A-Z]/g) || []).length < minUpper) {
+          return `รหัสผ่านต้องมีตัวอักษรพิมพ์ใหญ่ อย่างน้อย ${minUpper} ตัว`;
+      }
+      if ((password.match(/[a-z]/g) || []).length < minLower) {
+          return `รหัสผ่านต้องมีตัวอักษรพิมพ์เล็ก อย่างน้อย ${minLower} ตัว`;
+      }
+      if ((password.match(/[0-9]/g) || []).length < minDigit) {
+          return `รหัสผ่านต้องมีตัวเลข อย่างน้อย ${minDigit} ตัว`;
+      }
+      if ((password.match(/[\W_]/g) || []).length < minSpecial) {
+          return `รหัสผ่านต้องมีตัวอักษรพิเศษ อย่างน้อย ${minSpecial} ตัว`;
+      }
+
+      return "รหัสผ่านถูกต้อง";
   }
 
-  // Password strength check: at least one lowercase, one uppercase letter, and one number
-  var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-
-  if (!regex.test(password)) {
-      validationMessage.textContent = "รหัสผ่านจะต้องมีอักษรตัวพิมพ์เล็กอย่างน้อยหนึ่งตัว ตัวพิมพ์ใหญ่หนึ่งตัว และตัวเลขหนึ่งตัว ความยาวขั้นต่ำคือ 8 ตัวอักษร";
-      validationMessage.style.color = "red";
-      return false;
+  function validateNumber(number) {
+    if (number.length === 13 && /^\d+$/.test(number)) {
+        return "หมายเลขถูกต้อง";
+    } else {
+        return "หมายเลขต้องมีความยาว 13 หลักและประกอบด้วยตัวเลขเท่านั้น";
+    }
   }
 
- validationMessage.textContent = "รหัสผ่านตรงกัน";
-  validationMessage.style.color = "green";
-  return true;
-}
+  function validateNumberField() {
+    const number = numberInput.value;
+       // ตรวจสอบและตัดข้อมูลที่เกิน 13 หลัก
+       if (number.length > 13) {
+        number = number.slice(0, 13);
+        numberInput.value = number;
+    }
+
+    const numberMessage = validateNumber(number);
+    
+    if (numberMessage !== "หมายเลขถูกต้อง") {
+        messageElement13.textContent = numberMessage;
+        messageElement13.style.color = "red";
+        submitButton.disabled = true; // ปิดการใช้งานปุ่ม data-inputmask="'mask': '9999999999999'"
+        return false;
+    }else{
+      messageElement13.textContent = "";
+    }
+
+    return true;
+  }
+
+  function validateForm() {
+      const password1 = password1Input.value;
+      const password2 = password2Input.value;
+
+      const validationMessage = validatePassword(password1);
+
+      if (validationMessage !== "รหัสผ่านถูกต้อง") {
+          messageElement.textContent = validationMessage;
+          messageElement.style.color = "red";
+          submitButton.disabled = true; // ปิดการใช้งานปุ่ม
+          return;
+      }
+
+      if (password1 === password2) {
+          messageElement.textContent = "รหัสผ่านตรงกัน";
+          messageElement.style.color = "green";
+          submitButton.disabled = false; // เปิดใช้งานปุ่ม
+      } else {
+          messageElement.textContent = "รหัสผ่านไม่ตรงกัน";
+          messageElement.style.color = "red";
+          submitButton.disabled = true; // ปิดการใช้งานปุ่ม
+      }
+  }
+
+  password1Input.addEventListener('input', validateForm);
+  password2Input.addEventListener('input', validateForm);
+  numberInput.addEventListener('input', validateNumberField);
+});
 
 function CheckEmailRegister() {
 

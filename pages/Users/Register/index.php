@@ -67,9 +67,9 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                             </div>
                                         </div>
                                         <div class="invalid-feedback">กรุณากรอกยืนยันรหัสผ่าน</div>
-                                        <div class="w-100" id="validationMessage"></div>
+                                       
                                     </div>
-
+                                    <p id="message"></p>
                                     <hr>
 
                                     <div class="input-group mb-3">
@@ -112,14 +112,16 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="เลขบัตรประชาชน 13 หลัก"
                                             id="UserIdCard" name="UserIdCard" required
-                                            data-inputmask="'mask': '9999999999999'">
+                                            pattern="\d*" maxlength="13" title="กรุณากรอกหมายเลขที่เป็นตัวเลขเท่านั้น">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-user"></span>
                                             </div>
-                                        </div>
+                                        </div>      
+                                        <div id="message13"></div>                                  
                                         <div class="invalid-feedback">กรุณากรอกเลขบัตรประชาชน 13 หลัก</div>
                                     </div>
+                                    
                                     <div class="input-group mb-3">
                                         <input type="date" class="form-control" placeholder="วันเกิด" id="UserBirthday"
                                             name="UserBirthday" required>

@@ -16,22 +16,22 @@ try {
 
     // ดึงข้อมูลจากฐานข้อมูล
     $stmt = $pdo->query('SELECT
-    tb_users.UserID,
-    tb_users.UserCode,
-    tb_users.UserGender,
-    tb_users.UserPrefix,
-    tb_users.UserFirstName,
-    tb_users.UserLastName,
-    tb_users.UserIdCard,
-    tb_users.UserRangeAge,
-    tb_users.UserLevelEdu,
-    tb_users.UserTypeService,
-    tb_users.UserBirthday,
-    tb_users.UserPhone,
-    tb_users.Email,
-    tb_range_age.rangeage_title,
-    tb_type_service.typeser_title,
-    tb_level_edu.edu_title
+        tb_users.UserID,
+        tb_users.UserCode,
+        tb_users.UserGender,
+        tb_users.UserPrefix,
+        tb_users.UserFirstName,
+        tb_users.UserLastName,
+        tb_users.UserIdCard,
+        tb_users.UserRangeAge,
+        tb_users.UserLevelEdu,
+        tb_users.UserTypeService,
+        tb_users.UserBirthday,
+        tb_users.UserPhone,
+        tb_users.Email,
+        tb_range_age.rangeage_title,
+        tb_type_service.typeser_title,
+        tb_level_edu.edu_title
     FROM
     tb_users
     INNER JOIN tb_range_age ON tb_range_age.rangeage_id = tb_users.UserRangeAge
