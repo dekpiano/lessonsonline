@@ -21,6 +21,12 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
 $ShowQuiz = $Quiz->readQuiz(@$_GET['Course'],@$_GET['Leeson']); // คำตอบ
 $ViewLatestExamRound = $Quiz->ViewLatestExamRound($rowLesMain['LessonID'],@$_GET['AnswerCategory']);
 $Viewscore = $Quiz->Viewscore($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound'],@$_GET['AnswerCategory']);
+if($Viewscore['CountAll'] == 0){
+    $CountAll = 1;
+}else{
+    $CountAll = $Viewscore['CountAll'];
+}
+
 $ViewAnswerIsCorrect = $Quiz->ViewAnswerIsCorrect($rowLesMain['LessonID'],@$ViewLatestExamRound['UserAnswerExamRound'],@$_GET['AnswerCategory']);
 
 $CourseProgress = $CourseMain->CourseProgress(@$_GET['Course'])->fetch(PDO::FETCH_ASSOC);
@@ -78,7 +84,10 @@ input[type="radio"]:hover+label {
                         <div class="col-sm-6">
                             <h1 class="m-0">แบบทดสอบ บทที่ <?=$rowLesMain['LessonNo']?> <?=$rowLesMain['LessonTitle']?>
                             </h1>
-                            <h5>( <?=$Viewscore['SumScore']?>/<?=$Viewscore['CountAll']?> คะแนน คิดเป็น <?=number_format((($Viewscore['SumScore']/$Viewscore['CountAll'])*100),2);?>%)</h5>
+                            <h5>( <?=@$Viewscore['SumScore']?>/<?=$Viewscore['CountAll']?> คะแนน คิดเป็น 
+                            <?php $P = number_format(((@$Viewscore['SumScore']/$CountAll)*100),2) ?>
+                            <?=$P == 0 ?"0":$P;?>%)
+                        </h5>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
