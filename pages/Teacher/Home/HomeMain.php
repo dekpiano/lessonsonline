@@ -116,6 +116,11 @@ $CheckGraduationAll = $course->CheckGraduation();
                         <!-- ./col -->
                     </div>
                     <!-- /.row -->
+<hr>
+                    <h2 class="mb-1">รายงาน</h2>
+                    <div>
+                        <a href="../Report/ReportToExcel.php" class="btn btn-success">ดาวน์โหลด Excel</a>
+                    </div>
 
                 </div><!-- /.container-fluid -->
             </section>
