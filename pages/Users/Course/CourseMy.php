@@ -13,7 +13,7 @@ $stmt = $Course->CourseMy();
 $Check = $Course->CourseMy()->fetch(PDO::FETCH_ASSOC);
 $CheckAssessment = $Assessment->CheckAssessment(@$Check['CourseID']);
 
-//print_r($CheckAssessment);exit();
+//print_r($_SESSION['UserID']);exit();
 
 ?>
 <?php include_once('../../../pages/Users/Layout/HeaderUser.php') ?>

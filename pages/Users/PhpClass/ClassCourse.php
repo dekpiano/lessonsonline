@@ -20,7 +20,7 @@ class ClassCourse {
 
     // อ่านข้อมูลคอร์สเรียนทั้งหมด
     public function read() {
-        $query = "SELECT tb_courses.*,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullNmae FROM tb_courses JOIN tb_users ON tb_courses.TeacherID = tb_users.UserID";
+        $query = "SELECT tb_courses.*,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullNmae FROM tb_courses LEFT JOIN tb_users ON tb_courses.TeacherID = tb_users.UserID";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -66,8 +66,8 @@ class ClassCourse {
         }
         $query = "SELECT tb_enrollments.*,tb_courses.CourseCode,tb_courses.CourseName,tb_courses.CourseImage,tb_courses.CourseStatus,CONCAT(tb_users.UserPrefix,tb_users.UserFirstName,' ',tb_users.UserLastName) As FullName 
         FROM tb_enrollments 
-        JOIN tb_courses ON tb_courses.CourseID = tb_enrollments.CourseID
-        JOIN tb_users ON tb_courses.TeacherID = tb_users.UserID
+        LEFT JOIN tb_courses ON tb_courses.CourseID = tb_enrollments.CourseID
+        LEFT JOIN tb_users ON tb_courses.TeacherID = tb_users.UserID
         WHERE tb_enrollments.UserID = ? ";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $_SESSION['UserID']);
