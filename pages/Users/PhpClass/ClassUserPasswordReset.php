@@ -50,7 +50,13 @@ class ClassUserPasswordReset {
                 $mail->Port       = 587;
                 // Set charset
                 $mail->CharSet = 'UTF-8';
-
+                $mail->SMTPOptions = array(
+                    'ssl' => array(
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                    )
+                );
                   // เปิดการดีบัก
                 // $mail->SMTPDebug = 2; // ตั้งค่าให้แสดงระดับดีบักที่ต้องการ
                 // $mail->Debugoutput = 'html';
@@ -70,6 +76,8 @@ class ClassUserPasswordReset {
             } catch (Exception $e) {
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
+        }else{
+            header("location:../?Alert=err");
         }
           
     

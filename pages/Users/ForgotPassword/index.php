@@ -30,8 +30,14 @@ $Course = new ClassLearn($db);
                                     <span class="fas fa-envelope"></span>
                                 </div>
                             </div>
+                            
                         </div>
-                        <div class="row">
+                        <?php if(isset($_GET['Alert'])): ?>
+                        <div class="alert-danger p-2">
+                                อีเมลของคุณไม่ถูกต้อง หรือไม่มีในระบบ!
+                            </div>
+                            <?php endif; ?>
+                        <div class="row mt-3">
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary btn-block">รับรหัสผ่านใหม่</button>
                             </div>
