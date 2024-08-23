@@ -45,30 +45,64 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                         <div class="invalid-feedback">กรุณากรอกอีเมล</div>
                                         <div class="w-100 text-danger" id="emailStatus"></div>
                                     </div>
+                                    <style>
+                                    .error {
+                                        color: red;
+                                        margin: 5px 0;
+                                        display: none;
+                                    }
 
+                                    .valid {
+                                        display: none;
+                                        color: green;
+                                        margin: 5px 0;
+                                    }
+                                    </style>
 
                                     <div class="input-group mb-3">
                                         <input type="password" class="form-control" placeholder="รหัสผ่าน" id="Password"
-                                            name="Password" required onkeyup="validatePassword()">
+                                            name="Password" required>
                                         <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <span class="fas fa-lock"></span>
-                                            </div>
+                                            <button class="btn btn-secondary" type="button" id="togglePassword">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
                                         </div>
-                                        <div class="invalid-feedback">กรุณากรอกรหัสผ่าน</div>
+                                        <div class="w-100">
+                                            <small id="lengthError" class="error">รหัสผ่านต้องมีความยาวอย่างน้อย 8
+                                                ตัวอักษร</small>
+                                            <small id="uppercaseError"
+                                                class="error">รหัสผ่านต้องมีตัวอักษรพิมพ์ใหญ่อย่างน้อย 1
+                                                ตัว</small>
+                                            <small id="lowercaseError"
+                                                class="error">รหัสผ่านต้องมีตัวอักษรพิมพ์เล็กอย่างน้อย 1
+                                                ตัว</small>
+                                            <small id="digitError" class="error">รหัสผ่านต้องมีตัวเลขอย่างน้อย 1
+                                                ตัว</small>
+                                            <small id="specialCharError"
+                                                class="error">รหัสผ่านต้องมีอักขระพิเศษอย่างน้อย 1
+                                                ตัว
+                                                เช่น !@#$%^&*</small>
+                                        </div>
+
                                     </div>
                                     <div class="input-group mb-3">
                                         <input type="password" class="form-control" placeholder="ยืนยันรหัสผ่าน"
-                                            required onkeyup="validatePassword()" id="ConfirmPassword"
-                                            name="ConfirmPassword">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <span class="fas fa-lock"></span>
-                                            </div>
+                                            required id="ConfirmPassword" name="ConfirmPassword">
+                                            <div class="input-group-append">
+                                            <button class="btn btn-secondary" type="button" id="togglePassword1">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
                                         </div>
-                                        <div class="invalid-feedback">กรุณากรอกยืนยันรหัสผ่าน</div>
-                                       
+                                        <div class="w-100">
+                                            <small id="matchError" class="error">รหัสผ่านทั้งสองช่องไม่ตรงกัน</small>
+                                            <small id="matchSuccess" class="valid">รหัสผ่านตรงกัน!</small>
+                                        </div>
+
+
                                     </div>
+
+
+                                    <!-- <small id="validMessage" class="valid">รหัสผ่านถูกต้อง!</small> -->
                                     <p id="message"></p>
                                     <hr>
 
@@ -111,17 +145,17 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                     </div>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder="เลขบัตรประชาชน 13 หลัก"
-                                            id="UserIdCard" name="UserIdCard" required
-                                            pattern="\d*" maxlength="13" title="กรุณากรอกหมายเลขที่เป็นตัวเลขเท่านั้น">
+                                            id="UserIdCard" name="UserIdCard" required pattern="\d*" maxlength="13"
+                                            title="กรุณากรอกหมายเลขที่เป็นตัวเลขเท่านั้น">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-user"></span>
                                             </div>
-                                        </div>      
-                                        <div id="message13"></div>                                  
+                                        </div>
+                                        <small id="message13"></small>
                                         <div class="invalid-feedback">กรุณากรอกเลขบัตรประชาชน 13 หลัก</div>
                                     </div>
-                                    
+
                                     <div class="input-group mb-3">
                                         <input type="date" class="form-control" placeholder="วันเกิด" id="UserBirthday"
                                             name="UserBirthday" required>
@@ -137,7 +171,8 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                             <option value="">กรุณาเลือกช่วงอายุ</option>
                                             <?php $RangeAge = $User->RangeAge();
                                             while($row = $RangeAge->fetch(PDO::FETCH_ASSOC)): ?>
-                                            <option value="<?=$row['rangeage_id']?>"><?=$row['rangeage_title']?></option>
+                                            <option value="<?=$row['rangeage_id']?>"><?=$row['rangeage_title']?>
+                                            </option>
                                             <?php endwhile; ?>
                                         </select>
                                         <div class="input-group-append">
@@ -164,7 +199,8 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                         <div class="invalid-feedback">กรุณาเลือกระดับการศึกษา</div>
                                     </div>
                                     <div class="input-group mb-3">
-                                        <select name="UserTypeService" id="UserTypeService" class="form-control" required>
+                                        <select name="UserTypeService" id="UserTypeService" class="form-control"
+                                            required>
                                             <option value="">กรุณาเลือกประเภทผู้บริการ</option>
                                             <?php $type = $User->TypeService();
                                             while($row = $type->fetch(PDO::FETCH_ASSOC)): ?>
@@ -190,8 +226,8 @@ $rowLesMain = $ResutlSing->fetch(PDO::FETCH_ASSOC); //เนื้อหาแ�
                                     </div>
 
 
-                                    <button type="submit" id="BtnSubmitRegister"
-                                        class="btn btn-primary btn-block">สมัครเรียน</button>
+                                    <button type="submit" id="BtnSubmitRegister" class="btn btn-primary btn-block"
+                                        disabled>สมัครเรียน</button>
 
                                 </form>
 

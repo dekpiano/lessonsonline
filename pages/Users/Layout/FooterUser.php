@@ -74,7 +74,7 @@ $.widget.bridge('uibutton', $.ui.button)
 <?php endif; ?>
 
 <?php if(uri(3) == "Register"):?>
-<script src="../../Users/Register/Js/JsRegisterUser.js?v=3.5"></script>
+<script src="../../Users/Register/Js/JsRegisterUser.js?v=4.2"></script>
 <?php endif; ?>
 
 <?php if(uri(3) == "Learn"):?>

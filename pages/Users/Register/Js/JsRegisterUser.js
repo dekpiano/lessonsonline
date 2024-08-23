@@ -25,42 +25,130 @@ $(document).on("submit","#FormRegisterUser", function(e) {
     });
 });
 
+const passwordInput = document.getElementById('Password');
+const confirmPasswordInput = document.getElementById('ConfirmPassword');
+const lengthError = document.getElementById('lengthError');
+const uppercaseError = document.getElementById('uppercaseError');
+const lowercaseError = document.getElementById('lowercaseError');
+const digitError = document.getElementById('digitError');
+const specialCharError = document.getElementById('specialCharError');
+const validMessage = document.getElementById('validMessage');
+const matchError = document.getElementById('matchError');
+const matchSuccess = document.getElementById('matchSuccess');
+const BtnSubmitRegister = document.getElementById('BtnSubmitRegister');
+
+function validatePassword() {
+    const password = passwordInput.value;
+    let isValid = true;
+
+    if (password.length < 8) {
+        lengthError.style.display = 'block';
+        isValid = false;
+    } else {
+        lengthError.style.display = 'none';
+    }
+
+    if (!/[A-Z]/.test(password)) {
+        uppercaseError.style.display = 'block';
+        isValid = false;
+    } else {
+        uppercaseError.style.display = 'none';
+    }
+
+    if (!/[a-z]/.test(password)) {
+        lowercaseError.style.display = 'block';
+        isValid = false;
+    } else {
+        lowercaseError.style.display = 'none';
+    }
+
+    if (!/[0-9]/.test(password)) {
+        digitError.style.display = 'block';
+        isValid = false;
+    } else {
+        digitError.style.display = 'none';
+    }
+
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        specialCharError.style.display = 'block';
+        isValid = false;
+    } else {
+        specialCharError.style.display = 'none';
+    }
+
+    if (isValid) {
+        validMessage.style.display = 'block';
+    } else {
+        validMessage.style.display = 'none';
+    }
+
+    return isValid;
+}
+
+function validateConfirmPassword() {
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    if (password === confirmPassword && password !== "") {
+        matchSuccess.style.display = 'block';
+        matchError.style.display = 'none';
+        BtnSubmitRegister.disabled = false;
+        return true;
+    } else {
+        matchError.style.display = 'block';
+        matchSuccess.style.display = 'none';
+        BtnSubmitRegister.disabled = true;
+        return false;
+    }
+}
+
+passwordInput.addEventListener('keyup', function() {
+    validatePassword();
+    validateConfirmPassword();
+});
+
+confirmPasswordInput.addEventListener('keyup', function() {
+    validateConfirmPassword();
+});
+
+
+document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('Password');
+    const toggleIcon = this.querySelector('i');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+});
+
+document.getElementById('togglePassword1').addEventListener('click', function () {
+    const passwordField = document.getElementById('ConfirmPassword');
+    const toggleIcon = this.querySelector('i');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+});
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const password1Input = document.getElementById('Password');
-  const password2Input = document.getElementById('ConfirmPassword');
-  const messageElement = document.getElementById('message');
+
   const messageElement13 = document.getElementById('message13');
   const numberInput = document.getElementById('UserIdCard');
   const submitButton = document.getElementById('BtnSubmitRegister');
 
-  function validatePassword(password) {
-      const minLength = 8;
-      const maxLength = 20;
-      const minUpper = 1;
-      const minLower = 1;
-      const minDigit = 1;
-      const minSpecial = 1;
-
-      if (password.length < minLength || password.length > maxLength) {
-          return `รหัสผ่านต้องมีความยาวระหว่าง ${minLength} ถึง ${maxLength} ตัวอักษร`;
-      }
-      if ((password.match(/[A-Z]/g) || []).length < minUpper) {
-          return `รหัสผ่านต้องมีตัวอักษรพิมพ์ใหญ่ อย่างน้อย ${minUpper} ตัว`;
-      }
-      if ((password.match(/[a-z]/g) || []).length < minLower) {
-          return `รหัสผ่านต้องมีตัวอักษรพิมพ์เล็ก อย่างน้อย ${minLower} ตัว`;
-      }
-      if ((password.match(/[0-9]/g) || []).length < minDigit) {
-          return `รหัสผ่านต้องมีตัวเลข อย่างน้อย ${minDigit} ตัว`;
-      }
-      if ((password.match(/[\W_]/g) || []).length < minSpecial) {
-          return `รหัสผ่านต้องมีตัวอักษรพิเศษ อย่างน้อย ${minSpecial} ตัว`;
-      }
-
-      return "รหัสผ่านถูกต้อง";
-  }
 
   function validateNumber(number) {
     if (number.length === 13 && /^\d+$/.test(number)) {
@@ -84,41 +172,14 @@ document.addEventListener('DOMContentLoaded', () => {
         messageElement13.textContent = numberMessage;
         messageElement13.style.color = "red";
         submitButton.disabled = true; // ปิดการใช้งานปุ่ม data-inputmask="'mask': '9999999999999'"
-        return false;
+       
     }else{
       messageElement13.textContent = "";
+      submitButton.disabled = false;
     }
-
-    return true;
   }
 
-  function validateForm() {
-      const password1 = password1Input.value;
-      const password2 = password2Input.value;
 
-      const validationMessage = validatePassword(password1);
-
-      if (validationMessage !== "รหัสผ่านถูกต้อง") {
-          messageElement.textContent = validationMessage;
-          messageElement.style.color = "red";
-          submitButton.disabled = true; // ปิดการใช้งานปุ่ม
-          return;
-      }
-
-      if (password1 === password2) {
-          messageElement.textContent = "รหัสผ่านตรงกัน";
-          messageElement.style.color = "green";
-          submitButton.disabled = false; // เปิดใช้งานปุ่ม
-      } else {
-          messageElement.textContent = "รหัสผ่านไม่ตรงกัน";
-          messageElement.style.color = "red";
-          submitButton.disabled = true; // ปิดการใช้งานปุ่ม
-      }
-  }
-
-  password1Input.addEventListener('input', validateForm);
-  password2Input.addEventListener('input', validateForm);
-  numberInput.addEventListener('input', validateNumberField);
 });
 
 function CheckEmailRegister() {
