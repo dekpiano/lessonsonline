@@ -21,8 +21,8 @@ $CheckGraduationAll = $course->CheckGraduation();
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-    <?php include_once('../../../pages/Teacher/Layout/NavbarTopTeacher.php') ?>
-    <?php include_once('../../../pages/Teacher/Layout/NavbarLeftTeacher.php') ?>
+        <?php include_once('../../../pages/Teacher/Layout/NavbarTopTeacher.php') ?>
+        <?php include_once('../../../pages/Teacher/Layout/NavbarLeftTeacher.php') ?>
 
 
         <!-- Content Wrapper. Contains page content -->
@@ -116,10 +116,16 @@ $CheckGraduationAll = $course->CheckGraduation();
                         <!-- ./col -->
                     </div>
                     <!-- /.row -->
-<hr>
+                    <hr>
                     <h2 class="mb-1">รายงาน</h2>
+                    <hr>
                     <div>
+                        <h4>แบบรายงานผู้เรียนกิจกรรมส่งเสริมการเรียน</h4>
                         <a href="../Report/ReportToExcel.php" class="btn btn-success">ดาวน์โหลด Excel</a>
+                    </div>
+                    <div class="mt-3">
+                        <h4>รายงานแบบสำรวจความพึงพอใจของผู้เรียน</h4>
+                        <a href="../Report/ReportComplacence.php" class="btn btn-success">ดาวน์โหลด Excel</a>
                     </div>
 
                 </div><!-- /.container-fluid -->

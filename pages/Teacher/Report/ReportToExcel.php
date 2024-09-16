@@ -208,7 +208,7 @@ try {
 
      // ตั้งค่า header เพื่อให้สามารถดาวน์โหลดไฟล์ Excel
      header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-     header('Content-Disposition: attachment;filename="report.xlsx"');
+     header('Content-Disposition: attachment;filename="แบบรายงานผู้เรียนกิจกรรมส่งเสริมการเรียน.xlsx"');
      header('Cache-Control: max-age=0');
  
      $writer = new Xlsx($spreadsheet);
