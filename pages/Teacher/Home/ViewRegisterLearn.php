@@ -9,12 +9,16 @@ $course = new ClassCourse($db);
 $Home = new ClassHome($db);
 $Title = $Home->TitleBar;
 
+// เช็ค dashborad
 $CourseAll = $course->CheckPackageCourse();
 $LessonsAll = $course->CheckLessons();
 $EnrollmentsAll = $course->CheckEnrollments();
 $CheckGraduationAll = $course->CheckGraduation();
 $CountRegisterAll = $Home->CheckPackageCourse();
 
+$CheckUserEnrollments = $Home->CheckUserEnrollments();
+
+//exit();
 ?>
 
 <?php include_once('../../../pages/Teacher/Layout/HeaderTeacher.php') ?>
@@ -135,16 +139,39 @@ $CountRegisterAll = $Home->CheckPackageCourse();
                     </div>
                     <!-- /.row -->
                     <hr>
-                    <h2 class="mb-1">รายงาน</h2>
+                    <h2 class="mb-1">ลงทะเบียนเรียน</h2>
                     <hr>
-                    <div>
-                        <h4>แบบรายงานผู้เรียนกิจกรรมส่งเสริมการเรียน</h4>
-                        <a href="../Report/ReportToExcel.php" class="btn btn-success">ดาวน์โหลด Excel</a>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover" id="Tb_ViewRegisterAll">
+                                <thead>
+                                    <tr>
+                                        <th>ชื่อ - นามสกุล</th>
+                                        <th>อีเมล</th>
+                                        <th>เบอร์โทร</th>
+                                        <th>วันที่ลงทะเบียนเรียน</th>
+                                        <th>คอร์สที่เรียน</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($CheckUserEnrollments as $key => $v_CheckUserEnrollments) : ?>
+                                    <tr>
+                                        <td><?=$v_CheckUserEnrollments['UserPrefix'].$v_CheckUserEnrollments['UserFirstName'].' '.$v_CheckUserEnrollments['UserLastName'];?></td>
+                                        <td><?=$v_CheckUserEnrollments['Email']?></td>
+                                        <td><?=$v_CheckUserEnrollments['UserPhone']?></td>
+                                        <td><?=thai_date_fullmonth(strtotime($v_CheckUserEnrollments['EnrollDate']))?></td>
+                                        <td>
+                                        <?=$v_CheckUserEnrollments['CourseName']?>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="mt-3">
-                        <h4>รายงานแบบสำรวจความพึงพอใจของผู้เรียน</h4>
-                        <a href="../Report/ReportComplacence.php" class="btn btn-success">ดาวน์โหลด Excel</a>
-                    </div>
+
+
 
                 </div><!-- /.container-fluid -->
             </section>

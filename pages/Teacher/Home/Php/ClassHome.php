@@ -4,11 +4,6 @@ class ClassHome {
     private $table_name = "tb_courses";
 
     public $TitleBar = "หน้าแรก";
-    public $CourseID;
-    public $CourseName;
-    public $Description;
-    public $TeacherID;
-    public $CourseDateCreated;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -48,6 +43,68 @@ class ClassHome {
 
         return $stmt;
     }
+
+    public function CheckRegisterAll(){
+
+        $query = "SELECT UserPrefix,UserFirstName,UserLastName,UserPhone,DateCreated,Email FROM tb_users WHERE UserType = 'student'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    public function CheckLessonsAll(){
+
+        $query = "SELECT LessonNo,LessonTitle FROM tb_lessons";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    public function CheckCoursesAll(){
+
+        $query = "SELECT CourseCode,CourseName FROM tb_courses";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    public function CheckPackageCourse() {
+
+        $query = "SELECT COUNT(*) FROM tb_users";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+
+    }
+
+    public function CheckUserEnrollments() {
+
+        $query = "SELECT 
+        tb_enrollments.UserID,
+        tb_enrollments.EnrollmentID,
+        tb_enrollments.CourseID,
+        tb_users.UserPrefix,
+        tb_users.UserFirstName,
+        tb_users.UserLastName,
+        tb_courses.CourseName,
+        tb_users.UserPhone,
+        tb_enrollments.EnrollDate,
+        tb_users.Email
+        FROM tb_enrollments
+        INNER JOIN tb_courses ON tb_enrollments.CourseID = tb_courses.CourseID
+        INNER JOIN tb_users ON tb_enrollments.UserID = tb_users.UserID";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+
+        return $stmt;
+
+    }
+    
 
 }
 ?>

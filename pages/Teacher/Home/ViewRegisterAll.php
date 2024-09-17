@@ -9,11 +9,14 @@ $course = new ClassCourse($db);
 $Home = new ClassHome($db);
 $Title = $Home->TitleBar;
 
+// เช็ค dashborad
 $CourseAll = $course->CheckPackageCourse();
 $LessonsAll = $course->CheckLessons();
 $EnrollmentsAll = $course->CheckEnrollments();
 $CheckGraduationAll = $course->CheckGraduation();
 $CountRegisterAll = $Home->CheckPackageCourse();
+
+$CheckRegisterAll = $Home->CheckRegisterAll();
 
 ?>
 
@@ -135,16 +138,35 @@ $CountRegisterAll = $Home->CheckPackageCourse();
                     </div>
                     <!-- /.row -->
                     <hr>
-                    <h2 class="mb-1">รายงาน</h2>
+                    <h2 class="mb-1">สมาชิกทั้งหมด</h2>
                     <hr>
-                    <div>
-                        <h4>แบบรายงานผู้เรียนกิจกรรมส่งเสริมการเรียน</h4>
-                        <a href="../Report/ReportToExcel.php" class="btn btn-success">ดาวน์โหลด Excel</a>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover" id="Tb_ViewRegisterAll">
+                                <thead>
+                                    <tr>
+                                        <th>ชื่อ - นามสกุล</th>
+                                        <th>อีเมล</th>
+                                        <th>เบอร์โทร</th>
+                                        <th>วันที่สมัครเรียน</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($CheckRegisterAll as $key => $v_RegisterAll) : ?>
+                                    <tr>
+                                        <td><?=$v_RegisterAll['UserPrefix'].$v_RegisterAll['UserFirstName'].' '.$v_RegisterAll['UserLastName'];?></td>
+                                        <td><?=$v_RegisterAll['Email']?></td>
+                                        <td><?=$v_RegisterAll['UserPhone']?></td>
+                                        <td><?=thai_date_fullmonth(strtotime($v_RegisterAll['DateCreated']))?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="mt-3">
-                        <h4>รายงานแบบสำรวจความพึงพอใจของผู้เรียน</h4>
-                        <a href="../Report/ReportComplacence.php" class="btn btn-success">ดาวน์โหลด Excel</a>
-                    </div>
+
+
 
                 </div><!-- /.container-fluid -->
             </section>

@@ -9,12 +9,17 @@ $course = new ClassCourse($db);
 $Home = new ClassHome($db);
 $Title = $Home->TitleBar;
 
+// เช็ค dashborad
 $CourseAll = $course->CheckPackageCourse();
 $LessonsAll = $course->CheckLessons();
 $EnrollmentsAll = $course->CheckEnrollments();
 $CheckGraduationAll = $course->CheckGraduation();
 $CountRegisterAll = $Home->CheckPackageCourse();
 
+$CheckLessonsAll = $Home->CheckLessonsAll();
+
+
+//exit();
 ?>
 
 <?php include_once('../../../pages/Teacher/Layout/HeaderTeacher.php') ?>
@@ -135,16 +140,31 @@ $CountRegisterAll = $Home->CheckPackageCourse();
                     </div>
                     <!-- /.row -->
                     <hr>
-                    <h2 class="mb-1">รายงาน</h2>
+                    <h2 class="mb-1">บทเรียน</h2>
                     <hr>
-                    <div>
-                        <h4>แบบรายงานผู้เรียนกิจกรรมส่งเสริมการเรียน</h4>
-                        <a href="../Report/ReportToExcel.php" class="btn btn-success">ดาวน์โหลด Excel</a>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover" id="Tb_ViewLessons">
+                                <thead>
+                                    <tr>
+                                        <th>บทที่</th>
+                                        <th>เรื่อง</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($CheckLessonsAll as $key => $v_RegisterAll) : ?>
+                                    <tr>
+                                        <td><?=$v_RegisterAll['LessonNo']?></td>
+                                        <td><?=$v_RegisterAll['LessonTitle']?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="mt-3">
-                        <h4>รายงานแบบสำรวจความพึงพอใจของผู้เรียน</h4>
-                        <a href="../Report/ReportComplacence.php" class="btn btn-success">ดาวน์โหลด Excel</a>
-                    </div>
+
+
 
                 </div><!-- /.container-fluid -->
             </section>
