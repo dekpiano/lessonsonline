@@ -154,6 +154,14 @@ class ClassEnrollmentUser {
         return $stmt->fetch(PDO::FETCH_ASSOC);
 
     }
+
+    public function CheckEnrollmentSuccessful($CourseID){
+        $Successful = "SELECT COUNT(*) AS SumAll FROM tb_enrollments WHERE EnrollCertificate != '' AND CourseID = $CourseID";
+        $stmt = $this->conn->prepare($Successful);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } 
+    
     
 }
 ?>
