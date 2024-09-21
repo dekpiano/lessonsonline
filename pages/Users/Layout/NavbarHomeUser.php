@@ -33,12 +33,12 @@
         </button>
 
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-
+        
             <!-- Right navbar links -->
             <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                 <?php if(!empty($_SESSION['FullName'])):?>
                 <li class="nav-item">
-                    <a class="nav-link" href="../../../pages/Users/Course/CourseMy" role="button">
+                    <a class="nav-link <?php echo uri(4) == "CourseMy"?"active":"";?>  " href="../../../pages/Users/Course/CourseMy" role="button">
                         คอร์สเรียนของฉัน
                     </a>
                 </li>
