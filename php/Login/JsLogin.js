@@ -7,7 +7,7 @@ $(document).on("submit","#loginForm", function(e) {
         data: $(this).serialize(),
         success: function(response) {
             var data = JSON.parse(response);
-            console.log(data.Type);
+            console.log(response);
             if(data.Type == "teacher"){
                window.location.href = "../../../pages/Teacher/Home/HomeMain";
             }else if(data.Type == "student"){ 

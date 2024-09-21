@@ -39,6 +39,11 @@
 * {
     font-family: "Sarabun";
 }
+.content-wrapper{
+    background-image:url('../../../dist/img/main-bg.png');
+    background-size:cover;
+}
+
 </style>
 
 <!-- Modal -->

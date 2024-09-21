@@ -46,7 +46,7 @@ $.widget.bridge('uibutton', $.ui.button)
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../../../dist/js/pages/dashboard.js"></script>
 
-<script src="../../../php/Login/JsLogin.js?v=3.3"></script>
+<script src="../../../php/Login/JsLogin.js?v=3.4"></script>
 <script>
     $(":input").inputmask();
 // Disable form submissions if there are invalid fields

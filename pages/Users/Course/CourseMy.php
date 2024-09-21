@@ -131,7 +131,11 @@ $CheckAssessment = $Assessment->CheckAssessment(@$Check['CourseID']);
 
                                             </td>
                                             <td class="project-state">
+                                            <?php if($CheckAssessment == 0) :?>
                                                 <span class="badge badge-success"><?=$row['CourseStatus']?></span>
+                                                <?php else: ?>
+                                                    <span class="badge badge-success">Success</span>
+                                            <?php endif; ?>
                                             </td>
 
                                             <td class="project-actions">
