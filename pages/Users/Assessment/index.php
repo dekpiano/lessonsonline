@@ -40,6 +40,7 @@ $CheckAssessment = $Assessment->CheckAssessment(@$_GET['Course']);
                         <div class="col-md-8">
                             <div class="card">
                                 <form   id="<?= $CheckAssessment > 0 ?"FormAssessmentUpdate":"FormAssessmentInsert"?>" method="post">
+                                <input type="hidden" name="CourseID" id="CourseID"  value="<?=$_GET['Course']?>">
                                 <div class="card-body">
                                     <table class="table table-bordered">
                                         <thead>
@@ -57,7 +58,7 @@ $CheckAssessment = $Assessment->CheckAssessment(@$_GET['Course']);
                                             </tr>
                                             <?php $num = 1;
                                     while($row = $QuestionAll->fetch(PDO::FETCH_ASSOC)) : 
-
+                                       
                                         $EditAssessment = $Assessment->EditAssessment(@$_GET['Course'],$row['ass_question_id']);
                                         //echo "<pre>";print_r($EditAssessment);
                                         if($row['ass_question_type'] == 'rating'):

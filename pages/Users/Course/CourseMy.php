@@ -91,6 +91,8 @@ $CheckAssessment = $Assessment->CheckAssessment(@$Check['CourseID']);
               $LessonsTotal = $Course->LessonsTotal($row['CourseID'])->fetch(PDO::FETCH_ASSOC);
                                           
               $ValCourseProgress = $CourseProgress->fetch(PDO::FETCH_ASSOC);
+              $CheckDoAssessment = $Course->CheckDoAssessment($row['CourseID']);
+              //print_r($CheckDoAssessment['DoAssessment'] );
               //สมการหา %
               $ValProgressAll = ROUND((($ValCourseProgress['completed_lessons']/$LessonsTotal['TotalLessons'])*100),2);
                 ?>
@@ -131,7 +133,7 @@ $CheckAssessment = $Assessment->CheckAssessment(@$Check['CourseID']);
 
                                             </td>
                                             <td class="project-state">
-                                            <?php if($CheckAssessment == 0) :?>
+                                            <?php if($CheckDoAssessment['DoAssessment'] == 0) :?>
                                                 <span class="badge badge-success"><?=$row['CourseStatus']?></span>
                                                 <?php else: ?>
                                                     <span class="badge badge-success">Success</span>
@@ -155,7 +157,7 @@ $CheckAssessment = $Assessment->CheckAssessment(@$Check['CourseID']);
                                                 </a>
                                             </td>
                                             <td>
-                                            <?php $disabledCertificate = ($CheckAssessment == 0) ?"disabled":""?>
+                                            <?php $disabledCertificate = ($CheckDoAssessment['DoAssessment'] == 0) ?"disabled":""?>
                                             <a class="btn btn-warning btn-xs <?=$disabledAssessment?> <?=$disabledCertificate?>" href="Certificate/LoadCertificate.php?CourseID=<?=$row['CourseID']?>" target="_blank">
                                             <i class="fas fa-file-export"></i>
                                                     ดาวน์โหลด

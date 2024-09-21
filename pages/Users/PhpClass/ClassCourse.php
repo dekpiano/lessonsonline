@@ -104,6 +104,15 @@ class ClassCourse {
         $stmt->execute();
         return $stmt;
     }
+
+    public function CheckDoAssessment($CourseID) {
+        $query = "SELECT COUNT(*) AS DoAssessment FROM tb_assessments_responses WHERE course_id = ? AND user_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $CourseID);
+        $stmt->bindParam(2, $_SESSION['UserID']);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     
 }
 ?>

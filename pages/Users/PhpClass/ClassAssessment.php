@@ -41,34 +41,37 @@ class ClassAssessment {
     public function AssessmentInsert() {
      
 
-        $query1 = "INSERT INTO tb_assessments_responses SET question_id=:question_id,user_id=:user_id,response_text=:response_text,response_rating=:response_rating";
+        $query1 = "INSERT INTO tb_assessments_responses SET course_id=:course_id,question_id=:question_id,user_id=:user_id,response_text=:response_text,response_rating=:response_rating";
         $stmt = $this->conn->prepare($query1);       
-        //print_r($_POST);
+        
         foreach ($_POST as $question_id => $answer_text) {
-
-            $query = $this->conn->prepare("SELECT ass_question_type FROM tb_assessments_questions WHERE ass_question_id = :question_id");
-            $query->bindParam(":question_id", $question_id);
-            $query->execute();
-            $question = $query->fetch();            
-
-            if($question['ass_question_type'] == 'rating'){
-                $stmt->bindValue(":response_rating", $answer_text); 
-                $stmt->bindValue(":response_text", "");    
-            }else{
-                $stmt->bindValue(":response_text", htmlspecialchars(strip_tags($answer_text))); 
-                $stmt->bindValue(":response_rating", "");    
-            }            
-            $stmt->bindValue(":question_id", $question_id);
-            $stmt->bindValue(":user_id", $_SESSION['UserID']);               
-            $stmt->execute();
+            if($question_id != "CourseID"){
+                $stmt->bindValue(":course_id", $_POST['CourseID']); 
+                $query = $this->conn->prepare("SELECT ass_question_type FROM tb_assessments_questions WHERE ass_question_id = :question_id");
+                $query->bindParam(":question_id", $question_id);
+                $query->execute();
+                $question = $query->fetch();            
+    
+                if($question['ass_question_type'] == 'rating'){
+                    $stmt->bindValue(":response_rating", $answer_text); 
+                    $stmt->bindValue(":response_text", "");    
+                }else{
+                    $stmt->bindValue(":response_text", htmlspecialchars(strip_tags($answer_text))); 
+                    $stmt->bindValue(":response_rating", "");    
+                }            
+                $stmt->bindValue(":question_id", $question_id);
+                $stmt->bindValue(":user_id", $_SESSION['UserID']);               
+                $stmt->execute();
+            }
         }
 
-        $UpdateKeyCertificate = "UPDATE tb_enrollments SET EnrollCertificate=:EnrollCertificate,EnrollCompletionDate=:EnrollCompletionDate WHERE CourseID=:CourseID AND UserID=:UserID";
+        $UpdateKeyCertificate = "UPDATE tb_enrollments SET EnrollCertificate=:EnrollCertificate,EnrollCompletionDate=:EnrollCompletionDate,EnrollStatus=:EnrollStatus WHERE CourseID=:CourseID AND UserID=:UserID";
         $stmtUpdateKey = $this->conn->prepare($UpdateKeyCertificate); 
         $stmtUpdateKey->bindValue(":EnrollCertificate", $this->generateUUID());
         $stmtUpdateKey->bindValue(":EnrollCompletionDate", date('Y-m-d'));
         $stmtUpdateKey->bindValue(":CourseID", 1);
         $stmtUpdateKey->bindValue(":UserID", $_SESSION['UserID']);
+        $stmtUpdateKey->bindValue(":EnrollStatus", "Success");
         $stmtUpdateKey->execute();
 
         // Return a JSON response
@@ -76,26 +79,29 @@ class ClassAssessment {
     }
 
     public function AssessmentUpdate() {
-        $query1 = "UPDATE tb_assessments_responses SET response_text=:response_text,response_rating=:response_rating WHERE question_id=:question_id AND user_id=:user_id";
+        $query1 = "UPDATE tb_assessments_responses SET response_text=:response_text,response_rating=:response_rating WHERE question_id=:question_id AND user_id=:user_id AND course_id=:course_id";
         $stmt = $this->conn->prepare($query1);       
-        //print_r($_POST);
+        print_r($_POST);
         foreach ($_POST as $question_id => $answer_text) {
-
-            $query = $this->conn->prepare("SELECT ass_question_type FROM tb_assessments_questions WHERE ass_question_id = :question_id");
-            $query->bindParam(":question_id", $question_id);
-            $query->execute();
-            $question = $query->fetch();            
-
-            if($question['ass_question_type'] == 'rating'){
-                $stmt->bindValue(":response_rating", $answer_text); 
-                $stmt->bindValue(":response_text", "");    
-            }else{
-                $stmt->bindValue(":response_text", htmlspecialchars(strip_tags($answer_text))); 
-                $stmt->bindValue(":response_rating", "");    
-            }            
-            $stmt->bindValue(":question_id", $question_id);
-            $stmt->bindValue(":user_id", $_SESSION['UserID']);               
-            $stmt->execute();
+            if($question_id != "CourseID"){
+                $query = $this->conn->prepare("SELECT ass_question_type FROM tb_assessments_questions WHERE ass_question_id = :question_id"); 
+                $query->bindParam(":question_id", $question_id);
+                $query->execute();
+                $question = $query->fetch();            
+                //print_r($_POST['CourseID']);
+                if($question['ass_question_type'] == 'rating'){
+                    $stmt->bindValue(":response_rating", $answer_text); 
+                    $stmt->bindValue(":response_text", "");    
+                }else{
+                    $stmt->bindValue(":response_text", htmlspecialchars(strip_tags($answer_text))); 
+                    $stmt->bindValue(":response_rating", "");    
+                }            
+                $stmt->bindValue(":question_id", $question_id);
+                $stmt->bindValue(":user_id", $_SESSION['UserID']); 
+                $stmt->bindValue(":course_id", $_POST['CourseID']);              
+                $stmt->execute();
+            }
+           
         }
         // Return a JSON response
         echo json_encode(['status' => 'success', 'message' => 'Assessment submitted successfully']);
@@ -104,7 +110,7 @@ class ClassAssessment {
     public function EditAssessment($CourseID,$question_id) {
         $Query = "SELECT
             tb_assessments_responses.user_id,
-            tb_assessments.course_id,
+            tb_assessments_responses.course_id,
             tb_assessments_responses.question_id,
             tb_assessments_responses.response_text,
             tb_assessments_responses.response_rating,
@@ -113,7 +119,7 @@ class ClassAssessment {
             tb_assessments_responses
             INNER JOIN tb_assessments_questions ON tb_assessments_questions.ass_question_id = tb_assessments_responses.question_id
             INNER JOIN tb_assessments ON tb_assessments.assessment_id = tb_assessments_questions.assessment_id
-            WHERE tb_assessments.course_id = ? AND tb_assessments_responses.user_id = ? AND tb_assessments_responses.question_id = ?
+            WHERE tb_assessments_responses.course_id = ? AND tb_assessments_responses.user_id = ? AND tb_assessments_responses.question_id = ? 
         ";
         $stmt = $this->conn->prepare($Query);
         $stmt->bindValue(1, $CourseID);
@@ -132,7 +138,7 @@ class ClassAssessment {
             tb_assessments_responses
             INNER JOIN tb_assessments_questions ON tb_assessments_questions.ass_question_id = tb_assessments_responses.question_id
             INNER JOIN tb_assessments ON tb_assessments.assessment_id = tb_assessments_questions.assessment_id
-        WHERE tb_assessments.course_id = ? AND tb_assessments_responses.user_id = ?
+        WHERE tb_assessments_responses.course_id = ? AND tb_assessments_responses.user_id = ?
     ";
         $stmt = $this->conn->prepare($Query);
         $stmt->bindValue(1, $CourseID);
