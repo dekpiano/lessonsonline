@@ -69,7 +69,7 @@ class ClassAssessment {
         $stmtUpdateKey = $this->conn->prepare($UpdateKeyCertificate); 
         $stmtUpdateKey->bindValue(":EnrollCertificate", $this->generateUUID());
         $stmtUpdateKey->bindValue(":EnrollCompletionDate", date('Y-m-d'));
-        $stmtUpdateKey->bindValue(":CourseID", 1);
+        $stmtUpdateKey->bindValue(":CourseID", $_POST['CourseID']);
         $stmtUpdateKey->bindValue(":UserID", $_SESSION['UserID']);
         $stmtUpdateKey->bindValue(":EnrollStatus", "Success");
         $stmtUpdateKey->execute();
@@ -103,6 +103,17 @@ class ClassAssessment {
             }
            
         }
+
+        $UpdateKeyCertificate = "UPDATE tb_enrollments SET EnrollCertificate=:EnrollCertificate,EnrollCompletionDate=:EnrollCompletionDate,EnrollStatus=:EnrollStatus WHERE CourseID=:CourseID AND UserID=:UserID";
+        $stmtUpdateKey = $this->conn->prepare($UpdateKeyCertificate); 
+        $stmtUpdateKey->bindValue(":EnrollCertificate", $this->generateUUID());
+        $stmtUpdateKey->bindValue(":EnrollCompletionDate", date('Y-m-d'));
+        $stmtUpdateKey->bindValue(":CourseID", $_POST['CourseID']);
+        $stmtUpdateKey->bindValue(":UserID", $_SESSION['UserID']);
+        $stmtUpdateKey->bindValue(":EnrollStatus", "Success");
+        $stmtUpdateKey->execute();
+
+        
         // Return a JSON response
         echo json_encode(['status' => 'success', 'message' => 'Assessment submitted successfully']);
     }
