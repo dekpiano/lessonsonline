@@ -136,19 +136,24 @@ try {
         $sheet->setCellValue('B' . $rowNumber, $row['UserPrefix'].$row['UserFirstName'].' '.$row['UserLastName']);
         $sheet->setCellValueExplicit('C' . $rowNumber, $row['UserIdCard'],  DataType::TYPE_STRING);
         $sheet->setCellValue('D' . $rowNumber, $row['UserBirthday']);
-        $sheet->setCellValue('E' . $rowNumber, $row['UserGender']);
+        if($row['UserPrefix'] == "นาย" || $row['UserPrefix'] == "เด็กชาย"){
+            $sheet->setCellValue('E' . $rowNumber, '✓');
+        }else{
+            $sheet->setCellValue('F' . $rowNumber, '✓');
+        }
+        
 
         // ตัวอย่างการใส่ข้อมูลสำหรับอายุ (ใช้การเช็คเงื่อนไข)
         if ($row['UserRangeAge'] == 1) {
-            $sheet->setCellValue('F' . $rowNumber, '✓');
-        } elseif ($row['UserRangeAge'] == 2) {
             $sheet->setCellValue('G' . $rowNumber, '✓');
-        } elseif ($row['UserRangeAge'] == 3) {
+        } elseif ($row['UserRangeAge'] == 2) {
             $sheet->setCellValue('H' . $rowNumber, '✓');
-        } elseif ($row['UserRangeAge'] == 4) {
+        } elseif ($row['UserRangeAge'] == 3) {
             $sheet->setCellValue('I' . $rowNumber, '✓');
-        } else {
+        } elseif ($row['UserRangeAge'] == 4) {
             $sheet->setCellValue('J' . $rowNumber, '✓');
+        } else {
+            $sheet->setCellValue('K' . $rowNumber, '✓');
         }
 
         // ตัวอย่างการใส่ข้อมูลระดับการศึกษา
